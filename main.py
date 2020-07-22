@@ -16,8 +16,11 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 
 import argparse
 import sys
+from blessings import Terminal
 import requests
 from bs4 import BeautifulSoup as bs
+
+term = Terminal()
 
 
 def Search(Query: str) -> dict:
@@ -71,8 +74,24 @@ another python script, it'll return some parsable JSON. Assuming you are utilizi
 this script's wonderful functions and objects.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
-parser.add_argument("query", type=str, help="The query to search", nargs="+")
-# parser.add_argument("-o", "--output", type=str, help="The output file", nargs="?")
+parser.add_argument("query", help="The query to search.", nargs="+")
+parser.add_argument(
+    "-j",
+    "--json",
+    "--raw-data",
+    "-r",
+    "--raw",
+    help="For outputting JSON data that you can use.",
+    action="store_true",
+    default=False,
+)
+parser.add_argument(
+    "-o", "--output", help="The output file", nargs="?", default=sys.stdout
+)
 args = parser.parse_args(sys.argv[1:])
-
-print(Search(args.query))
+ANSWERS = Search(args.query)
+if args.json:
+    print(ANSWERS)
+else:  # We got some parsing to do
+    for question, answer in ANSWERS:
+        pass
