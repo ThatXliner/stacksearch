@@ -246,8 +246,8 @@ parser.add_argument(
     help="Don't print the progress.",
     dest="s",
 )
-class test_class():
-    def test_1():
+class TestClass():
+    def test_one():
         args = parser.parse_args("python lists".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
@@ -290,7 +290,7 @@ class test_class():
                     print("\n\n\n", file=args.OUTPUT)
                 finally:
                     question_number += 1
-    def test_2():
+    def test_two():
         args = parser.parse_args("python lists".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
