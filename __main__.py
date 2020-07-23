@@ -88,7 +88,7 @@ async def fSearch(
         )
     }
     if print_prog:
-        print("Requesting questions found...")
+        print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -98,7 +98,7 @@ async def fSearch(
         )
     )
     if print_prog:
-        print("Parsing questions found...")
+        print("Parsing questions found (This may take a while)...")
     pages = await parsePages(_links_for_pages)
     full_questions = await _full_questions(pages)
     answers = await _answers(pages)
@@ -107,7 +107,7 @@ async def fSearch(
 
 
 def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
-    """For getting very precise information on StackOverflow.
+    """For getting very precise information on StackOverflow. This is the function you should use.
 
     Returns
     -------
@@ -131,7 +131,7 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
         )
     }
     if print_prog:
-        print("Requesting questions found...")
+        print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -141,7 +141,7 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
         )
     )
     if print_prog:
-        print("Parsing questions found...")
+        print("Parsing questions found (This may take a while)...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
@@ -188,7 +188,7 @@ def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> d
         )
     }
     if print_prog:
-        print("Requesting questions found...")
+        print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -198,7 +198,7 @@ def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> d
         )
     )
     if print_prog:
-        print("Parsing questions found...")
+        print("Parsing questions found (This may take a while)...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
@@ -266,7 +266,7 @@ if PRINT_PROGRESS:
 ANSWERS = Search(" ".join(args.query))
 
 if args.json:
-    pprint(ANSWERS, file=args.OUTPUT)  # You may get unprocessed, raw JSON
+    pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
 else:  # We got some parsing to do
     if PRINT_PROGRESS:
         print("Outputting results")
