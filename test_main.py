@@ -15,6 +15,7 @@ import sys
 import argparse
 import requests
 import grequests
+import asyncio
 from bs4 import BeautifulSoup as bs
 from blessings import Terminal
 from pprint import pprint
@@ -68,7 +69,7 @@ async def fSearch(
             yield requests.get(f"https://{site}/search?q={Query}")
     if print_prog:
         print("Requesting results from StackOverflow...")
-    responses = get_stuff(sites, Query)
+    responses = await get_stuff(sites, Query)
     if print_prog:
         print("Parsing response HTML...")
     soups = (bs(r.content, "lxml") for r in responses)
@@ -85,9 +86,9 @@ async def fSearch(
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
-            for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(question.values())
-            ) for question in questions
+            for link in [
+                "https://stackoverflow.com" + x for x in question.items()
+            ]  for question in questions
         )
     )
     if print_prog:
@@ -126,10 +127,8 @@ def Search(Query: str, print_prog: bool = True, sites: list = ["stackoverflow.co
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
-            for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(question.values())
-            )
-        ) for question in questions
+            for link in ["https://stackoverflow.com" + x, question.values()] for question in questions
+        ) 
     )
     if print_prog:
         print("Parsing questions found (This may take a while)...")
@@ -295,7 +294,7 @@ class TestClass():
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
             print("Searching StackOverflow...")
-        ANSWERS = fSearch(" ".join(args.query))
+        ANSWERS = asyncio.run(fSearch(" ".join(args.query)))
 
         if args.json:
             pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
