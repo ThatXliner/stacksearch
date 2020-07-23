@@ -97,7 +97,7 @@ async def fSearch(
     return dict(zip(full_questions, answers))
 
 
-def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
+def test_Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     """For getting very precise information on StackOverflow. This is the function you should use.
     Returns
     -------
@@ -248,7 +248,7 @@ args = parser.parse_args("python lists".split())
 PRINT_PROGRESS = args.s
 if PRINT_PROGRESS:
     print("Searching StackOverflow...")
-ANSWERS = Search(" ".join(args.query))
+ANSWERS = test_Search(" ".join(args.query))
 
 if args.json:
     pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
