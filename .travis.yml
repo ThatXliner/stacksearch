@@ -7,4 +7,4 @@ install:
   - python3 -m pip install pytest
   - python3 -m pip install -r requirements.txt
 script:
-  - pytest main.py
+  - pytest -k main.py
