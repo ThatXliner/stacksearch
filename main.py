@@ -50,11 +50,13 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
     """
 
     async def _full_questions(pages):
-        print("Identifying question text...")
+        if args.s:
+            print("Identifying question text...")
         return [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
 
     async def _answers(pages):
-        print("Identifying answers...")
+        if args.s:
+            print("Identifying answers...")
         return [
             [
                 answer.find(attrs=TEXT_REQUIREMENTS).get_text()
@@ -70,18 +72,22 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
             bs(link.content, "lxml") for link in _links_for_pages
         ]
 
-    print("Requesting results from StackOverflow...")
+    if args.s:
+        print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    print("Parsing response HTML...")
+    if args.s:
+        print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    print("Collecting question links...")
+    if args.s:
+        print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    print("Requesting questions found...")
+    if args.s:
+        print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -90,7 +96,8 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    print("Parsing questions found...")
+    if args.s:
+        print("Parsing questions found...")
     pages = await parsePages(_links_for_pages)
     full_questions = await _full_questions(pages)
     answers = await _answers(pages)
@@ -108,18 +115,22 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
 
     """
 
-    print("Requesting results from StackOverflow...")
+    if args.s:
+        print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    print("Parsing response HTML...")
+    if args.s:
+        print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    print("Collecting question links...")
+    if args.s:
+        print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    print("Requesting questions found...")
+    if args.s:
+        print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -128,13 +139,16 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    print("Parsing questions found...")
+    if args.s:
+        print("Parsing questions found...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
-    print("Identifying question text...")
+    if args.s:
+        print("Identifying question text...")
     full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    print("Identifying answers...")
+    if args.s:
+        print("Identifying answers...")
     answers = [
         [
             answer.find(attrs=TEXT_REQUIREMENTS).get_text()
@@ -158,18 +172,22 @@ def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
 
     \"""
 
-    print("Requesting results from StackOverflow...")
+    if args.s:
+        print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    print("Parsing response HTML...")
+    if args.s:
+        print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    print("Collecting question links...")
+    if args.s:
+        print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    print("Requesting questions found...")
+    if args.s:
+        print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
@@ -178,13 +196,16 @@ def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    print("Parsing questions found...")
+    if args.s:
+        print("Parsing questions found...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
-    print("Identifying question text...")
+    if args.s:
+        print("Identifying question text...")
     full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    print("Identifying answers...")
+    if args.s:
+        print("Identifying answers...")
     answers = [
         [
             answer.find(attrs=TEXT_REQUIREMENTS).get_text()
@@ -223,39 +244,58 @@ parser.add_argument(
 parser.add_argument(
     "-o",
     "--output",
-    help="The output file",
+    help="The output file.",
     nargs="?",
     default=sys.stdout,
     action="store",
     dest="OUPUT",
 )
-
+parser.add_argument(
+    "-s",
+    "--silent",
+    action="store_true",
+    default=False,
+    help="Don't print the progress.",
+    dest="s",
+)
 args = parser.parse_args(sys.argv[1:])
-print("Searching StackOverflow...")
-ANSWERS = Search(args.query)
+if args.s:
+    print("Searching StackOverflow...")
+ANSWERS = Search(" ".join(args.query))
 
 if args.json:
-    print(ANSWERS)  # You may get unprocessed, raw JSON
+    print(ANSWERS, file=args.output)  # You may get unprocessed, raw JSON
 else:  # We got some parsing to do
-    print("Outputting results")
+    if args.s:
+        print("Outputting results")
     question_number = 1
     for question, answers in ANSWERS.items():
         print(
-            f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}"
+            f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
+            file=args.output,
         )
         print("\n")
         try:
-            print(f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}")
-            print("\n\n\n")
+            print(
+                f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                file=args.output,
+            )
+            print("\n\n\n", file=args.output)
             try:
                 for answer in answers[1:]:
-                    print(f"{t.green}Answer: {answer}{t.normal}")
-                    print("\n\n\n")
+                    print(f"{t.green}Answer: {answer}{t.normal}", file=args.output)
+                    print("\n\n\n", file=args.output)
             except IndexError:
-                print(f"{t.red}{t.bold}This is the only answer.{t.normal}")
+                print(
+                    f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                    file=args.output,
+                )
         except IndexError:
-            print(f"{t.bright_red}There were no answers for this question{t.normal}\n")
+            print(
+                f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                file=args.output,
+            )
         else:
-            print("\n\n\n")
+            print("\n\n\n", file=args.output)
         finally:
             question_number += 1
