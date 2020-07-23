@@ -244,7 +244,7 @@ parser.add_argument(
     help="Don't print the progress.",
     dest="s",
 )
-args = parser.parse_args(sys.argv[1:])
+args = parser.parse_args("python lists".split())
 PRINT_PROGRESS = args.s
 if PRINT_PROGRESS:
     print("Searching StackOverflow...")
