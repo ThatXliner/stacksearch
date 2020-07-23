@@ -247,7 +247,7 @@ parser.add_argument(
     dest="s",
 )
 class TestClass():
-    def test_one():
+    def test_one(self):
         args = parser.parse_args("python lists".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
@@ -290,7 +290,7 @@ class TestClass():
                     print("\n\n\n", file=args.OUTPUT)
                 finally:
                     question_number += 1
-    def test_two():
+    def test_two(self):
         args = parser.parse_args("python lists".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
