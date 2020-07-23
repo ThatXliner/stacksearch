@@ -66,7 +66,7 @@ async def fSearch(
         ]
     async def get_stuff(sites, Query):
         for site in sites:
-            yield requests.get(f"https://{site}/search?q={Query}")
+            requests.get(f"https://{site}/search?q={Query}")
     if print_prog:
         print("Requesting results from StackOverflow...")
     responses = await get_stuff(sites, Query)
