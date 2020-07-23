@@ -2,10 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 Author: Bryan Hu .
+
 @Bryan Hu .
+
 Made with love by Bryan Hu .
+
+
 Version: v1.0.0.1
+
 Desc: The main file to use/execute when trying to search StackOverflow.
+
 """
 from gevent import monkey as curious_george
 
@@ -27,18 +33,21 @@ NEWLINE = "\n"
 
 
 async def fSearch(
-    Query: str, print_prog: bool = True, sites: list = ["stackoverflow.com"],*args: Any, **kwargs: Any
+    Query: str, print_prog: bool = True, *args: Any, **kwargs: Any
 ) -> dict:
     """For getting very precise information on StackOverflow.
+
     This is 'supposed' to be faster than the normal 'Search' function for it abuses
     Asyncio. The thing is, this function will probably be deprecated unless there is a
     tested significant difference in performance. Use the 'search' function for it is
     more supported (all of the new features will be implemented in the Search function
     first).
+
     Returns
     -------
     dict
         A dict containing the raw data of the questions/answers gotten.
+
     """
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
@@ -64,31 +73,29 @@ async def fSearch(
         return [  # Pages of all the questions related to Query
             bs(link.content, "lxml") for link in _links_for_pages
         ]
-    async def get_stuff(sites, Query):
-        for site in sites:
-            requests.get(f"https://{site}/search?q={Query}")
+
     if print_prog:
         print("Requesting results from StackOverflow...")
-    responses = await get_stuff(sites, Query)
+    r = requests.get(f"https://stackoverflow.com/search?q={Query}")
     if print_prog:
         print("Parsing response HTML...")
-    soups = (bs(r.content, "lxml") for r in responses)
+    soup = bs(r.content, "lxml")
     if print_prog:
         print("Collecting question links...")
-    questions = [{  # The raw ingredients
+    questions = {  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
-        ) 
-    } for soup in soups]
+        )
+    }
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
-            for link in [
-                "https://stackoverflow.com" + x for x in question.items()
-            ]  for question in questions
+            for link in map(
+                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
+            )
         )
     )
     if print_prog:
@@ -100,35 +107,39 @@ async def fSearch(
     return dict(zip(full_questions, answers))
 
 
-def Search(Query: str, print_prog: bool = True, sites: list = ["stackoverflow.com"],*args: Any, **kwargs: Any) -> dict:
+def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     """For getting very precise information on StackOverflow. This is the function you should use.
+
     Returns
     -------
     dict
         A dict containing the raw data of the questions/answers gotten.
+
     """
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print("Requesting results from StackOverflow...")
-    responses = (requests.get(f"https://{site}/search?q={Query}") for site in sites)
+    r = requests.get(f"https://stackoverflow.com/search?q={Query}")
     if print_prog:
         print("Parsing response HTML...")
-    soups = (bs(r.content, "lxml") for r in responses)
+    soup = bs(r.content, "lxml")
     if print_prog:
         print("Collecting question links...")
-    questions = [{  # The raw ingredients
+    questions = {  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
-        ) 
-    } for soup in soups]
+        )
+    }
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
-            for link in map(lambda x: "https://stackoverflow.com" + y, ((y, for x, y in question.values()) for question in questions) ) 
-        ) 
+            for link in map(
+                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
+            )
+        )
     )
     if print_prog:
         print("Parsing questions found (This may take a while)...")
@@ -152,12 +163,15 @@ def Search(Query: str, print_prog: bool = True, sites: list = ["stackoverflow.co
 
 """
 We don't need the internal search function, yet.
-def test_search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
+
+def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     \"""You should never use this. This is the internal search function.
+
     Returns
     -------
     dict
         A dict containing the raw data of the questions/answers gotten.
+
     \"""
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
@@ -209,6 +223,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description="""
 For searching StackOverflow and getting results that you can use.
+
 There are many other libraries/modules available that do the same
 thing. The reason you should use this is because this returns results that you can
 use. If ran from the command line, it'll return human readable results. If ran from
@@ -245,16 +260,23 @@ parser.add_argument(
     help="Don't print the progress.",
     dest="s",
 )
-class TestClass():
+
+
+class TestClass:
+    """For testing."""
+
     def test_one(self):
-        args = parser.parse_args("python lists".split())
+        """A test with Search."""
+        args = parser.parse_args("python list".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
             print("Searching StackOverflow...")
         ANSWERS = Search(" ".join(args.query))
 
         if args.json:
-            pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
+            pprint(
+                ANSWERS, stream=args.OUTPUT, width=79
+            )  # You will get unprocessed, raw JSON
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results")
@@ -273,7 +295,9 @@ class TestClass():
                     print("\n\n\n", file=args.OUTPUT)
                     try:
                         for answer in answers[1:]:
-                            print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
+                            print(
+                                f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT
+                            )
                             print("\n\n\n", file=args.OUTPUT)
                     except IndexError:
                         print(
@@ -289,15 +313,19 @@ class TestClass():
                     print("\n\n\n", file=args.OUTPUT)
                 finally:
                     question_number += 1
+
     def test_two(self):
-        args = parser.parse_args("python lists".split())
+        """A test with the asyncio version of Search."""
+        args = parser.parse_args("python list".split())
         PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
             print("Searching StackOverflow...")
         ANSWERS = asyncio.run(fSearch(" ".join(args.query)))
 
         if args.json:
-            pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
+            pprint(
+                ANSWERS, stream=args.OUTPUT, width=79
+            )  # You will get unprocessed, raw JSON
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results")
@@ -316,7 +344,9 @@ class TestClass():
                     print("\n\n\n", file=args.OUTPUT)
                     try:
                         for answer in answers[1:]:
-                            print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
+                            print(
+                                f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT
+                            )
                             print("\n\n\n", file=args.OUTPUT)
                     except IndexError:
                         print(
@@ -332,4 +362,3 @@ class TestClass():
                     print("\n\n\n", file=args.OUTPUT)
                 finally:
                     question_number += 1
-
