@@ -246,46 +246,91 @@ parser.add_argument(
     help="Don't print the progress.",
     dest="s",
 )
-def test_main():
-    args = parser.parse_args("python lists".split())
-    PRINT_PROGRESS = args.s
-    if PRINT_PROGRESS:
-        print("Searching StackOverflow...")
-    ANSWERS = Search(" ".join(args.query))
-
-    if args.json:
-        pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
-    else:  # We got some parsing to do
+class test_class():
+    def test_1():
+        args = parser.parse_args("python lists".split())
+        PRINT_PROGRESS = args.s
         if PRINT_PROGRESS:
-            print("Outputting results")
-        question_number = 1
-        for question, answers in ANSWERS.items():
-            print(
-                f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
-                file=args.OUTPUT,
-            )
-            print("\n")
-            try:
+            print("Searching StackOverflow...")
+        ANSWERS = Search(" ".join(args.query))
+
+        if args.json:
+            pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
+        else:  # We got some parsing to do
+            if PRINT_PROGRESS:
+                print("Outputting results")
+            question_number = 1
+            for question, answers in ANSWERS.items():
                 print(
-                    f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                    f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                     file=args.OUTPUT,
                 )
-                print("\n\n\n", file=args.OUTPUT)
+                print("\n")
                 try:
-                    for answer in answers[1:]:
-                        print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
-                        print("\n\n\n", file=args.OUTPUT)
-                except IndexError:
                     print(
-                        f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
                         file=args.OUTPUT,
                     )
-            except IndexError:
+                    print("\n\n\n", file=args.OUTPUT)
+                    try:
+                        for answer in answers[1:]:
+                            print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
+                            print("\n\n\n", file=args.OUTPUT)
+                    except IndexError:
+                        print(
+                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                            file=args.OUTPUT,
+                        )
+                except IndexError:
+                    print(
+                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                        file=args.OUTPUT,
+                    )
+                else:
+                    print("\n\n\n", file=args.OUTPUT)
+                finally:
+                    question_number += 1
+    def test_2():
+        args = parser.parse_args("python lists".split())
+        PRINT_PROGRESS = args.s
+        if PRINT_PROGRESS:
+            print("Searching StackOverflow...")
+        ANSWERS = fSearch(" ".join(args.query))
+
+        if args.json:
+            pprint(ANSWERS, stream=args.OUTPUT, width=79)  # You will get unprocessed, raw JSON
+        else:  # We got some parsing to do
+            if PRINT_PROGRESS:
+                print("Outputting results")
+            question_number = 1
+            for question, answers in ANSWERS.items():
                 print(
-                    f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                    f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                     file=args.OUTPUT,
                 )
-            else:
-                print("\n\n\n", file=args.OUTPUT)
-            finally:
-                question_number += 1
+                print("\n")
+                try:
+                    print(
+                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                        file=args.OUTPUT,
+                    )
+                    print("\n\n\n", file=args.OUTPUT)
+                    try:
+                        for answer in answers[1:]:
+                            print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
+                            print("\n\n\n", file=args.OUTPUT)
+                    except IndexError:
+                        print(
+                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                            file=args.OUTPUT,
+                        )
+                except IndexError:
+                    print(
+                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                        file=args.OUTPUT,
+                    )
+                else:
+                    print("\n\n\n", file=args.OUTPUT)
+                finally:
+                    question_number += 1
+
