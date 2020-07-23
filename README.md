@@ -1,6 +1,6 @@
 # stacksearch
 
-[![Build Status](https://travis-ci.com/ThatXliner/stacksearch.svg?branch=master)](https://travis-ci.com/ThatXliner/stacksearch)
+[![Build Status](https://travis-ci.com/ThatXliner/stacksearch.svg?branch=master)](https://travis-ci.com/ThatXliner/stacksearch) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 StackSearch is a python module that provides a way to search StackOverflow. The reason this is better than other modules is that this module provides a modern API, a beautiful command-line interface via argparse and blessings, all in pure Python.
 
