@@ -249,7 +249,7 @@ parser.add_argument(
     nargs="?",
     default=sys.stdout,
     action="store",
-    dest="OUPUT",
+    dest="OUTPUT",
 )
 parser.add_argument(
     "-s",
@@ -266,7 +266,7 @@ if PRINT_PROGRESS:
 ANSWERS = Search(" ".join(args.query))
 
 if args.json:
-    pprint(ANSWERS, file=args.output)  # You may get unprocessed, raw JSON
+    pprint(ANSWERS, file=args.OUTPUT)  # You may get unprocessed, raw JSON
 else:  # We got some parsing to do
     if PRINT_PROGRESS:
         print("Outputting results")
@@ -274,30 +274,30 @@ else:  # We got some parsing to do
     for question, answers in ANSWERS.items():
         print(
             f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
-            file=args.output,
+            file=args.OUTPUT,
         )
         print("\n")
         try:
             print(
                 f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
-                file=args.output,
+                file=args.OUTPUT,
             )
-            print("\n\n\n", file=args.output)
+            print("\n\n\n", file=args.OUTPUT)
             try:
                 for answer in answers[1:]:
-                    print(f"{t.green}Answer: {answer}{t.normal}", file=args.output)
-                    print("\n\n\n", file=args.output)
+                    print(f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT)
+                    print("\n\n\n", file=args.OUTPUT)
             except IndexError:
                 print(
                     f"{t.red}{t.bold}This is the only answer.{t.normal}",
-                    file=args.output,
+                    file=args.OUTPUT,
                 )
         except IndexError:
             print(
                 f"{t.bright_red}There were no answers for this question{t.normal}\n",
-                file=args.output,
+                file=args.OUTPUT,
             )
         else:
-            print("\n\n\n", file=args.output)
+            print("\n\n\n", file=args.OUTPUT)
         finally:
             question_number += 1
