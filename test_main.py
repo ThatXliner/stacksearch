@@ -121,13 +121,13 @@ def Search(Query: str, print_prog: bool = True, sites: list = ["stackoverflow.co
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         ) 
-    }for soup in soups]
+    } for soup in soups]
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
-            for link in ["https://stackoverflow.com" + x, question.values()] for question in questions
+            for link in map(lambda x: "https://stackoverflow.com" + y, ((y, for x, y in question.values()) for question in questions) ) 
         ) 
     )
     if print_prog:
