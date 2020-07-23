@@ -17,16 +17,14 @@ from gevent import monkey as curious_george
 
 curious_george.patch_all(thread=False, select=False)
 
-import argparse
 import sys
-from blessings import Terminal
+import argparse
 import requests
 import grequests
 from bs4 import BeautifulSoup as bs
+from blessings import Terminal
+from pprint import pprint
 from typing import Any
-
-
-# from pprint import pprint
 
 t = Terminal()
 NEWLINE = "\n"
@@ -268,7 +266,7 @@ if PRINT_PROGRESS:
 ANSWERS = Search(" ".join(args.query))
 
 if args.json:
-    print(ANSWERS, file=args.output)  # You may get unprocessed, raw JSON
+    pprint(ANSWERS, file=args.output)  # You may get unprocessed, raw JSON
 else:  # We got some parsing to do
     if PRINT_PROGRESS:
         print("Outputting results")
