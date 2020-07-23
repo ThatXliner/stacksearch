@@ -2,7 +2,8 @@ language: python
 
 python:
   - "3.8"
-  - "3.9"
+ # - "3.9"
+ # 3.9 doesn't exist yet.
 
 install:
   - pip install pytest
