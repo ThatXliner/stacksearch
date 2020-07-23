@@ -74,20 +74,20 @@ async def fSearch(
     soups = (bs(r.content, "lxml") for r in responses)
     if print_prog:
         print("Collecting question links...")
-    questions = {  # The raw ingredients
+    questions = [{  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
-        ) for soup in soups
-    }
+        ) 
+    } for soup in soups]
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
             for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
-            )
+                lambda x: "https://stackoverflow.com" + x, iter(question.values())
+            ) for question in questions
         )
     )
     if print_prog:
@@ -115,21 +115,21 @@ def Search(Query: str, print_prog: bool = True, sites: list = ["stackoverflow.co
     soups = (bs(r.content, "lxml") for r in responses)
     if print_prog:
         print("Collecting question links...")
-    questions = {  # The raw ingredients
+    questions = [{  # The raw ingredients
         question.string: question.get("href")
         for question in soup.find_all(
             attrs={"class": "question-hyperlink", "data-gps-track": None}
-        ) for soup in soups
-    }
+        ) 
+    }for soup in soups]
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = grequests.map(
         (
             grequests.get(link)
             for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
+                lambda x: "https://stackoverflow.com" + x, iter(question.values())
             )
-        )
+        ) for question in questions
     )
     if print_prog:
         print("Parsing questions found (This may take a while)...")
