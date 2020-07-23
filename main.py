@@ -30,7 +30,7 @@ from typing import Any
 
 t = Terminal()
 NEWLINE = "\n"
-TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
+# TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
 
 async def fSearch(
@@ -50,6 +50,7 @@ async def fSearch(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
     async def _full_questions(pages):
         if print_prog:
@@ -116,7 +117,7 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
         A dict containing the raw data of the questions/answers gotten.
 
     """
-
+    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
@@ -173,7 +174,7 @@ def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> d
         A dict containing the raw data of the questions/answers gotten.
 
     \"""
-
+    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
