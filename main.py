@@ -33,7 +33,9 @@ NEWLINE = "\n"
 TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
 
-async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
+async def fSearch(
+    Query: str, print_prog: bool = True, *args: Any, **kwargs: Any
+) -> dict:
     """For getting very precise information on StackOverflow.
 
     This is 'supposed' to be faster than the normal 'Search' function for it abuses
@@ -50,12 +52,12 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
     """
 
     async def _full_questions(pages):
-        if args.s:
+        if print_prog:
             print("Identifying question text...")
         return [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
 
     async def _answers(pages):
-        if args.s:
+        if print_prog:
             print("Identifying answers...")
         return [
             [
@@ -72,13 +74,13 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
             bs(link.content, "lxml") for link in _links_for_pages
         ]
 
-    if args.s:
+    if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    if args.s:
+    if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    if args.s:
+    if print_prog:
         print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
@@ -86,7 +88,7 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    if args.s:
+    if print_prog:
         print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
@@ -96,7 +98,7 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    if args.s:
+    if print_prog:
         print("Parsing questions found...")
     pages = await parsePages(_links_for_pages)
     full_questions = await _full_questions(pages)
@@ -105,7 +107,7 @@ async def FastSearch(Query: str, *args: Any, **kwargs: Any) -> dict:
     return dict(zip(full_questions, answers))
 
 
-def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
+def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     """For getting very precise information on StackOverflow.
 
     Returns
@@ -115,13 +117,13 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
 
     """
 
-    if args.s:
+    if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    if args.s:
+    if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    if args.s:
+    if print_prog:
         print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
@@ -129,7 +131,7 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    if args.s:
+    if print_prog:
         print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
@@ -139,15 +141,15 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    if args.s:
+    if print_prog:
         print("Parsing questions found...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
-    if args.s:
+    if print_prog:
         print("Identifying question text...")
     full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    if args.s:
+    if print_prog:
         print("Identifying answers...")
     answers = [
         [
@@ -162,7 +164,7 @@ def Search(Query: str, *args: Any, **kwargs: Any) -> dict:
 """
 We don't need the internal search function, yet.
 
-def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
+def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     \"""You should never use this. This is the internal search function.
 
     Returns
@@ -172,13 +174,13 @@ def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
 
     \"""
 
-    if args.s:
+    if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    if args.s:
+    if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
-    if args.s:
+    if print_prog:
         print("Collecting question links...")
     questions = {  # The raw ingredients
         question.string: question.get("href")
@@ -186,7 +188,7 @@ def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
             attrs={"class": "question-hyperlink", "data-gps-track": None}
         )
     }
-    if args.s:
+    if print_prog:
         print("Requesting questions found...")
     _links_for_pages = grequests.map(
         (
@@ -196,15 +198,15 @@ def _search(Query: str, *args: Any, **kwargs: Any) -> dict:
             )
         )
     )
-    if args.s:
+    if print_prog:
         print("Parsing questions found...")
     pages = [  # Pages of all the questions related to Query
         bs(link.content, "lxml") for link in _links_for_pages
     ]
-    if args.s:
+    if print_prog:
         print("Identifying question text...")
     full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    if args.s:
+    if print_prog:
         print("Identifying answers...")
     answers = [
         [
@@ -259,14 +261,15 @@ parser.add_argument(
     dest="s",
 )
 args = parser.parse_args(sys.argv[1:])
-if args.s:
+PRINT_PROGRESS = args.s
+if PRINT_PROGRESS:
     print("Searching StackOverflow...")
 ANSWERS = Search(" ".join(args.query))
 
 if args.json:
     print(ANSWERS, file=args.output)  # You may get unprocessed, raw JSON
 else:  # We got some parsing to do
-    if args.s:
+    if PRINT_PROGRESS:
         print("Outputting results")
     question_number = 1
     for question, answers in ANSWERS.items():
