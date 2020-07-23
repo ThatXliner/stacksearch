@@ -19,6 +19,7 @@ TK.
 - Object-oriented APIs
 - Python backwards-compatibility
 - Being able to scrape _all_ StackOverflow sites/pages
+- A better README
 - And more command-line options
 
 ## Current Features
