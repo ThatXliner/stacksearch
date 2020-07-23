@@ -1,2 +1,4 @@
 cmd: /Users/bryanhu/Library/Python/3.8/bin/pytest
 sh: false
+atomCommandName: build:pytest
+keymap: f5
