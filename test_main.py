@@ -21,7 +21,8 @@ import sys
 import argparse
 import requests
 import grequests
-import asyncio
+
+# import asyncio
 from bs4 import BeautifulSoup as bs
 from blessings import Terminal
 from pprint import pprint
@@ -31,11 +32,21 @@ t = Terminal()
 NEWLINE = "\n"
 # TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
+# TODO: In the future, remove the gevent/grequests dependency.
+# TODO: In the future, add tests against 0-question results
+# TODO: In the future, add tests against invalid sites. Also, process the sites.
+# TODO: In the future, add tests against offline.
+
 
 async def fSearch(
-    Query: str, print_prog: bool = True, *args: Any, **kwargs: Any
+    Query: str,
+    print_prog: bool = True,
+    search_on_site: str = "stackoverflow.com",
+    # Including the "stackexchange.com" (if present) and/or the ".com" suffix
+    *args: Any,
+    **kwargs: Any,
 ) -> dict:
-    """For getting very precise information on StackOverflow.
+    """For getting very precise information on StackOverflow. The async (awaitable) version.
 
     This is 'supposed' to be faster than the normal 'Search' function for it abuses
     Asyncio. The thing is, this function will probably be deprecated unless there is a
@@ -76,7 +87,9 @@ async def fSearch(
 
     if print_prog:
         print("Requesting results from StackOverflow...")
-    r = requests.get(f"https://stackoverflow.com/search?q={Query}")
+    r = requests.get(
+        f"https://{search_on_site}/search?q={Query}"
+    )  # NOTE: For python3.9, use the str.remove_suffix()
     if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
@@ -94,7 +107,10 @@ async def fSearch(
         (
             grequests.get(link)
             for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
+                lambda x: f"https://{search_on_site}" + x,
+                iter(
+                    questions.values()
+                ),  # NOTE: For python3.9, use str.remove_suffix()
             )
         )
     )
@@ -107,7 +123,13 @@ async def fSearch(
     return dict(zip(full_questions, answers))
 
 
-def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
+def Search(
+    Query: str,
+    print_prog: bool = True,
+    search_on_site: str = "stackoverflow.com",
+    *args: Any,
+    **kwargs: Any,
+) -> dict:
     """For getting very precise information on StackOverflow. This is the function you should use.
 
     Returns
@@ -119,7 +141,9 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print("Requesting results from StackOverflow...")
-    r = requests.get(f"https://stackoverflow.com/search?q={Query}")
+    r = requests.get(
+        f"https://{search_on_site}/search?q={Query}"
+    )  # NOTE: For python3.9, use the str.remove_suffix()
     if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")
@@ -137,7 +161,10 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
         (
             grequests.get(link)
             for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
+                lambda x: f"https://{search_on_site}" + x,
+                iter(
+                    questions.values()
+                ),  # NOTE: For python3.9, use str.remove_suffix()
             )
         )
     )
@@ -163,6 +190,8 @@ def Search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> di
 
 """
 We don't need the internal search function, yet.
+
+Actually, we might never.
 
 def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
     \"""You should never use this. This is the internal search function.
@@ -260,6 +289,13 @@ parser.add_argument(
     help="Don't print the progress.",
     dest="s",
 )
+parser.add_argument(
+    "--sites",
+    action="extend",
+    default=["stackoverflow.com"],
+    nargs="+",
+    help="The StackExchange sites to search.",
+)
 
 
 class TestClass:
@@ -268,10 +304,18 @@ class TestClass:
     def test_one(self):
         """A test with Search."""
         args = parser.parse_args("python list".split())
-        PRINT_PROGRESS = args.s
+
+        PRINT_PROGRESS = not args.s
+        SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
-            print("Searching StackOverflow...")
-        ANSWERS = Search(" ".join(args.query))
+            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
+        ANSWERS = []
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
+                )
+            )
 
         if args.json:
             pprint(
@@ -280,47 +324,59 @@ class TestClass:
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results")
-            question_number = 1
-            for question, answers in ANSWERS.items():
-                print(
-                    f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
-                    file=args.OUTPUT,
-                )
-                print("\n")
-                try:
+
+            for answer in ANSWERS:
+                question_number = 1
+                print(t.bold("Answers from {}"))
+                for question, answers in answer.items():
                     print(
-                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                         file=args.OUTPUT,
                     )
-                    print("\n\n\n", file=args.OUTPUT)
+                    print("\n")
                     try:
-                        for answer in answers[1:]:
-                            print(
-                                f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT
-                            )
-                            print("\n\n\n", file=args.OUTPUT)
-                    except IndexError:
                         print(
-                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                            f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
                             file=args.OUTPUT,
                         )
-                except IndexError:
-                    print(
-                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
-                        file=args.OUTPUT,
-                    )
-                else:
-                    print("\n\n\n", file=args.OUTPUT)
-                finally:
-                    question_number += 1
+                        print("\n\n\n", file=args.OUTPUT)
+                        try:
+                            for question_answer in answers[1:]:
+                                print(
+                                    f"{t.green}Answer: {question_answer}{t.normal}",
+                                    file=args.OUTPUT,
+                                )
+                                print("\n\n\n", file=args.OUTPUT)
+                        except IndexError:
+                            print(
+                                f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                                file=args.OUTPUT,
+                            )
+                    except IndexError:
+                        print(
+                            f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                            file=args.OUTPUT,
+                        )
+                    else:
+                        print("\n\n\n", file=args.OUTPUT)
+                    finally:
+                        question_number += 1
 
-    def test_two(self):
+    async def test_two(self):
         """A test with the asyncio version of Search."""
         args = parser.parse_args("python list".split())
-        PRINT_PROGRESS = args.s
+
+        PRINT_PROGRESS = not args.s
+        SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
-            print("Searching StackOverflow...")
-        ANSWERS = asyncio.run(fSearch(" ".join(args.query)))
+            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
+        ANSWERS = []
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                await fSearch(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
+                )
+            )
 
         if args.json:
             pprint(
@@ -329,36 +385,166 @@ class TestClass:
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results")
-            question_number = 1
-            for question, answers in ANSWERS.items():
-                print(
-                    f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
-                    file=args.OUTPUT,
-                )
-                print("\n")
-                try:
+
+            for answer in ANSWERS:
+                question_number = 1
+                print(t.bold("Answers from {}"))
+                for question, answers in answer.items():
                     print(
-                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                         file=args.OUTPUT,
                     )
-                    print("\n\n\n", file=args.OUTPUT)
+                    print("\n")
                     try:
-                        for answer in answers[1:]:
-                            print(
-                                f"{t.green}Answer: {answer}{t.normal}", file=args.OUTPUT
-                            )
-                            print("\n\n\n", file=args.OUTPUT)
-                    except IndexError:
                         print(
-                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                            f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
                             file=args.OUTPUT,
                         )
-                except IndexError:
+                        print("\n\n\n", file=args.OUTPUT)
+                        try:
+                            for question_answer in answers[1:]:
+                                print(
+                                    f"{t.green}Answer: {question_answer}{t.normal}",
+                                    file=args.OUTPUT,
+                                )
+                                print("\n\n\n", file=args.OUTPUT)
+                        except IndexError:
+                            print(
+                                f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                                file=args.OUTPUT,
+                            )
+                    except IndexError:
+                        print(
+                            f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                            file=args.OUTPUT,
+                        )
+                    else:
+                        print("\n\n\n", file=args.OUTPUT)
+                    finally:
+                        question_number += 1
+
+    def test_one_lots_of_sites(self):
+        """A test with Search. For lots of sites."""
+        args = parser.parse_args(
+            "python list --sites superuser.com stackoverflow.com".split()
+        )
+
+        PRINT_PROGRESS = not args.s
+        SITES_TO_SEARCH = args.sites
+        if PRINT_PROGRESS:
+            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
+        ANSWERS = []
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
+                )
+            )
+
+        if args.json:
+            pprint(
+                ANSWERS, stream=args.OUTPUT, width=79
+            )  # You will get unprocessed, raw JSON
+        else:  # We got some parsing to do
+            if PRINT_PROGRESS:
+                print("Outputting results")
+
+            for answer in ANSWERS:
+                question_number = 1
+                print(t.bold("Answers from {}"))
+                for question, answers in answer.items():
                     print(
-                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                         file=args.OUTPUT,
                     )
-                else:
-                    print("\n\n\n", file=args.OUTPUT)
-                finally:
-                    question_number += 1
+                    print("\n")
+                    try:
+                        print(
+                            f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                            file=args.OUTPUT,
+                        )
+                        print("\n\n\n", file=args.OUTPUT)
+                        try:
+                            for question_answer in answers[1:]:
+                                print(
+                                    f"{t.green}Answer: {question_answer}{t.normal}",
+                                    file=args.OUTPUT,
+                                )
+                                print("\n\n\n", file=args.OUTPUT)
+                        except IndexError:
+                            print(
+                                f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                                file=args.OUTPUT,
+                            )
+                    except IndexError:
+                        print(
+                            f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                            file=args.OUTPUT,
+                        )
+                    else:
+                        print("\n\n\n", file=args.OUTPUT)
+                    finally:
+                        question_number += 1
+
+    async def test_two_lots_of_sites(self):
+        """A test with the asyncio version of Search. For lots of sites."""
+        args = parser.parse_args(
+            "python list --sites superuser.com stackoverflow.com".split()
+        )
+
+        PRINT_PROGRESS = not args.s
+        SITES_TO_SEARCH = args.sites
+        if PRINT_PROGRESS:
+            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
+        ANSWERS = []
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                await fSearch(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
+                )
+            )
+
+        if args.json:
+            pprint(
+                ANSWERS, stream=args.OUTPUT, width=79
+            )  # You will get unprocessed, raw JSON
+        else:  # We got some parsing to do
+            if PRINT_PROGRESS:
+                print("Outputting results")
+
+            for answer in ANSWERS:
+                question_number = 1
+                print(t.bold("Answers from {}"))
+                for question, answers in answer.items():
+                    print(
+                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
+                        file=args.OUTPUT,
+                    )
+                    print("\n")
+                    try:
+                        print(
+                            f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                            file=args.OUTPUT,
+                        )
+                        print("\n\n\n", file=args.OUTPUT)
+                        try:
+                            for question_answer in answers[1:]:
+                                print(
+                                    f"{t.green}Answer: {question_answer}{t.normal}",
+                                    file=args.OUTPUT,
+                                )
+                                print("\n\n\n", file=args.OUTPUT)
+                        except IndexError:
+                            print(
+                                f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                                file=args.OUTPUT,
+                            )
+                    except IndexError:
+                        print(
+                            f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                            file=args.OUTPUT,
+                        )
+                    else:
+                        print("\n\n\n", file=args.OUTPUT)
+                    finally:
+                        question_number += 1
