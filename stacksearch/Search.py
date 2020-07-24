@@ -18,8 +18,6 @@ from bs4 import BeautifulSoup as bs
 from typing import Any
 
 
-
-
 # NOTE: Async is broken
 # async def fSearch(
 #     Query: str,
@@ -135,6 +133,7 @@ def Search(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+
     def _remove_dot_com(string: str) -> str:
         string = str(string)
         # Maybe a regex is better here...
@@ -144,6 +143,7 @@ def Search(
             return string[0 : len(string) - 4]
         else:
             return string
+
     search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:

@@ -21,7 +21,8 @@ import sys
 import argparse
 import requests
 import grequests
-import pytest
+
+# import pytest
 
 # import asyncio
 from bs4 import BeautifulSoup as bs
@@ -75,15 +76,14 @@ async def fSearch(
     """
 
     async def _remove_dot_com(string: str) -> str:
-            string = str(string)
-            # Maybe a regex is better here...
-            if string.endswith(".com"):
-                return string[0 : len(string) - 4]
-            elif string.endswith(".org"):
-                return string[0 : len(string) - 4]
-            else:
-                return string
-
+        string = str(string)
+        # Maybe a regex is better here...
+        if string.endswith(".com"):
+            return string[0 : len(string) - 4]
+        elif string.endswith(".org"):
+            return string[0 : len(string) - 4]
+        else:
+            return string
 
     search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -165,7 +165,7 @@ def Search(
         A dict containing the raw data of the questions/answers gotten.
 
     """
-    search_on_site = _remove_dot_com(str(search_on_site))
+    search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
@@ -280,6 +280,13 @@ class TestClass:
     """For testing."""
 
     async def a_main(self, args):
+        """Async version of a_main.
+
+        Returns
+        -------
+        None
+
+        """
         args = parser.parse_args((args).split())
         if args.version:
             print(f"stacksearch version: {__version__}")  # noqa
@@ -340,23 +347,24 @@ class TestClass:
                         print("\n\n\n", file=args.OUTPUT)
                     finally:
                         question_number += 1
-                  
+
     def main(self, args):
+        """You should not use this. IT'S A TEST. This is the main function."""
         args = parser.parse_args((args).split())
         if args.version:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
-        SITES_TO_SEARCH = set(map(_remove_dot_com, args.sites))
+        SITES_TO_SEARCH = set(args.sites)
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
         for site in map(str, SITES_TO_SEARCH):
-                ANSWERS.append(
-                    Search(
-                        " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
-                    )
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
                 )
+            )
 
         if args.json:
             pprint(
@@ -402,18 +410,20 @@ class TestClass:
                         print("\n\n\n", file=args.OUTPUT)
                     finally:
                         question_number += 1
+
     def test_one(self):
         """A test with Search."""
         self.main("python list")
 
-#     @pytest.mark.asyncio
-#     async def test_two(self):
-#         """A test with the asyncio version of Search."""
-#         self.a_main("python list")
+    #     @pytest.mark.asyncio
+    #     async def test_two(self):
+    #         """A test with the asyncio version of Search."""
+    #         self.a_main("python list")
 
     def test_one_lots_of_sites(self):
         """A test with Search. For lots of sites."""
         self.main("python list --sites superuser.com stackoverflow")
+
 
 #     @pytest.mark.asyncio
 #     async def test_two_lots_of_sites(self):
