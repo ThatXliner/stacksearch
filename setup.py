@@ -9,8 +9,8 @@ from stacksearch.__init__ import __version__
 HERE = Path(__file__).parent
 
 # The text of the README file
-README       = (HERE / "README.md").read_text()
-REQUIREMENTS = (HERE / "requirements.txt").read_text().split('\n')
+README = (HERE / "README.md").read_text()
+REQUIREMENTS = (HERE / "requirements.txt").read_text().split("\n")
 
 setup(
     name="stacksearch",  # Replace with your own username
@@ -29,5 +29,5 @@ setup(
     ],
     python_requires=">=3.8",
     include_package_data=True,
-    install_requires=REQUIREMENTS,
+    install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
 )

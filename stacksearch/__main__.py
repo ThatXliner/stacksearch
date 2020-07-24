@@ -108,60 +108,63 @@ def main(args: list) -> None:
         sys.exit(0)
     elif len(args.query) == 0:
         raise ValueError("Query is required.")
-    PRINT_PROGRESS = not args.s
-    SITES_TO_SEARCH = set(args.sites)
-    if PRINT_PROGRESS:
-        print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
-    ANSWERS = []
-    for site in map(str, SITES_TO_SEARCH):
-        ANSWERS.append(
-            Search(" ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site)
-        )
-
-    if args.json:
-        pprint(
-            ANSWERS, stream=args.OUTPUT, width=79
-        )  # You will get unprocessed, raw JSON
-    else:  # We got some parsing to do
+    else:
+        PRINT_PROGRESS = not args.s
+        SITES_TO_SEARCH = set(args.sites)
         if PRINT_PROGRESS:
-            print("Outputting results")
-        question_number = 0.0
-        for answer in ANSWERS:
-            question_number += 1.0
-            print(t.bold("Answers from {}"))
-            for question, answers in answer.items():
-                print(
-                    f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
-                    file=args.OUTPUT,
+            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
+        ANSWERS = []
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
                 )
-                print("\n")
-                try:
+            )
+
+        if args.json:
+            pprint(
+                ANSWERS, stream=args.OUTPUT, width=79
+            )  # You will get unprocessed, raw JSON
+        else:  # We got some parsing to do
+            if PRINT_PROGRESS:
+                print("Outputting results")
+            question_number = 0.0
+            for answer in ANSWERS:
+                question_number += 1.0
+                print(t.bold("Answers from {}"))
+                for question, answers in answer.items():
                     print(
-                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
+                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
                         file=args.OUTPUT,
                     )
-                    print("\n\n\n", file=args.OUTPUT)
+                    print("\n")
                     try:
-                        for question_answer in answers[1:]:
-                            print(
-                                f"{t.green}Answer: {question_answer}{t.normal}",
-                                file=args.OUTPUT,
-                            )
-                            print("\n\n\n", file=args.OUTPUT)
-                    except IndexError:
                         print(
-                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                            f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
                             file=args.OUTPUT,
                         )
-                except IndexError:
-                    print(
-                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
-                        file=args.OUTPUT,
-                    )
-                else:
-                    print("\n\n\n", file=args.OUTPUT)
-                finally:
-                    question_number += 0.1
+                        print("\n\n\n", file=args.OUTPUT)
+                        try:
+                            for question_answer in answers[1:]:
+                                print(
+                                    f"{t.green}Answer: {question_answer}{t.normal}",
+                                    file=args.OUTPUT,
+                                )
+                                print("\n\n\n", file=args.OUTPUT)
+                        except IndexError:
+                            print(
+                                f"{t.red}{t.bold}This is the only answer.{t.normal}",
+                                file=args.OUTPUT,
+                            )
+                    except IndexError:
+                        print(
+                            f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                            file=args.OUTPUT,
+                        )
+                    else:
+                        print("\n\n\n", file=args.OUTPUT)
+                    finally:
+                        question_number += 0.1
 
 
 if __name__ == "__main__":
