@@ -20,6 +20,7 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 import sys
 import argparse
 import requests
+from . import __version__
 
 # import grequests
 
