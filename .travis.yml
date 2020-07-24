@@ -10,8 +10,8 @@ install: #  Unnessecary
 #   - pip install -r requirements.txt
 #   - pytest-asyncio
 script:
-  - pytest-asyncio test/ -vvv
-  - python -m pytest tests/ -vvv
+  - python -m pytest-asyncio test/ -vvv
+  - pytest tests/ -vvv
 cache: pip
 notifications:
   email:
