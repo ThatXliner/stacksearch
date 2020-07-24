@@ -20,7 +20,7 @@ setup(
     description="StackSearch is a python module that provides a way to search StackOverflow.",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/ThatXliner/stacksearch",
+    # url="https://github.com/ThatXliner/stacksearch",
     project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
     packages=find_packages(exclude="tests", include="stacksearch"),
     scripts=["scripts/stacksearch"],
