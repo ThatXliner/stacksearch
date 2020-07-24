@@ -248,7 +248,7 @@ parser.add_argument(
 parser.add_argument(
     "--sites",
     action="extend",
-    default={"stackoverflow"},
+    default=["stackoverflow"],
     nargs="+",
     help="The StackExchange sites to search.",
 )
@@ -273,7 +273,7 @@ class TestClass:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
-        SITES_TO_SEARCH = args.sites
+        SITES_TO_SEARCH = set(map(_remove_dot_com, args.sites))
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
@@ -402,7 +402,7 @@ class TestClass:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
-        SITES_TO_SEARCH = args.sites
+        SITES_TO_SEARCH = set(map(_remove_dot_com, args.sites))
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
