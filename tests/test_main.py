@@ -21,12 +21,14 @@ import sys
 import argparse
 import requests
 import grequests
+import pytest
 
 # import asyncio
 from bs4 import BeautifulSoup as bs
 from blessings import Terminal
 from pprint import pprint
 from typing import Any
+from __init__ import __version__
 
 t = Terminal()
 NEWLINE = "\n"
@@ -188,65 +190,6 @@ def Search(
     return dict(zip(full_questions, answers))
 
 
-"""
-We don't need the internal search function, yet.
-
-Actually, we might never.
-
-def _search(Query: str, print_prog: bool = True, *args: Any, **kwargs: Any) -> dict:
-    \"""You should never use this. This is the internal search function.
-
-    Returns
-    -------
-    dict
-        A dict containing the raw data of the questions/answers gotten.
-
-    \"""
-    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
-    if print_prog:
-        print("Requesting results from StackOverflow...")
-    r = requests.get(f"https://stackoverflow.com/search?q={Query}")
-    if print_prog:
-        print("Parsing response HTML...")
-    soup = bs(r.content, "lxml")
-    if print_prog:
-        print("Collecting question links...")
-    questions = {  # The raw ingredients
-        question.string: question.get("href")
-        for question in soup.find_all(
-            attrs={"class": "question-hyperlink", "data-gps-track": None}
-        )
-    }
-    if print_prog:
-        print("Requesting questions found (This may take a while)...")
-    _links_for_pages = grequests.map(
-        (
-            grequests.get(link)
-            for link in map(
-                lambda x: "https://stackoverflow.com" + x, iter(questions.values())
-            )
-        )
-    )
-    if print_prog:
-        print("Parsing questions found (This may take a while)...")
-    pages = [  # Pages of all the questions related to Query
-        bs(link.content, "lxml") for link in _links_for_pages
-    ]
-    if print_prog:
-        print("Identifying question text...")
-    full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    if print_prog:
-        print("Identifying answers...")
-    answers = [
-        [
-            answer.find(attrs=TEXT_REQUIREMENTS).get_text()
-            for answer in page.find_all(attrs={"itemtype": "http://schema.org/Answer"})
-        ]
-        for page in pages
-    ]
-    return dict(zip(full_questions, answers))
-"""
-
 parser = argparse.ArgumentParser(
     prog="StackSearch",
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -296,6 +239,15 @@ parser.add_argument(
     nargs="+",
     help="The StackExchange sites to search.",
 )
+parser.add_argument(
+    "-v",
+    "-V",
+    "--version",
+    action="store_true",
+    default=False,
+    help="Print the version number and exit.",
+    dest="version",
+)
 
 
 class TestClass:
@@ -304,7 +256,9 @@ class TestClass:
     def test_one(self):
         """A test with Search."""
         args = parser.parse_args("python list".split())
-
+        if args.version:
+            print(f"stacksearch version: {__version__}")
+            sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
@@ -362,10 +316,13 @@ class TestClass:
                     finally:
                         question_number += 1
 
+    @pytest.mark.asyncio
     async def test_two(self):
         """A test with the asyncio version of Search."""
         args = parser.parse_args("python list".split())
-
+        if args.version:
+            print(f"stacksearch version: {__version__}")
+            sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
@@ -428,7 +385,9 @@ class TestClass:
         args = parser.parse_args(
             "python list --sites superuser.com stackoverflow.com".split()
         )
-
+        if args.version:
+            print(f"stacksearch version: {__version__}")
+            sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
@@ -486,12 +445,15 @@ class TestClass:
                     finally:
                         question_number += 1
 
+    @pytest.mark.asyncio
     async def test_two_lots_of_sites(self):
         """A test with the asyncio version of Search. For lots of sites."""
         args = parser.parse_args(
             "python list --sites superuser.com stackoverflow.com".split()
         )
-
+        if args.version:
+            print(f"stacksearch version: {__version__}")
+            sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
         if PRINT_PROGRESS:
