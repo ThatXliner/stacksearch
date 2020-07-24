@@ -22,7 +22,7 @@ import argparse
 from blessings import Terminal
 from pprint import pprint
 
-sys.path.insert("..")
+sys.path.insert(1, "..")
 from Search import Search  # , fSearch
 
 parser = argparse.ArgumentParser(
