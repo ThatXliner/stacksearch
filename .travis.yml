@@ -7,7 +7,7 @@ python:
 
 install: #  Unnessecary
   - pip install pytest-asyncio
-#   - pip install -r requirements.txt
+  - pip install -r requirements.txt
 #   - pytest-asyncio
 script:
   - pytest tests/ -vvv
