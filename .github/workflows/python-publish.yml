@@ -3,12 +3,11 @@
 
 name: Upload Python Package
 
-on:
-  push:
-    branches: master
+on: [push]
 
 jobs:
   deploy:
+    
 
     runs-on: ubuntu-latest
 
