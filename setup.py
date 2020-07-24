@@ -12,7 +12,7 @@ README = (HERE / "README.md").read_text()
 
 
 setup(
-    name="stacksearch-ThatXliner",  # Replace with your own username
+    name="stacksearch",  # Replace with your own username
     version="1.1.0",
     author="Bryan Hu",
     author_email="bryan.hu.cn@gmail.com",
