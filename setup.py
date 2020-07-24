@@ -3,6 +3,7 @@
 """To setup."""
 from pathlib import Path
 from setuptools import setup, find_packages
+from stacksearch.__init__ import __version__
 
 # The directory containing this file
 HERE = Path(__file__).parent
@@ -13,7 +14,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="stacksearch",  # Replace with your own username
-    version="1.1.0",
+    version=__version__,
     author="Bryan Hu",
     author_email="bryan.hu.cn@gmail.com",
     description="StackSearch is a python module that provides a way to search StackOverflow.",

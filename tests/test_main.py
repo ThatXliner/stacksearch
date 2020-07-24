@@ -28,7 +28,8 @@ from bs4 import BeautifulSoup as bs
 from blessings import Terminal
 from pprint import pprint
 from typing import Any
-from __init__ import __version__
+
+# from __init__ import __version__
 
 t = Terminal()
 NEWLINE = "\n"
