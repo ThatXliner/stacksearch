@@ -9,11 +9,12 @@ Made with love by Bryan hu .
 
 The primitive functions to use.
 """
-from gevent import monkey as curious_george
-
-curious_george.patch_all(thread=False, select=False)
+# from gevent import monkey as curious_george
+#
+# curious_george.patch_all(thread=False, select=False)
 import requests
-import grequests
+
+# import grequests
 from bs4 import BeautifulSoup as bs
 from typing import Any
 
@@ -164,15 +165,10 @@ def Search(
     }
     if print_prog:
         print("Requesting questions found (This may take a while)...")
-    _links_for_pages = grequests.map(  # May need to remove this dependancy
-        (
-            grequests.get(link)
-            for link in map(
-                lambda x: f"https://{search_on_site}.com" + x,
-                iter(
-                    questions.values()
-                ),  # NOTE: For python3.9, use str.remove_suffix()
-            )
+    _links_for_pages = (
+        requests.get(link)
+        for link in map(
+            lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
         )
     )
     if print_prog:
