@@ -10,7 +10,7 @@ python:
 #   - pip install -r requirements.txt
 #   - pytest-asyncio
 script:
-  - pytest tests/
+  - pytest tests/ -vvv
 cache: pip
 notifications:
   email:
