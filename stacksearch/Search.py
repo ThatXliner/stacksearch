@@ -17,12 +17,23 @@ import grequests
 from bs4 import BeautifulSoup as bs
 from typing import Any
 
+def _remove_dot_com(string: str) -> str:
+    string = str(string)
+    # Maybe a regex is better here...
+    if string.endswith(".com"):
+        return string[0 : len(string) - 4]
+    elif string.endswith(".org"):
+        return string[0 : len(string) - 4]
+    else:
+        return string
+
+
 
 async def fSearch(
     Query: str,
     print_prog: bool = True,
-    search_on_site: str = "stackoverflow.com",
-    # Including the "stackexchange.com" (if present) and/or the ".com" suffix
+    search_on_site: str = "stackoverflow",
+    # Including the "stackexchange.com" (if present) but not the ".com" suffix
     *args: Any,
     **kwargs: Any,
 ) -> dict:
@@ -40,6 +51,19 @@ async def fSearch(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+
+    async def _remove_dot_com(string: str) -> str:
+            string = str(string)
+            # Maybe a regex is better here...
+            if string.endswith(".com"):
+                return string[0 : len(string) - 4]
+            elif string.endswith(".org"):
+                return string[0 : len(string) - 4]
+            else:
+                return string
+
+
+    search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
     async def _full_questions(pages):
@@ -66,7 +90,7 @@ async def fSearch(
         ]
 
     if print_prog:
-        print("Requesting results from StackOverflow...")
+        print(f"Requesting results from {search_on_site}...")
     r = requests.get(
         f"https://{search_on_site}/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
@@ -106,7 +130,8 @@ async def fSearch(
 def Search(
     Query: str,
     print_prog: bool = True,
-    search_on_site: str = "stackoverflow.com",
+    search_on_site: str = "stackoverflow",
+    # Including the "stackexchange.com" (if present) but not the ".com" suffix
     *args: Any,
     **kwargs: Any,
 ) -> dict:
@@ -118,11 +143,12 @@ def Search(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+    search_on_site = _remove_dot_com(str(search_on_site))
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
-        print("Requesting results from StackOverflow...")
+        print(f"Requesting results from {search_on_site}...")
     r = requests.get(
-        f"https://{search_on_site}/search?q={Query}"
+        f"https://{search_on_site}.com/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
     if print_prog:
         print("Parsing response HTML...")
@@ -141,7 +167,7 @@ def Search(
         (
             grequests.get(link)
             for link in map(
-                lambda x: f"https://{search_on_site}" + x,
+                lambda x: f"https://{search_on_site}.com" + x,
                 iter(
                     questions.values()
                 ),  # NOTE: For python3.9, use str.remove_suffix()
