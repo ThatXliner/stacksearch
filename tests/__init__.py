@@ -8,6 +8,6 @@ parsing, then returns a python dict containing questions and answers.
 
 
 """
-__version__ = "1.1.0"
+__version__ = "TEST"
 
 __author__ = ["Bryan Hu"]
