@@ -321,7 +321,7 @@ class TestClass:
         """A test with the asyncio version of Search."""
         args = parser.parse_args("python list".split())
         if args.version:
-            print(f"stacksearch version: {__version__}")
+            print(f"stacksearch version: {__version__}")  # NOQA
             sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites

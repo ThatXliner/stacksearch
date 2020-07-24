@@ -87,7 +87,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args(sys.argv[1:])
     if args.version:
-        print(f"stacksearch version: {__version__}")
+        print(f"stacksearch version: {__version__}")  # NOQA
         sys.exit(0)
     PRINT_PROGRESS = not args.s
     SITES_TO_SEARCH = args.sites
