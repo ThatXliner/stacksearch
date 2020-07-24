@@ -99,7 +99,7 @@ async def fSearch(
         ]
 
     if print_prog:
-        print("Requesting results from StackOverflow...")
+        print(f"Requesting results from {search_on_site}...")
     r = requests.get(
         f"https://{search_on_site}/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
@@ -155,7 +155,7 @@ def Search(
     search_on_site = _remove_dot_com(str(search_on_site))
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
-        print("Requesting results from StackOverflow...")
+        print(f"Requesting results from {search_on_site}...")
     r = requests.get(
         f"https://{search_on_site}.com/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
@@ -248,7 +248,7 @@ parser.add_argument(
 parser.add_argument(
     "--sites",
     action="extend",
-    default=["stackoverflow"],
+    default={"stackoverflow"},
     nargs="+",
     help="The StackExchange sites to search.",
 )
