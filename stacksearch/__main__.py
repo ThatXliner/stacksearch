@@ -23,7 +23,7 @@ from blessings import Terminal
 from pprint import pprint
 
 
-from __package__ import Search  # , fSearch
+from Search import Search  # , fSearch
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
