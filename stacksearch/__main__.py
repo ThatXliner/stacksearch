@@ -128,13 +128,13 @@ def main(args: list) -> None:
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results")
-            question_number = 0.0
+            question_number = 0
             for answer in ANSWERS:
-                question_number += 1.0
+                question_number += 10
                 print(t.bold("Answers from {}"))
                 for question, answers in answer.items():
                     print(
-                        f"{t.bold}{t.bright_green}Question #{question_number}: {question}{t.normal}",
+                        f"{t.bold}{t.bright_green}Question #{question_number / 10}: {question}{t.normal}",
                         file=args.OUTPUT,
                     )
                     print("\n")
@@ -164,7 +164,7 @@ def main(args: list) -> None:
                     else:
                         print("\n\n\n", file=args.OUTPUT)
                     finally:
-                        question_number += 0.1
+                        question_number += 1
 
 
 if __name__ == "__main__":
