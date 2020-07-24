@@ -17,114 +17,106 @@ import grequests
 from bs4 import BeautifulSoup as bs
 from typing import Any
 
-def _remove_dot_com(string: str) -> str:
-    string = str(string)
-    # Maybe a regex is better here...
-    if string.endswith(".com"):
-        return string[0 : len(string) - 4]
-    elif string.endswith(".org"):
-        return string[0 : len(string) - 4]
-    else:
-        return string
 
 
 
-async def fSearch(
-    Query: str,
-    print_prog: bool = True,
-    search_on_site: str = "stackoverflow",
-    # Including the "stackexchange.com" (if present) but not the ".com" suffix
-    *args: Any,
-    **kwargs: Any,
-) -> dict:
-    """For getting very precise information on StackOverflow. The async (awaitable) version.
+# NOTE: Async is broken
+# async def fSearch(
+#     Query: str,
+#     print_prog: bool = True,
+#     search_on_site: str = "stackoverflow",
+#     # Including the "stackexchange.com" (if present) but not the ".com" suffix
+#     *args: Any,
+#     **kwargs: Any,
+# ) -> dict:
+#     """For getting very precise information on StackOverflow. The async (awaitable) version.
 
-    This is 'supposed' to be faster than the normal 'Search' function for it abuses
-    Asyncio. The thing is, this function will probably be deprecated unless there is a
-    tested significant difference in performance. Use the 'search' function for it is
-    more supported (all of the new features will be implemented in the Search function
-    first).
+#     This is 'supposed' to be faster than the normal 'Search' function for it abuses
+#     Asyncio. The thing is, this function will probably be deprecated unless there is a
+#     tested significant difference in performance. Use the 'search' function for it is
+#     more supported (all of the new features will be implemented in the Search function
+#     first).
 
-    Returns
-    -------
-    dict
-        A dict containing the raw data of the questions/answers gotten.
+#     Returns
+#     -------
+#     dict
+#         A dict containing the raw data of the questions/answers gotten.
 
-    """
+#     """
 
-    async def _remove_dot_com(string: str) -> str:
-            string = str(string)
-            # Maybe a regex is better here...
-            if string.endswith(".com"):
-                return string[0 : len(string) - 4]
-            elif string.endswith(".org"):
-                return string[0 : len(string) - 4]
-            else:
-                return string
+#     async def _remove_dot_com(string: str) -> str:
+#             string = str(string)
+#             # Maybe a regex is better here...
+#             if string.endswith(".com"):
+#                 return string[0 : len(string) - 4]
+#             elif string.endswith(".org"):
+#                 return string[0 : len(string) - 4]
+#             else:
+#                 return string
 
 
-    search_on_site = await _remove_dot_com(search_on_site)
-    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
+#     search_on_site = await _remove_dot_com(search_on_site)
+#     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
-    async def _full_questions(pages):
-        if print_prog:
-            print("Identifying question text...")
-        return [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
+#     async def _full_questions(pages):
+#         if print_prog:
+#             print("Identifying question text...")
+#         return [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
 
-    async def _answers(pages):
-        if print_prog:
-            print("Identifying answers...")
-        return [
-            [
-                answer.find(attrs=TEXT_REQUIREMENTS).get_text()
-                for answer in page.find_all(
-                    attrs={"itemtype": "http://schema.org/Answer"}
-                )
-            ]
-            for page in pages
-        ]
+#     async def _answers(pages):
+#         if print_prog:
+#             print("Identifying answers...")
+#         return [
+#             [
+#                 answer.find(attrs=TEXT_REQUIREMENTS).get_text()
+#                 for answer in page.find_all(
+#                     attrs={"itemtype": "http://schema.org/Answer"}
+#                 )
+#             ]
+#             for page in pages
+#         ]
 
-    async def parsePages(_links_for_pages):
-        return [  # Pages of all the questions related to Query
-            bs(link.content, "lxml") for link in _links_for_pages
-        ]
+#     async def parsePages(_links_for_pages):
+#         return [  # Pages of all the questions related to Query
+#             bs(link.content, "lxml") for link in _links_for_pages
+#         ]
 
-    if print_prog:
-        print(f"Requesting results from {search_on_site}...")
-    r = requests.get(
-        f"https://{search_on_site}/search?q={Query}"
-    )  # NOTE: For python3.9, use the str.remove_suffix()
-    if print_prog:
-        print("Parsing response HTML...")
-    soup = bs(r.content, "lxml")
-    if print_prog:
-        print("Collecting question links...")
-    questions = {  # The raw ingredients
-        question.string: question.get("href")
-        for question in soup.find_all(
-            attrs={"class": "question-hyperlink", "data-gps-track": None}
-        )
-    }
-    if print_prog:
-        print("Requesting questions found (This may take a while)...")
-    _links_for_pages = grequests.map(
-        (
-            grequests.get(link)
-            for link in map(
-                lambda x: f"https://{search_on_site}" + x,
-                iter(
-                    questions.values()
-                ),  # NOTE: For python3.9, use str.remove_suffix()
-            )
-        )
-    )
-    if print_prog:
-        print("Parsing questions found (This may take a while)...")
-    pages = await parsePages(_links_for_pages)
-    full_questions = await _full_questions(pages)
-    answers = await _answers(pages)
+#     if print_prog:
+#         print(f"Requesting results from {search_on_site}...")
+#     r = requests.get(
+#         f"https://{search_on_site}/search?q={Query}"
+#     )  # NOTE: For python3.9, use the str.remove_suffix()
+#     if print_prog:
+#         print("Parsing response HTML...")
+#     soup = bs(r.content, "lxml")
+#     if print_prog:
+#         print("Collecting question links...")
+#     questions = {  # The raw ingredients
+#         question.string: question.get("href")
+#         for question in soup.find_all(
+#             attrs={"class": "question-hyperlink", "data-gps-track": None}
+#         )
+#     }
+#     if print_prog:
+#         print("Requesting questions found (This may take a while)...")
+#     _links_for_pages = grequests.map(
+#         (
+#             grequests.get(link)
+#             for link in map(
+#                 lambda x: f"https://{search_on_site}" + x,
+#                 iter(
+#                     questions.values()
+#                 ),  # NOTE: For python3.9, use str.remove_suffix()
+#             )
+#         )
+#     )
+#     if print_prog:
+#         print("Parsing questions found (This may take a while)...")
+#     pages = await parsePages(_links_for_pages)
+#     full_questions = await _full_questions(pages)
+#     answers = await _answers(pages)
 
-    return dict(zip(full_questions, answers))
+#     return dict(zip(full_questions, answers))
 
 
 def Search(
@@ -143,7 +135,16 @@ def Search(
         A dict containing the raw data of the questions/answers gotten.
 
     """
-    search_on_site = _remove_dot_com(str(search_on_site))
+    def _remove_dot_com(string: str) -> str:
+        string = str(string)
+        # Maybe a regex is better here...
+        if string.endswith(".com"):
+            return string[0 : len(string) - 4]
+        elif string.endswith(".org"):
+            return string[0 : len(string) - 4]
+        else:
+            return string
+    search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
@@ -163,7 +164,7 @@ def Search(
     }
     if print_prog:
         print("Requesting questions found (This may take a while)...")
-    _links_for_pages = grequests.map(
+    _links_for_pages = grequests.map(  # May need to remove this dependancy
         (
             grequests.get(link)
             for link in map(
