@@ -354,7 +354,7 @@ class TestClass:
         args = parser.parse_args((args).split())
         if args.version:
             print(f"stacksearch version: {__version__}")  # noqa
-            sys.exit(0)
+            exit(0)
         elif len(args.query) == 0:
             raise ValueError("Query is required.")
         PRINT_PROGRESS = not args.s
