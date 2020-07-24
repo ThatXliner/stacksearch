@@ -13,77 +13,7 @@ Version: See __init__.py
 Desc: The main file to use/execute when trying to search StackOverflow.
 
 """
-
 import sys
-
-import argparse
-from blessings import Terminal
-from pprint import pprint
-from . import __version__
-
-from .Search import Search
-
-
-parser = argparse.ArgumentParser(
-    prog="StackSearch",
-    formatter_class=argparse.RawDescriptionHelpFormatter,
-    description="""
-For searching StackOverflow and getting results that you can use.
-
-There are many other libraries/modules available that do the same
-thing. The reason you should use this is because this returns results that you can
-use. If ran from the command line, it'll return human readable results. If ran from
-another python script, it'll return some parsable JSON. Assuming you are utilizing
-this script's wonderful functions and objects.""",
-    epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
-)
-parser.add_argument(  # Query
-    "query", help="The query to search.", nargs="*", action="extend",
-)
-parser.add_argument(  # JSON
-    "-j",
-    "--json",
-    "--raw-data",
-    "-r",
-    "--raw",
-    help="For outputting JSON data that you can use.",
-    action="store_true",
-    default=False,
-    dest="json",
-)
-parser.add_argument(  # Output
-    "-o",
-    "--output",
-    help="The output file.",
-    nargs="?",
-    default=sys.stdout,
-    action="store",
-    dest="OUTPUT",
-)
-parser.add_argument(  # Silent
-    "-s",
-    "--silent",
-    action="store_true",
-    default=False,
-    help="Don't print the progress.",
-    dest="s",
-)
-parser.add_argument(  # Sites
-    "--sites",
-    action="extend",
-    default=["stackoverflow"],
-    nargs="+",
-    help="The StackExchange sites to search.",
-)
-parser.add_argument(  # Version
-    "-v",
-    "-V",
-    "--version",
-    action="store_true",
-    default=False,
-    help="Print the version number and exit.",
-    dest="version",
-)
 
 
 def main(args: list) -> None:
@@ -100,6 +30,73 @@ def main(args: list) -> None:
         None
 
     """
+
+    import argparse
+    from blessings import Terminal
+    from pprint import pprint
+    from . import __version__
+    from .Search import Search
+
+    parser = argparse.ArgumentParser(
+        prog="StackSearch",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""
+    For searching StackOverflow and getting results that you can use.
+
+    There are many other libraries/modules available that do the same
+    thing. The reason you should use this is because this returns results that you can
+    use. If ran from the command line, it'll return human readable results. If ran from
+    another python script, it'll return some parsable JSON. Assuming you are utilizing
+    this script's wonderful functions and objects.""",
+        epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
+    )
+    parser.add_argument(  # Query
+        "query", help="The query to search.", nargs="*", action="extend",
+    )
+    parser.add_argument(  # JSON
+        "-j",
+        "--json",
+        "--raw-data",
+        "-r",
+        "--raw",
+        help="For outputting JSON data that you can use.",
+        action="store_true",
+        default=False,
+        dest="json",
+    )
+    parser.add_argument(  # Output
+        "-o",
+        "--output",
+        help="The output file.",
+        nargs="?",
+        default=sys.stdout,
+        action="store",
+        dest="OUTPUT",
+    )
+    parser.add_argument(  # Silent
+        "-s",
+        "--silent",
+        action="store_true",
+        default=False,
+        help="Don't print the progress.",
+        dest="s",
+    )
+    parser.add_argument(  # Sites
+        "--sites",
+        action="extend",
+        default=["stackoverflow"],
+        nargs="+",
+        help="The StackExchange sites to search.",
+    )
+    parser.add_argument(  # Version
+        "-v",
+        "-V",
+        "--version",
+        action="store_true",
+        default=False,
+        help="Print the version number and exit.",
+        dest="version",
+    )
 
     args = parser.parse_args(args)
     t = Terminal()

@@ -21,7 +21,9 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/ThatXliner/stacksearch",
+    project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
     packages=find_packages(exclude="tests", include="stacksearch"),
+    scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -30,4 +32,5 @@ setup(
     python_requires=">=3.8",
     include_package_data=True,
     install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
+    keywords="api stackexchange stackoverflow python webscrape webscrap",
 )
