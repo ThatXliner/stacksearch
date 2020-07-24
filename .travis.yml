@@ -11,7 +11,7 @@ install: #  Unnessecary
 #   - pytest-asyncio
 script:
   - pytest-asyncio test/ -vvv
-  - pytest tests/ -vvv
+  - python -m pytest tests/ -vvv
 cache: pip
 notifications:
   email:
