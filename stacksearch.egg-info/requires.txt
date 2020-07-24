@@ -1,0 +1,6 @@
+gevent
+requests
+grequests
+bs4
+blessings
+lxml
