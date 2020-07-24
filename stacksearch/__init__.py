@@ -8,7 +8,7 @@ parsing, then returns a python dict containing questions and answers.
 
 
 """
-from __main__ import main  # noqa
+from .__main__ import main
 
 __version__ = "1.0.4"
 

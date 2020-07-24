@@ -14,9 +14,10 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 
 """
 from sys import path
+from pathlib import Path
 
-path.insert(0, "../../")
-from stacksearch import main as MAIN
+path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
+from stacksearch.__main__ import main as MAIN
 
 
 class TestClass:
