@@ -41,8 +41,14 @@ t = Terminal()
 
 
 def _remove_dot_com(string: str) -> str:
+    string = str(string)
+    # Maybe a regex is better here...
     if string.endswith(".com"):
         return string[0 : len(string) - 4]
+    elif string.endswith(".org"):
+        return string[0 : len(string) - 4]
+    else:
+        return string
 
 
 async def fSearch(
