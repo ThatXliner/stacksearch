@@ -355,7 +355,7 @@ class TestClass:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         else:
-            if isinstance(args.query, None):
+            if isinstance(args.query, type(None)):
                 raise ValueError("Query must have some value!")
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = set(args.sites)
