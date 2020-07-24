@@ -31,7 +31,7 @@ from typing import Any
 
 
 t = Terminal()
-NEWLINE = "\n"
+# NEWLINE = "\n"
 # TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
 # TODO: In the future, remove the gevent/grequests dependency.
@@ -40,11 +40,16 @@ NEWLINE = "\n"
 # TODO: In the future, add tests against offline.
 
 
+def _remove_dot_com(string: str) -> str:
+    if string.endswith(".com"):
+        return string[0 : len(string) - 4]
+
+
 async def fSearch(
     Query: str,
     print_prog: bool = True,
-    search_on_site: str = "stackoverflow.com",
-    # Including the "stackexchange.com" (if present) and/or the ".com" suffix
+    search_on_site: str = "stackoverflow",
+    # Including the "stackexchange.com" (if present) but not the ".com" suffix
     *args: Any,
     **kwargs: Any,
 ) -> dict:
@@ -62,6 +67,12 @@ async def fSearch(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+
+    async def _remove_dot_com(string: str) -> str:
+        if string.endswith(".com"):
+            return string[0 : len(string) - 4]
+
+    search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
 
     async def _full_questions(pages):
@@ -128,7 +139,8 @@ async def fSearch(
 def Search(
     Query: str,
     print_prog: bool = True,
-    search_on_site: str = "stackoverflow.com",
+    search_on_site: str = "stackoverflow",
+    # Including the "stackexchange.com" (if present) but not the ".com" suffix
     *args: Any,
     **kwargs: Any,
 ) -> dict:
@@ -140,11 +152,12 @@ def Search(
         A dict containing the raw data of the questions/answers gotten.
 
     """
+    search_on_site = _remove_dot_com(str(search_on_site))
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print("Requesting results from StackOverflow...")
     r = requests.get(
-        f"https://{search_on_site}/search?q={Query}"
+        f"https://{search_on_site}.com/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
     if print_prog:
         print("Parsing response HTML...")
@@ -163,7 +176,7 @@ def Search(
         (
             grequests.get(link)
             for link in map(
-                lambda x: f"https://{search_on_site}" + x,
+                lambda x: f"https://{search_on_site}.com" + x,
                 iter(
                     questions.values()
                 ),  # NOTE: For python3.9, use str.remove_suffix()
@@ -235,7 +248,7 @@ parser.add_argument(
 parser.add_argument(
     "--sites",
     action="extend",
-    default=["stackoverflow.com"],
+    default=["stackoverflow"],
     nargs="+",
     help="The StackExchange sites to search.",
 )
@@ -257,7 +270,7 @@ class TestClass:
         """A test with Search."""
         args = parser.parse_args("python list".split())
         if args.version:
-            print(f"stacksearch version: {__version__}")
+            print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
@@ -383,10 +396,10 @@ class TestClass:
     def test_one_lots_of_sites(self):
         """A test with Search. For lots of sites."""
         args = parser.parse_args(
-            "python list --sites superuser.com stackoverflow.com".split()
+            "python list --sites superuser.com stackoverflow".split()
         )
         if args.version:
-            print(f"stacksearch version: {__version__}")
+            print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites
@@ -449,10 +462,10 @@ class TestClass:
     async def test_two_lots_of_sites(self):
         """A test with the asyncio version of Search. For lots of sites."""
         args = parser.parse_args(
-            "python list --sites superuser.com stackoverflow.com".split()
+            "python list --sites superuser.com stackoverflow".split()
         )
         if args.version:
-            print(f"stacksearch version: {__version__}")
+            print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = args.sites

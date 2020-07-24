@@ -5,11 +5,12 @@ python:
   # - "3.9"
   # 3.9 doesn't exist yet.
 
-# install:  #  Unnessecary
-#   - pip install pytest
+install: #  Unnessecary
+  - pip install pytest-asyncio
 #   - pip install -r requirements.txt
 #   - pytest-asyncio
 script:
+  - pytest-asyncio test/ -vvv
   - pytest tests/ -vvv
 cache: pip
 notifications:
