@@ -8,7 +8,7 @@ Author: Bryan Hu .
 Made with love by Bryan Hu .
 
 
-Version: v1.0.0.1
+Version: v1.1.0.1
 
 Desc: The main file to use/execute when trying to search StackOverflow.
 

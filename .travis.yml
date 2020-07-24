@@ -2,14 +2,16 @@ language: python
 
 python:
   - "3.8"
- # - "3.9"
- # 3.9 doesn't exist yet.
+  # - "3.9"
+  # 3.9 doesn't exist yet.
 
 install:
   - pip install pytest
   - pip install -r requirements.txt
+  - pytest-asyncio
 script:
   - pytest
+  - pytest-asyncio
 cache: pip
 notifications:
   email:
