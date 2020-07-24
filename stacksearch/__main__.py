@@ -76,7 +76,19 @@ if __name__ == "__main__":
         nargs="+",
         help="The StackExchange sites to search.",
     )
+    parser.add_argument(  # Version
+        "-v",
+        "-V",
+        "--version",
+        action="store_true",
+        default=False,
+        help="Print the version number and exit.",
+        dest="version",
+    )
     args = parser.parse_args(sys.argv[1:])
+    if args.version:
+        print(f"stacksearch version: {__version__}")
+        sys.exit(0)
     PRINT_PROGRESS = not args.s
     SITES_TO_SEARCH = args.sites
     if PRINT_PROGRESS:
@@ -90,7 +102,7 @@ if __name__ == "__main__":
         pprint(
             ANSWERS, stream=args.OUTPUT, width=79
         )  # You will get unprocessed, raw JSON
-    else:  # We got some parsing to do
+    else:  # We got some parsing to do (Big boy)
         if PRINT_PROGRESS:
             print("Outputting results")
         for answer in ANSWERS:
