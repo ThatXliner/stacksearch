@@ -101,10 +101,10 @@ def main(args: list) -> None:
     args = parser.parse_args(args)
     t = Terminal()
     if args.version:
-        print(f"stacksearch version: {__version__}")  # noqa
+        print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
         sys.exit(0)
     elif len(args.query) == 0:
-        raise ValueError("Query is required.")
+        parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = set(args.sites)
