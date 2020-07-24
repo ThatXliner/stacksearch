@@ -227,7 +227,9 @@ another python script, it'll return some parsable JSON. Assuming you are utilizi
 this script's wonderful functions and objects.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
-parser.add_argument("query", help="The query to search.", nargs="+", action="extend")
+parser.add_argument(
+    "query", help="The query to search.", nargs="+", action="extend", default=None
+)
 parser.add_argument(
     "-j",
     "--json",
@@ -352,6 +354,9 @@ class TestClass:
         if args.version:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
+        else:
+            if isinstance(args.query, None):
+                raise ValueError("Query must have some value!")
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = set(args.sites)
         if PRINT_PROGRESS:
