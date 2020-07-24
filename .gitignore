@@ -1,1 +1,3 @@
 stacksearch.egg-info
+stacksearch/__pycache__
+.gitignore
