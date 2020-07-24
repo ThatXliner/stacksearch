@@ -22,8 +22,8 @@ import argparse
 from blessings import Terminal
 from pprint import pprint
 
-sys.path.insert(1, "..")
-from Search import Search  # , fSearch
+
+from __package__ import Search  # , fSearch
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
