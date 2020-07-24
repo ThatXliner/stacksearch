@@ -228,7 +228,7 @@ this script's wonderful functions and objects.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
 parser.add_argument(
-    "query", help="The query to search.", nargs="+", action="extend", default=None
+    "query", help="The query to search.", nargs="*", action="extend",
 )
 parser.add_argument(
     "-j",
@@ -354,9 +354,8 @@ class TestClass:
         if args.version:
             print(f"stacksearch version: {__version__}")  # noqa
             sys.exit(0)
-        else:
-            if isinstance(args.query, type(None)):
-                raise ValueError("Query must have some value!")
+        elif len(args.query) == 0:
+            raise ValueError("Query is required.")
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = set(args.sites)
         if PRINT_PROGRESS:
