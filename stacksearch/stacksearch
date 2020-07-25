@@ -3,6 +3,9 @@
 """README."""
 
 import sys
-from .__main__ import main
+from pathlib import Path
+
+sys.path.insert(0, Path(__file__).parent)
+from __main__ import main
 
 main(sys.argv[1:])
