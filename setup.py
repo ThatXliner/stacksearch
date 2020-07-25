@@ -26,11 +26,18 @@ setup(
     scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: CPython",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "Natural Language :: English",
     ],
     python_requires=">=3.8",
     include_package_data=True,
     install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
     keywords="api stackexchange stackoverflow python webscrape webscrap",
+    entry_points={"console_scripts": ["stacksearch=stacksearch.__main__:main"]},
 )
