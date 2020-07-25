@@ -144,9 +144,6 @@ async def fSearch(
         else:
             return string
 
-    async def ParsePage(link):
-        return bs(link.content, "lxml")
-
     async def findAnswers(pages):
         return (
             (
@@ -192,7 +189,7 @@ async def fSearch(
         )
     if print_prog:
         print("Parsing questions found (This may take a while)...")
-    pages = [await ParsePage(link) for link in _links_for_pages]
+    pages = (bs(link.content, "lxml") for link in _links_for_pages)
     if print_prog:
         print("Identifying question text...")
     full_questions = (page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages)
