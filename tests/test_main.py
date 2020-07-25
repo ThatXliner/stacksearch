@@ -25,9 +25,9 @@ from stacksearch.__main__ import custom_main as MAIN
 class TestClass:
     """For testing."""
 
-    def main(self, args):
+    def main(self, args: str = "") -> None:
         """You should not use this. IT'S A TEST. This is the main function."""
-        MAIN(args)
+        MAIN([arg for arg in args.split() if arg])
 
     def test_one(self):
         """A test with Search."""
@@ -40,3 +40,7 @@ class TestClass:
     def test_version(self):
         """To test the version."""
         self.main("-v")
+
+    def test_noobs(self):
+        """To test the no argument functionality."""
+        self.main()
