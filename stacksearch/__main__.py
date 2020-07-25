@@ -101,7 +101,6 @@ def custom_main(args_: list) -> None:
     t = Terminal()
     if args.version:
         print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
-        sys.exit(0)
     elif len(args.query) == 0:
         parser.print_help(file=args.OUTPUT)
     else:
