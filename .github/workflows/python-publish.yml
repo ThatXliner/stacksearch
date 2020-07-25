@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - Stable
-      - master
 
 jobs:
   deploy:
