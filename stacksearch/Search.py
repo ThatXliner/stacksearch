@@ -12,7 +12,8 @@ The primitive functions to use. # API
 import requests
 from bs4 import BeautifulSoup as bs
 from typing import Any
-import httpx
+import httpx  # In the future, we might want to switch to aiohttp instead
+import asyncio
 
 
 def Search(
@@ -181,15 +182,16 @@ async def fSearch(
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     async with httpx.AsyncClient() as client:
-        _links_for_pages = (
+        _links_for_pages = [
             await client.get(link)
             for link in map(
                 lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
             )
-        )
+        ]
     if print_prog:
         print("Parsing questions found (This may take a while)...")
-    pages = (bs(link.content, "lxml") for link in _links_for_pages)
+
+    pages = [bs(link.content, "lxml") for link in _links_for_pages]
     if print_prog:
         print("Identifying question text...")
     full_questions = (page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages)
