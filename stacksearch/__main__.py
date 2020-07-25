@@ -13,16 +13,14 @@ Version: See __init__.py
 Desc: The main file to use/execute when trying to search StackOverflow.
 
 """
-import sys
 
 
-def main(args: list) -> None:
+def main() -> None:
     """This is the main function for the command-line interface.
 
     Parameters
     ----------
-    args : list
-        The list of arguments.
+    None.
 
     Returns
     -------
@@ -30,7 +28,7 @@ def main(args: list) -> None:
         None
 
     """
-
+    import sys
     import argparse
     from blessings import Terminal
     from pprint import pprint
@@ -98,7 +96,7 @@ def main(args: list) -> None:
         dest="version",
     )
 
-    args = parser.parse_args(args)
+    args = parser.parse_args(sys.argv[1:])
     t = Terminal()
     if args.version:
         print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
@@ -165,4 +163,4 @@ def main(args: list) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
