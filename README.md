@@ -11,25 +11,25 @@ The reason this is better than other modules is that this module provides a mode
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
 
 - The ability to return a dictionary of _ALL_ the search results found, not just the first result
-
 - The ability to return results from a variety of different [StackExchange](https://stackexchange.com/) sites
-
 - A beautiful command-line interface for humans
-
 - A decently documented API
-
-- Decently easy-to-read code (formatted with [Black](<(https://github.com/psf/black)>))
-
+- Decently easy-to-read code (formatted with [Black](https://github.com/psf/black))
 - And open source code on [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable)
+
+## Current Features
+
+- Everything listed in the 'Benefits' section of the README above
+- Mostly, if not fully, [type-hinted](https://www.python.org/dev/peps/pep-0585/)
+- A beautiful, simple, yet powerful command-line interface (via [argparse](https://docs.python.org/3/library/argparse.html) and [blessings](https://pypi.org/project/blessings/))
+- The ability to crank out raw [JSON](https://www.json.org/json-en.html) data to use
+- And an API
 
 ## Downsides
 
 - Possibly slower than the other modules
-
 - The first PyPi project ever made by ThatXliner
-
 - Not optimized (well, after all, it's python)
-
 - A big list of dependencies
 
 ## Future Features
@@ -42,12 +42,6 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 - ~~A better README~~ (Done)
 - Being able to output different formats of data (e.g. YAML, TOML, XML, etc)
 - And more command-line options
-
-## Current Features
-
-- A beautiful, simple, yet powerful command-line interface
-- The ability to crank out raw [JSON](https://www.json.org/json-en.html) data to use
-- And an API
 
 ## Usage Examples
 

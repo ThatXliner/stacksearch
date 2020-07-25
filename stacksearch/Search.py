@@ -7,7 +7,7 @@ Author: Bryan hu .
 
 Made with love by Bryan hu .
 
-The primitive functions to use.
+The primitive functions to use. # API
 """
 import requests
 from bs4 import BeautifulSoup as bs
@@ -18,16 +18,30 @@ def Search(
     Query: str,
     print_prog: bool = True,
     search_on_site: str = "stackoverflow",
-    # Including the "stackexchange.com" (if present) but not the ".com" suffix
     *args: Any,
     **kwargs: Any,
 ) -> dict:
-    """For getting very precise information on StackOverflow. This is the function you should use.
+    """This is the official API for the stacksearch module.
+
+    Parameters
+    ----------
+    Query : str
+        This is the query to search the stackexchange website for.
+    print_prog : bool
+        If True, prints the progress. Otherwise, it does not print the progress (the default is True).
+    search_on_site : str
+        The stackexchange website to search on (the default is "stackoverflow").
+    *args : Any
+        For backwards compatibility.
+    **kwargs : Any
+        For backwards compatibility.
 
     Returns
     -------
     dict
-        A dict containing the raw data of the questions/answers gotten.
+        In the format: {
+        'question': ['answer1', 'answer2', ...], 'question2': ['answer1', ...]
+        }
 
     """
 
@@ -48,6 +62,7 @@ def Search(
     r = requests.get(
         f"https://{search_on_site}.com/search?q={Query}"
     )  # NOTE: For python3.9, use the str.remove_suffix()
+    r.raise_for_status()
     if print_prog:
         print("Parsing response HTML...")
     soup = bs(r.content, "lxml")

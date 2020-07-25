@@ -16,18 +16,19 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 
 
 def custom_main(args_: list) -> None:
-    """This is the main function for the command-line interface.
+    """For simulating the command line with custom arguments in your program.
 
     Parameters
     ----------
-    None.
+    args_ : list
+        The list of arguments.
 
     Returns
     -------
     None
-        None
 
     """
+
     import sys
     import argparse
     from blessings import Terminal
