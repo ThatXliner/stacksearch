@@ -31,6 +31,10 @@ class TestClass:
         """You should not use this. IT'S A TEST. This is the main function."""
         MAIN([arg for arg in args.split() if arg])
 
+    def amain(self, args: str = "") -> None:
+        """You should not use this. IT'S A TEST. This is the main async function."""
+        run(FMAIN([arg for arg in args.split() if arg]))
+
     def test_stable(self):
         """A test with Search."""
         self.main("python list")
@@ -47,9 +51,13 @@ class TestClass:
         """To test the no argument functionality."""
         self.main()
 
-    def amain(self, args: str = "") -> None:
-        """You should not use this. IT'S A TEST. This is the main async function."""
-        run(FMAIN([arg for arg in args.split() if arg]))
+    def test_async_version(self):
+        """To test the version."""
+        self.amain("-v")
+
+    def test_async_noobs(self):
+        """To test the no argument functionality."""
+        self.amain()
 
     def test_async(self):
         """To test the async search."""
@@ -58,11 +66,3 @@ class TestClass:
     def test_async_lots_of_sites(self):
         """A test with Search. For lots of sites."""
         self.amain("python list --sites superuser.com stackoverflow")
-
-    def test_async_version(self):
-        """To test the version."""
-        self.amain("-v")
-
-    def test_async_noobs(self):
-        """To test the no argument functionality."""
-        self.amain()
