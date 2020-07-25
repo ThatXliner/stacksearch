@@ -22,7 +22,7 @@ setup(
     long_description_content_type="text/markdown",
     # url="https://github.com/ThatXliner/stacksearch",
     project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
-    packages=find_packages(exclude="tests", include="stacksearch"),
+    packages=find_packages(exclude=["tests"], include=["stacksearch"]),
     # scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
