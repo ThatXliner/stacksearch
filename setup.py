@@ -23,7 +23,7 @@ setup(
     # url="https://github.com/ThatXliner/stacksearch",
     project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
     packages=find_packages(exclude="tests", include="stacksearch"),
-    scripts=["scripts/stacksearch"],
+    # scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
