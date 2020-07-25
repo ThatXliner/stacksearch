@@ -15,22 +15,6 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 """
 
 
-def main() -> None:
-    """This is the main function for the command-line interface.
-
-    Parameters
-    ----------
-    None.
-
-    Returns
-    -------
-    None
-        None
-
-    """
-    import sys
-    custom_main(sys.argv[1:])
-
 def custom_main(args_: list) -> None:
     """This is the main function for the command-line interface.
 
@@ -176,6 +160,24 @@ def custom_main(args_: list) -> None:
                         print("\n\n\n", file=args.OUTPUT)
                     finally:
                         question_number += 1
+
+
+def main() -> None:
+    """This is the main function for the command-line interface.
+
+    Parameters
+    ----------
+    None.
+
+    Returns
+    -------
+    None
+        None
+
+    """
+    import sys
+
+    custom_main(sys.argv[1:])
 
 
 if __name__ == "__main__":
