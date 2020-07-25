@@ -29,7 +29,9 @@ def main() -> None:
 
     """
     import sys
+
     custom_main(sys.argv[1:])
+
 
 def custom_main(args_: list) -> None:
     """This is the main function for the command-line interface.
