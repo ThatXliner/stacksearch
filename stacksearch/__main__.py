@@ -101,11 +101,12 @@ def custom_main(args_: list) -> None:
     t = Terminal()
     if args.version:
         print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
-    elif len(args.query) == 0:
+    elif not args.query:
         parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
         SITES_TO_SEARCH = set(args.sites)
+        FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
@@ -117,9 +118,7 @@ def custom_main(args_: list) -> None:
             )
 
         if args.json:
-            pprint(
-                ANSWERS, stream=args.OUTPUT, width=79
-            )  # You will get unprocessed, raw JSON
+            pprint(ANSWERS, stream=FILE, width=79)  # You will get unprocessed, raw JSON
         else:  # We got some parsing to do
             if PRINT_PROGRESS:
                 print("Outputting results...")
@@ -277,34 +276,34 @@ async def fcustom_main(args_: list) -> None:
                 for question, answers in answer.items():
                     print(
                         f"{t.bold}{t.bright_green}Question #{question_number / 10}: {question}{t.normal}",
-                        file=args.OUTPUT,
+                        file=FILE,
                     )
                     print("\n")
                     try:
                         print(
                             f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
-                            file=args.OUTPUT,
+                            file=FILE,
                         )
-                        print("\n\n\n", file=args.OUTPUT)
+                        print("\n\n\n", file=FILE)
                         try:
                             for question_answer in answers[1:]:
                                 print(
                                     f"{t.green}Answer: {question_answer}{t.normal}",
-                                    file=args.OUTPUT,
+                                    file=FILE,
                                 )
-                                print("\n\n\n", file=args.OUTPUT)
+                                print("\n\n\n", file=FILE)
                         except IndexError:
                             print(
                                 f"{t.red}{t.bold}This is the only answer.{t.normal}",
-                                file=args.OUTPUT,
+                                file=FILE,
                             )
                     except IndexError:
                         print(
                             f"{t.bright_red}There were no answers for this question{t.normal}\n",
-                            file=args.OUTPUT,
+                            file=FILE,
                         )
                     else:
-                        print("\n\n\n", file=args.OUTPUT)
+                        print("\n\n\n", file=FILE)
                     finally:
                         question_number += 1
 
