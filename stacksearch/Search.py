@@ -12,7 +12,7 @@ The primitive functions to use. # API
 import requests
 from bs4 import BeautifulSoup as bs
 from typing import Any
-import httpx
+import httpx  # We probably should switch to aiohttp in the future
 
 
 def Search(
