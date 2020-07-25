@@ -85,6 +85,8 @@ SOFTWARE.
 
 ## Contributing :pencil2:
 
+![GitHub contributors](https://img.shields.io/github/contributors/ThatXliner/stacksearch)
+
 Due to the fact that I have a GitHub secret on the repository, **no one here will be a pull-requestless contributor**, meaning **all contributors will need to contribute to the project via pull-request and/or issue reports**. <sub>Though, there are exceptions.</sub>
 
 ## Links :paperclip:
