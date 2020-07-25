@@ -192,7 +192,7 @@ async def fSearch(
         )
     if print_prog:
         print("Parsing questions found (This may take a while)...")
-    pages = [await (link) for link in _links_for_pages]
+    pages = [await ParsePage(link) for link in _links_for_pages]
     if print_prog:
         print("Identifying question text...")
     full_questions = (page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages)
