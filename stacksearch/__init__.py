@@ -8,8 +8,8 @@ parsing, then returns a python dict containing questions and answers.
 
 
 """
-from .__main__ import main  # noqa: F401
+# from .__main__ import main  # noqa: F401
 
-__version__ = "1.2.1.dev1"
+__version__ = "1.2.1.dev2"
 
 __author__ = ["Bryan Hu"]
