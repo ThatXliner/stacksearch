@@ -145,9 +145,9 @@ async def fSearch(
             return string
 
     async def ParsePages(links_for_pages):
-        return [  # Pages of all the questions related to Query
+        return (  # Pages of all the questions related to Query
             bs(link.content, "lxml") for link in links_for_pages
-        ]
+        )
 
     async def findAnswers(pages):
         return (
