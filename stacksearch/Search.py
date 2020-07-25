@@ -146,15 +146,15 @@ async def fSearch(
             return string
 
     async def findAnswers(pages):
-        return (
-            (
+        return [
+            [
                 answer.find(attrs=TEXT_REQUIREMENTS).get_text()
                 for answer in page.find_all(
                     attrs={"itemtype": "http://schema.org/Answer"}
                 )
-            )
+            ]
             for page in pages
-        )
+        ]
 
     async def findQuestions(soup):
         return {  # The raw ingredients
