@@ -10,6 +10,6 @@ parsing, then returns a python dict containing questions and answers.
 """
 from .__main__ import main  # noqa: F401
 
-__version__ = "1.2.0"
+__version__ = "1.2.0.dev0"
 
 __author__ = ["Bryan Hu"]

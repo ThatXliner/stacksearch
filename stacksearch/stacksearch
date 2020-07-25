@@ -3,6 +3,6 @@
 """README."""
 
 import sys
-from stacksearch import main
+from .__main__ import main
 
 main(sys.argv[1:])
