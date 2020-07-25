@@ -194,7 +194,7 @@ async def fSearch(
     pages = [bs(link.content, "lxml") for link in _links_for_pages]
     if print_prog:
         print("Identifying question text...")
-    full_questions = (page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages)
+    full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
     if print_prog:
         print("Identifying answers...")
     answers = await findAnswers(pages)
