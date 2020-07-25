@@ -13,7 +13,6 @@ import requests
 from bs4 import BeautifulSoup as bs
 from typing import Any
 import httpx  # In the future, we might want to switch to aiohttp instead
-import asyncio
 
 
 def Search(
