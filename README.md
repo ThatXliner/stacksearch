@@ -1,6 +1,4 @@
-# stacksearch :mag_right:
-
-NOTE: The GFM emojis may not be rendered in PyPI.
+# stacksearch 🔎
 
 [![Build Status](https://travis-ci.com/ThatXliner/stacksearch.svg?branch=master)](https://travis-ci.com/ThatXliner/stacksearch) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ThatXliner/stacksearch) ![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/ThatXliner/stacksearch/master) ![PyPI](https://img.shields.io/pypi/v/stacksearch) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ThatXliner/stacksearch) ![PyPI - Implementation](https://img.shields.io/pypi/implementation/stacksearch) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/stacksearch) ![PyPI - Wheel](https://img.shields.io/pypi/wheel/stacksearch) ![PyPI - License](https://img.shields.io/pypi/l/stacksearch) ![GitHub top language](https://img.shields.io/github/languages/top/ThatXliner/stacksearch) ![GitHub language count](https://img.shields.io/github/languages/count/ThatXliner/stacksearch)
 
@@ -8,7 +6,22 @@ StackSearch is a python module that provides a way to search [StackOverflow](htt
 
 The reason this is better than other modules is that this module provides a modern API, a beautiful command-line interface via argparse and blessings, all in pure Python.
 
-## Benefits :thumbsup:
+It is also available as a standalone command-line tool, so you may run it directly like so:
+
+```bash
+stacksearch This is the query
+```
+
+without the `python3 -m` prefix, if desired.
+
+It also has an API which you can use via
+
+```python
+>>> from stackoverflow import Search
+>>> Search.Search("This is the query")
+```
+
+## Benefits 👍
 
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
 
@@ -20,7 +33,14 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 - Decently easy-to-read code (formatted with [Black](https://github.com/psf/black))
 - And **open source code on [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable)**
 
-## Current Features :smile:
+## Downsides 👎
+
+- Possibly _slower_ than the other modules
+- **The first PyPi project ever made by ThatXliner**
+- Not _fully_ (completely) optimized (well, after all, it's python)
+- ~~A big list of dependencies~~ (shortened in version 1.0.0 or so)
+
+## Current Features 😁
 
 - **Everything listed in the 'Benefits' section of the README above**
 - Mostly, **if not fully**, [type-hinted](https://www.python.org/dev/peps/pep-0585/)
@@ -29,14 +49,7 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 - The ability to **crank out raw [JSON](https://www.json.org/json-en.html) data** to **_use_**
 - And an **API**
 
-## Downsides :thumbsdown:
-
-- Possibly _slower_ than the other modules
-- **The first PyPi project ever made by ThatXliner**
-- Not _fully_ (completely) optimized (well, after all, it's python)
-- ~~A big list of dependencies~~ (shortened in version 1.0.0 or so)
-
-## Future Features :running:
+## Future Features 🏃‍♂️
 
 - ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
 - Documentation
@@ -81,17 +94,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Code style guide :flushed:
+## Code style guide 😳
 
 [Black](https://github.com/psf/black). We (I, right now.) use the black formatter to format our code. **It's pretty strict.**
 
-## Contributing :pencil2:
+## Contributing ✏️
 
 ![GitHub contributors](https://img.shields.io/github/contributors/ThatXliner/stacksearch)
 
 Due to the fact that I have a GitHub secret on the repository, **no one here will be a pull-requestless contributor**, meaning **all contributors will need to contribute to the project via pull-request and/or issue reports**. <sub>Though, there are exceptions.</sub>
 
-## Links :paperclip:
+## Links 📎
 
 [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable) (Possibly this page)
 
