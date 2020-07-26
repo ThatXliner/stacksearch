@@ -125,6 +125,8 @@ def custom_main(args_: list) -> None:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
         for site in map(str, SITES_TO_SEARCH):
+            print(site)
+            print(args.query)
             ANSWERS.append(
                 Search(
                     " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
@@ -285,6 +287,8 @@ async def fcustom_main(args_: list) -> None:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
         for site in map(str, SITES_TO_SEARCH):
+            print(site)
+            print(args.query)
             ANSWERS.append(
                 await fSearch(
                     " ".join(args.query), print_prog=PRINT_PROGRESS, search_on_site=site
