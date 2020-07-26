@@ -162,7 +162,7 @@ def custom_main(args_: list) -> None:
 
 
 async def fcustom_main(args_: list) -> None:
-    """For simulating the command line with custom arguments in your program using the expiramental fSearch.
+    """For simulating the command line with custom arguments in your program using fSearch.
 
     This is the async version.
 
