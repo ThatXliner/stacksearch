@@ -85,13 +85,22 @@ def custom_main(args_: list) -> None:
         help="Don't print the progress.",
         dest="s",
     )
-    parser.add_argument(  # Sites
-        "--sites",
-        action="extend",
-        default=["stackoverflow"],
-        nargs="+",
-        help="The StackExchange sites to search.",
-    )
+    try:
+        parser.add_argument(  # Sites
+            "--sites",
+            action="extend",
+            default=["stackoverflow"],
+            nargs="+",
+            help="The StackExchange sites to search.",
+        )
+    except ValueError:
+        parser.add_argument(  # Python <3.8
+            "--sites",
+            action="append",
+            default=["stackoverflow"],
+            nargs="+",
+            help="The StackExchange sites to search.",
+        )
     parser.add_argument(  # Version
         "-v",
         "-V",
@@ -236,13 +245,22 @@ async def fcustom_main(args_: list) -> None:
         help="Don't print the progress.",
         dest="s",
     )
-    parser.add_argument(  # Sites
-        "--sites",
-        action="extend",
-        default=["stackoverflow"],
-        nargs="+",
-        help="The StackExchange sites to search.",
-    )
+    try:
+        parser.add_argument(  # Sites
+            "--sites",
+            action="extend",
+            default=["stackoverflow"],
+            nargs="+",
+            help="The StackExchange sites to search.",
+        )
+    except ValueError:
+        parser.add_argument(  # Python <3.8
+            "--sites",
+            action="append",
+            default=["stackoverflow"],
+            nargs="+",
+            help="The StackExchange sites to search.",
+        )
     parser.add_argument(  # Version
         "-v",
         "-V",
