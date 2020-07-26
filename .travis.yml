@@ -3,7 +3,7 @@ language: python
 python:
   - "3.8"
   - "3.7"
-  - "3.6"
+  # - "3.6"  # Asyncio doesn't have run
   # - "3.9"
   # 3.9 doesn't exist yet.
 
