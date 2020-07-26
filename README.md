@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.com/ThatXliner/stacksearch.svg?branch=master)](https://travis-ci.com/ThatXliner/stacksearch) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ThatXliner/stacksearch) ![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/ThatXliner/stacksearch/master) ![PyPI](https://img.shields.io/pypi/v/stacksearch) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ThatXliner/stacksearch) ![PyPI - Implementation](https://img.shields.io/pypi/implementation/stacksearch) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/stacksearch) ![PyPI - Wheel](https://img.shields.io/pypi/wheel/stacksearch) ![PyPI - License](https://img.shields.io/pypi/l/stacksearch) ![GitHub top language](https://img.shields.io/github/languages/top/ThatXliner/stacksearch) ![GitHub language count](https://img.shields.io/github/languages/count/ThatXliner/stacksearch)
 
-WARNING: You are currently using the expiramental version of stacksearch.
-
 StackSearch is a python module that provides a way to search [StackOverflow](https://stackoverflow.com/).
 
 The reason this is better than other modules is that this module provides a modern API, a beautiful command-line interface via argparse and blessings, all in pure Python.
@@ -22,6 +20,8 @@ It also has an API which you can use via
 >>> from stackoverflow import Search
 >>> Search.Search("This is the query")
 ```
+
+Have fun!
 
 ## Benefits 👍
 
