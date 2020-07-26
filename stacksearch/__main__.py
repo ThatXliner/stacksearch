@@ -119,7 +119,10 @@ def custom_main(args_: list) -> None:
         parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
-        SITES_TO_SEARCH = set(args.sites)
+        try:
+            SITES_TO_SEARCH = set(args.sites)
+        except TypeError:
+            SITES_TO_SEARCH = set(args.sites[0])
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -290,7 +293,10 @@ async def fcustom_main(args_: list) -> None:
         parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
-        SITES_TO_SEARCH = set(args.sites)
+        try:
+            SITES_TO_SEARCH = set(args.sites)
+        except TypeError:
+            SITES_TO_SEARCH = set(args.sites[0])
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
