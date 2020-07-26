@@ -226,3 +226,7 @@ async def fcustom_main(args_: list) -> None:
             )
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
+
+
+if __name__ == "__main__":
+    custom_main(sys.argv[1:])
