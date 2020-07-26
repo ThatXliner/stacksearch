@@ -23,6 +23,8 @@ It also has an API which you can use via
 >>> Search.Search("This is the query")
 ```
 
+Have fun!
+
 ## Benefits 👍
 
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
