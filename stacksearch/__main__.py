@@ -128,22 +128,13 @@ def custom_main(args_: list) -> None:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
         for site in map(str, SITES_TO_SEARCH):
-            try:
-                ANSWERS.append(
-                    Search(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+            ANSWERS.append(
+                Search(
+                    " ".join([item for elem in args.query for item in elem]),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-            except TypeError:
-                ANSWERS.append(
-                    Search(
-                        " ".join([item for elem in args.query for item in elem]),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
-                )
+            )
 
         if args.json:
             pprint(ANSWERS, stream=FILE, width=79)  # You will get unprocessed, raw JSON
@@ -302,22 +293,13 @@ async def fcustom_main(args_: list) -> None:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
         for site in map(str, SITES_TO_SEARCH):
-            try:
-                ANSWERS.append(
-                    await fSearch(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+            ANSWERS.append(
+                await fSearch(
+                    " ".join([item for elem in args.query for item in elem]),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-            except TypeError:
-                ANSWERS.append(
-                    await fSearch(
-                        " ".join([item for elem in args.query for item in elem]),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
-                )
+            )
 
         if args.json:
             pprint(ANSWERS, stream=FILE, width=79)  # You will get unprocessed, raw JSON
