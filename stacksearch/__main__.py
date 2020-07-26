@@ -49,9 +49,14 @@ def custom_main(args_: list) -> None:
     this script's wonderful functions and objects.""",
         epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
     )
-    parser.add_argument(  # Query
-        "query", help="The query to search.", nargs="*", action="extend",
-    )
+    try:
+        parser.add_argument(  # Query
+            "query", help="The query to search.", nargs="*", action="extend",
+        )
+    except ValueError:
+        parser.add_argument(  # Python <3.8
+            "query", help="The query to search.", nargs="*", action="append",
+        )
     parser.add_argument(  # JSON
         "-j",
         "--json",
@@ -195,9 +200,14 @@ async def fcustom_main(args_: list) -> None:
     this script's wonderful functions and objects.""",
         epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
     )
-    parser.add_argument(  # Query
-        "query", help="The query to search.", nargs="*", action="extend",
-    )
+    try:
+        parser.add_argument(  # Query
+            "query", help="The query to search.", nargs="*", action="extend",
+        )
+    except ValueError:
+        parser.add_argument(  # Python <3.8
+            "query", help="The query to search.", nargs="*", action="append",
+        )
     parser.add_argument(  # JSON
         "-j",
         "--json",
