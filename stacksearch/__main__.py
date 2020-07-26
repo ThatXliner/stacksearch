@@ -122,7 +122,7 @@ def custom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            SITES_TO_SEARCH = set(args.sites[0])
+            SITES_TO_SEARCH = set([item for elem in args.sites for item in elem])
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -139,7 +139,7 @@ def custom_main(args_: list) -> None:
             except TypeError:
                 ANSWERS.append(
                     Search(
-                        " ".join(args.query[0]),
+                        " ".join([item for elem in args.query for item in elem]),
                         print_prog=PRINT_PROGRESS,
                         search_on_site=site,
                     )
@@ -296,7 +296,7 @@ async def fcustom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            SITES_TO_SEARCH = set(args.sites[0])
+            SITES_TO_SEARCH = set([item for elem in args.sites for item in elem])
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -313,7 +313,7 @@ async def fcustom_main(args_: list) -> None:
             except TypeError:
                 ANSWERS.append(
                     await fSearch(
-                        " ".join(args.query[0]),
+                        " ".join([item for elem in args.query for item in elem]),
                         print_prog=PRINT_PROGRESS,
                         search_on_site=site,
                     )
