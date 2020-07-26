@@ -19,7 +19,7 @@ from blessings import Terminal
 from pprint import pprint
 from . import __version__
 from .Search import Search, fSearch
-import errors
+import __package__.errors as errors
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
@@ -217,9 +217,7 @@ async def fcustom_main(args_: list) -> None:
             for site in map(str, SITES_TO_SEARCH):
                 ANSWERS.append(
                     await fSearch(
-                        " ".join(
-                            [item for elem in map(list, args.query) for item in elem]
-                        ),
+                        " ".join(args.query),
                         print_prog=PRINT_PROGRESS,
                         search_on_site=site,
                     )
