@@ -17,7 +17,6 @@ from sys import path
 from pathlib import Path
 from asyncio import run
 
-# import httpx
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 from stacksearch.__main__ import custom_main as MAIN
