@@ -19,6 +19,7 @@ from blessings import Terminal
 from pprint import pprint
 from . import __version__
 from .Search import Search, fSearch
+import errors
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
@@ -38,8 +39,8 @@ try:
         "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
-    parser.add_argument(  # Python <3.8
-        "query", help="The query to search.", nargs="*", action="append",
+    raise errors.UnsupportedPythonVersion(
+        "This program only supports python 3.8 (for now)."
     )
 parser.add_argument(  # JSON
     "-j",
@@ -78,12 +79,8 @@ try:
         help="The StackExchange sites to search.",
     )
 except ValueError:
-    parser.add_argument(  # Python <3.8
-        "--sites",
-        action="append",
-        default=["stackoverflow"],
-        nargs="+",
-        help="The StackExchange sites to search.",
+    raise errors.UnsupportedPythonVersion(
+        "This program only supports python 3.8 (for now)."
     )
 parser.add_argument(  # Version
     "-v",
@@ -168,21 +165,23 @@ def custom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            SITES_TO_SEARCH = set(
-                [item for elem in map(list, args.sites) for item in elem]
-            )
+            raise errors.UnknownError("This should never happen")
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        for site in map(str, SITES_TO_SEARCH):
-            ANSWERS.append(
-                Search(
-                    " ".join([item for elem in map(list, args.query) for item in elem]),
-                    print_prog=PRINT_PROGRESS,
-                    search_on_site=site,
+        try:
+            for site in map(str, SITES_TO_SEARCH):
+                ANSWERS.append(
+                    Search(
+                        " ".join(args.query),
+                        print_prog=PRINT_PROGRESS,
+                        search_on_site=site,
+                    )
                 )
-            )
+        except TypeError:
+            raise errors.UnknownError("This should never happen")
+
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
@@ -209,21 +208,24 @@ async def fcustom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            SITES_TO_SEARCH = set(
-                [item for elem in map(list, args.sites) for item in elem]
-            )
+            raise errors.UnknownError("This should never happen")
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        for site in map(str, SITES_TO_SEARCH):
-            ANSWERS.append(
-                await fSearch(
-                    " ".join([item for elem in map(list, args.query) for item in elem]),
-                    print_prog=PRINT_PROGRESS,
-                    search_on_site=site,
+        try:
+            for site in map(str, SITES_TO_SEARCH):
+                ANSWERS.append(
+                    await fSearch(
+                        " ".join(
+                            [item for elem in map(list, args.query) for item in elem]
+                        ),
+                        print_prog=PRINT_PROGRESS,
+                        search_on_site=site,
+                    )
                 )
-            )
+        except TypeError:
+            raise errors.UnknownError("This should never happen")
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
