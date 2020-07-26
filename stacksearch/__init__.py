@@ -9,6 +9,6 @@ parsing, then returns a python dict containing questions and answers.
 
 """
 
-__version__ = "1.1.0.4.dev2"
+__version__ = "1.1.0.4.dev1"
 
 __author__ = ["Bryan Hu"]
