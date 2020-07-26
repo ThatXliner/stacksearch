@@ -39,30 +39,30 @@ class TestClass:
         """A test with Search."""
         self.main("python list")
 
+    def test_async(self):
+        """To test the async search."""
+        self.amain("python list")
+
     def test_stable_lots_of_sites(self):
         """A test with Search. For lots of sites."""
         self.main("python list --sites superuser.com stackoverflow")
+
+    def test_async_lots_of_sites(self):
+        """A test with Search. For lots of sites."""
+        self.amain("python list --sites superuser.com stackoverflow")
 
     def test_version(self):
         """To test the version."""
         self.main("-v")
 
-    def test_noobs(self):
-        """To test the no argument functionality."""
-        self.main()
-
     def test_async_version(self):
         """To test the version."""
         self.amain("-v")
 
+    def test_noobs(self):
+        """To test the no argument functionality."""
+        self.main()
+
     def test_async_noobs(self):
         """To test the no argument functionality."""
         self.amain()
-
-    def test_async(self):
-        """To test the async search."""
-        self.amain("python list")
-
-    def test_async_lots_of_sites(self):
-        """A test with Search. For lots of sites."""
-        self.amain("python list --sites superuser.com stackoverflow")
