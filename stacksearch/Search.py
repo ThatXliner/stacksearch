@@ -171,29 +171,30 @@ async def fSearch(
         r = await client.get(
             f"https://{search_on_site}.com/search?q={Query}"
         )  # NOTE: For python3.9, use the str.remove_suffix()
-    r.raise_for_status()
-    if print_prog:
-        print("Parsing response HTML...")
-    soup = bs(r.content, "lxml")
-    if print_prog:
-        print("Collecting question links...")
-    questions = await findQuestions(soup)
-    if print_prog:
-        print("Requesting questions found (This may take a while)...")
-    async with httpx.AsyncClient() as client:
+        r.raise_for_status()
+        if print_prog:
+            print("Parsing response HTML...")
+        soup = bs(r.content, "lxml")
+        if print_prog:
+            print("Collecting question links...")
+        questions = await findQuestions(soup)
+        if print_prog:
+            print("Requesting questions found (This may take a while)...")
         _links_for_pages = [
             await client.get(link)
             for link in map(
                 lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
             )
         ]
-    if print_prog:
-        print("Parsing questions found (This may take a while)...")
-    pages = [bs(link.content, "lxml") for link in _links_for_pages]
-    if print_prog:
-        print("Identifying question text...")
-    full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-    if print_prog:
-        print("Identifying answers...")
-    answers = await findAnswers(pages)
-    return dict(zip(full_questions, answers))
+        if print_prog:
+            print("Parsing questions found (This may take a while)...")
+        pages = [bs(link.content, "lxml") for link in _links_for_pages]
+        if print_prog:
+            print("Identifying question text...")
+        full_questions = [
+            page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
+        ]
+        if print_prog:
+            print("Identifying answers...")
+        answers = await findAnswers(pages)
+        return dict(zip(full_questions, answers))
