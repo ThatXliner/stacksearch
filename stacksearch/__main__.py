@@ -361,25 +361,3 @@ async def fcustom_main(args_: list) -> None:
                         print("\n\n\n", file=FILE)
                     finally:
                         question_number += 1
-
-
-def main() -> None:
-    """This is the main function for the command-line interface.
-
-    Parameters
-    ----------
-    None.
-
-    Returns
-    -------
-    None
-        None
-
-    """
-    import sys
-
-    custom_main(sys.argv[1:])
-
-
-if __name__ == "__main__":
-    main()

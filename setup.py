@@ -3,7 +3,7 @@
 """To setup."""
 from pathlib import Path
 from setuptools import setup, find_packages
-from stacksearch.__init__ import __version__
+from stacksearch import __version__
 
 # The directory containing this file
 HERE = Path(__file__).parent
@@ -23,7 +23,7 @@ setup(
     # url="https://github.com/ThatXliner/stacksearch",
     project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
     packages=find_packages(exclude=["tests"], include=["stacksearch"]),
-    # scripts=["scripts/stacksearch"],
+    scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
@@ -39,5 +39,5 @@ setup(
     include_package_data=True,
     install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
     keywords="api stackexchange stackoverflow python webscrape webscrap",
-    entry_points={"console_scripts": ["stacksearch=stacksearch.__main__:main"]},
+    # entry_points={"console_scripts": ["stacksearch=stacksearch.__main__:main"]},
 )
