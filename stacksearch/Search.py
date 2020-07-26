@@ -180,7 +180,7 @@ async def fSearch(
         questions = await findQuestions(soup)
         if print_prog:
             print("Requesting questions found (This may take a while)...")
-        _links_for_pages = [
+        _links_for_pages = [  # We cannot have a generator
             await client.get(link)
             for link in map(
                 lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
