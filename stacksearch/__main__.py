@@ -165,6 +165,8 @@ def custom_main(args_: list) -> None:
 async def fcustom_main(args_: list) -> None:
     """For simulating the command line with custom arguments in your program.
 
+    This is the async version.
+
     Parameters
     ----------
     args_ : list
