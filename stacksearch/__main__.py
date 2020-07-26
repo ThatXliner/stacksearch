@@ -19,7 +19,7 @@ from blessings import Terminal
 from pprint import pprint
 from . import __version__
 from .Search import Search, fSearch
-import __package__.errors as errors
+from .errors import UnknownError, UnsupportedPythonVersion
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
@@ -39,9 +39,7 @@ try:
         "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
-    raise errors.UnsupportedPythonVersion(
-        "This program only supports python 3.8 (for now)."
-    )
+    raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
 parser.add_argument(  # JSON
     "-j",
     "--json",
@@ -79,9 +77,7 @@ try:
         help="The StackExchange sites to search.",
     )
 except ValueError:
-    raise errors.UnsupportedPythonVersion(
-        "This program only supports python 3.8 (for now)."
-    )
+    raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
 parser.add_argument(  # Version
     "-v",
     "-V",
@@ -165,7 +161,7 @@ def custom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            raise errors.UnknownError("This should never happen")
+            raise UnknownError("This should never happen")
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -180,7 +176,7 @@ def custom_main(args_: list) -> None:
                     )
                 )
         except TypeError:
-            raise errors.UnknownError("This should never happen")
+            raise UnknownError("This should never happen")
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
@@ -208,7 +204,7 @@ async def fcustom_main(args_: list) -> None:
         try:
             SITES_TO_SEARCH = set(args.sites)
         except TypeError:
-            raise errors.UnknownError("This should never happen")
+            raise UnknownError("This should never happen")
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -223,7 +219,7 @@ async def fcustom_main(args_: list) -> None:
                     )
                 )
         except TypeError:
-            raise errors.UnknownError("This should never happen")
+            raise UnknownError("This should never happen")
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
