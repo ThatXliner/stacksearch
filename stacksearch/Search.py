@@ -48,7 +48,7 @@ def Search(
     """
 
     def rget(site):
-        return requests.get(rget, timeout=5,)
+        return requests.get(site, timeout=5,)
 
     def _remove_dot_com(string: str) -> str:
         string = str(string)
@@ -69,7 +69,7 @@ def Search(
         }
 
     def s(content):
-        return bs(content.content, "lxml")
+        return bs(content.content)
 
     search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -183,14 +183,14 @@ async def fSearch(
         return await client.get(site, timeout=5,)
 
     async def s(content):
-        return bs(content.content, "lxml")
+        return bs(content.content)
 
     search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
-        r = await rget(f"https://{search_on_site}.com/search?q={Query}")
+        r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
