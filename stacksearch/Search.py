@@ -69,7 +69,7 @@ def Search(
         }
 
     def s(content):
-        return bs(content.content)
+        return bs(content.content, "lxml")
 
     search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -183,7 +183,7 @@ async def fSearch(
         return await client.get(site, timeout=5,)
 
     async def s(content):
-        return bs(content.content)
+        return bs(content.content, "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -194,7 +194,7 @@ async def fSearch(
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
-        soup = bs(r.content)
+        soup = bs(r.content, "lxml")
         if print_prog:
             print("Collecting question links...")
         questions = await findQuestions(soup)
@@ -215,7 +215,7 @@ async def fSearch(
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            bs(link.content) for link in _links_for_pages
+            bs(link.content, "lxml") for link in _links_for_pages
         ]
         if print_prog:
             print("Identifying question text...")

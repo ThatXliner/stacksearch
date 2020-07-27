@@ -26,6 +26,9 @@ or you can install it manually via ``git clone``:
 
 Whatever you prefer.
 
+.. note::
+   If you want to install stacksearch via git, make sure to install the latest *stable* version
+
 
 Basic Tasks
 ----------------
@@ -36,7 +39,8 @@ To refer to the commands ``stacksearch`` provides (or the help menu), you can ty
 
 To search StackOverflow directly from the command-line, do ``stacksearch this is your query`` or ``python3.8 -m stacksearch this is your query`` and replace 'this is your query' with the query string you want to search for.
 
-**NOTE: For the rest of this tutorial, we'll refer your preferred stacksearch command as stacksearch for simplicity.**
+.. note::
+   For the rest of this tutorial, we'll refer your preferred stacksearch command as stacksearch for simplicity
 
 
 
@@ -49,11 +53,12 @@ For example, say you want to search *all* of the StackExchange you know, then yo
 
 Or maybe you just don't want so much debug information filling up your terminal, then you can pass the `--silent` option. Which could also be shortened to `-s`.
 
-**WARNING! DO NOT CONFUSE THE ``-s`` OPTION WITH THE ``--sites`` OPTION! THEY ARE NOT THE SAME!!**
+.. warning::
+   DO NOT CONFUSE THE ``-s`` OPTION WITH THE ``--sites`` OPTION! THEY ARE NOT THE SAME!!
 
 Or *maybe* you want JSON output that *you* can use. Then you can pass the ``--json`` option, the ``-j`` option, the ``--raw-data`` option, the ``--raw`` option, or the ``-r`` option. It'll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.
 
-**NOTE: The feature mentioned above is subject to change (after all, this *is* alpha)**
+.. note:: The feature mentioned above is subject to change (after all, this *is* alpha)
 
 Simple API
 ----------------
