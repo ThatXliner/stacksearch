@@ -14,6 +14,8 @@ GitHub: GitHub_
 .. toctree::
 
    semi-docs/quickstart.rst
+   semi-docs/api-ref.rst
+   semi-docs/using-the-api.rst
 
 
 

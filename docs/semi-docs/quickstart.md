@@ -39,7 +39,7 @@ To search StackOverflow directly from the command-line, do `stacksearch this is 
 
 **NOTE: For the rest of this tutorial, we'll refer your preferred `stacksearch` command as `stacksearch` for simplicity.**
 
-## Extra options
+## Options
 
 You can also provide _additional_ options to `stacksearch`.
 
@@ -52,3 +52,5 @@ Or maybe you just don't want so much debug information filling up your terminal,
 Or _maybe_ you want JSON output that _you_ can use. Then you can pass the `--json` option, the `-j` option, the `--raw-data` option, the `--raw` option, or the `-r` option. It'll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.
 
 **NOTE: The feature mentioned above is subject to change (after all, this _is_ alpha)**
+
+## Simple API

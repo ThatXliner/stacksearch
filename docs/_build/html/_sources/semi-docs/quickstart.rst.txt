@@ -38,10 +38,9 @@ To search StackOverflow directly from the command-line, do ``stacksearch this is
 
 **NOTE: For the rest of this tutorial, we'll refer your preferred ``stacksearch`` command as ``stacksearch`` for simplicity.**
 
-.. |python logo| image:: resource/py-logo.svg
 
 
-Extra options
+Options
 ----------------
 
 You can also provide *additional* options to `stacksearch`.
@@ -55,3 +54,6 @@ Or maybe you just don't want so much debug information filling up your terminal,
 Or *maybe* you want JSON output that *you* can use. Then you can pass the `--json` option, the `-j` option, the `--raw-data` option, the `--raw` option, or the `-r` option. It'll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.
 
 **NOTE: The feature mentioned above is subject to change (after all, this *is* alpha)**
+
+Simple API
+----------------
