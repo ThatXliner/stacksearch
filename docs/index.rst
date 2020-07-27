@@ -12,7 +12,6 @@ GitHub: GitHub_
 
 
 .. toctree::
-   :numbered:
    docs/quickstart.rst
    docs/api-ref.rst
    docs/using-the-api.rst
