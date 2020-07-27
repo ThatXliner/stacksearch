@@ -8,6 +8,8 @@ Welcome to stacksearch's documentation!
 
 **NOTICE: the documentation is still a work in progress. You may contribute to improve it.**
 
+GitHub: GitHub_
+
 
 .. toctree::
 
@@ -21,3 +23,6 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+.. _GitHub: https://github.com/ThatXliner/stacksearch

@@ -1,6 +1,6 @@
-================
-Quickstart guide
-================
+===============================
+Quickstart guide |python logo|
+===============================
 
 Hello! It seems that you want to use the wonderful tool of ``stacksearch``! Well, it's
 quite a simple journey. But enough talk, let's get started!
@@ -22,6 +22,8 @@ it should say something like this:
 
 if it doesn't, try running ``python3.8 -V`` explicitly.
 
+----------------------------------------------------------------
+
 After you ran `pip install stacksearch` (or `python3.8 -m pip install stacksearch`), you
 should be able to run the following command without any hassle:
 
@@ -36,3 +38,5 @@ Basic Tasks
 A very common task to search StackOverflow directly. ``stacksearch`` makes it easy to do just that.
 
 ``stacksearch what is foo``
+
+.. |python logo| image:: resource/py-logo.svg
