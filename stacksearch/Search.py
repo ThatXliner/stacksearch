@@ -194,7 +194,7 @@ async def fSearch(
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
-        soup = s(r)
+        soup = bs(r.content)
         if print_prog:
             print("Collecting question links...")
         questions = await findQuestions(soup)
@@ -215,7 +215,7 @@ async def fSearch(
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            await s(link) for link in _links_for_pages
+            bs(link.content) for link in _links_for_pages
         ]
         if print_prog:
             print("Identifying question text...")
