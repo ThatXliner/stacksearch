@@ -23,7 +23,7 @@ copyright = "2020, Bryan Hu"
 author = "Bryan Hu"
 
 # The full version, including alpha/beta/rc tags
-release = "1.2.2.alpha"
+release = "1.2.4.1.alpha"
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +32,7 @@ release = "1.2.2.alpha"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = []
-
+master_doc = "index"
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

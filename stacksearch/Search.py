@@ -13,6 +13,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from typing import Any
 import httpx  # We probably should switch to aiohttp in the future
+from time import sleep
 
 
 def Search(
@@ -22,7 +23,7 @@ def Search(
     *args: Any,
     **kwargs: Any,
 ) -> dict:
-    """This is the official API for the stacksearch module.
+    """Use this. This is the official API for the stacksearch module.
 
     Parameters
     ----------
@@ -61,7 +62,7 @@ def Search(
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     r = requests.get(
-        f"https://{search_on_site}.com/search?q={Query}"
+        f"https://{search_on_site}.com/search?q={Query}", timeout=5,
     )  # NOTE: For python3.9, use the str.remove_suffix()
     r.raise_for_status()
     if print_prog:
@@ -77,12 +78,21 @@ def Search(
     }
     if print_prog:
         print("Requesting questions found (This may take a while)...")
-    _links_for_pages = (
-        requests.get(link)
-        for link in map(
-            lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+    # _links_for_pages = (
+    #     requests.get(link, timeout=5,)
+    #     for link in map(
+    #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+    #     )
+    # )
+    _links_for_pages = []
+    for link in map(
+        lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+    ):
+        sleep(0.01)
+        requests.get(
+            link, timeout=5,
         )
-    )
+
     if print_prog:
         print("Parsing questions found (This may take a while)...")
     pages = [  # Pages of all the questions related to Query
@@ -100,6 +110,8 @@ def Search(
         ]
         for page in pages
     ]
+    if print_prog:
+        print("Returning results...")
     return dict(zip(full_questions, answers))
 
 
@@ -110,7 +122,7 @@ async def fSearch(
     *args: Any,
     **kwargs: Any,
 ) -> dict:
-    """This is the async version of the Search API function.
+    """Use this. This is the async version of the Search API function.
 
     Parameters
     ----------
@@ -169,7 +181,7 @@ async def fSearch(
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
         r = await client.get(
-            f"https://{search_on_site}.com/search?q={Query}"
+            f"https://{search_on_site}.com/search?q={Query}", timeout=5,
         )  # NOTE: For python3.9, use the str.remove_suffix()
         r.raise_for_status()
         if print_prog:
@@ -180,15 +192,23 @@ async def fSearch(
         questions = await findQuestions(soup)
         if print_prog:
             print("Requesting questions found (This may take a while)...")
-        _links_for_pages = [  # We cannot have a generator
+        # _links_for_pages = [  # We cannot have a generator
+        #     await client.get(link, timeout=5,)
+        #     for link in map(
+        #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+        #     )
+        # ]
+        _links_for_pages = []
+        for link in map(
+            lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+        ):
+            sleep(0.01)
             await client.get(link)
-            for link in map(
-                lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
-            )
-        ]
         if print_prog:
             print("Parsing questions found (This may take a while)...")
-        pages = [bs(link.content, "lxml") for link in _links_for_pages]
+        pages = [  # Pages of all the questions related to Query
+            bs(link.content, "lxml") for link in _links_for_pages
+        ]
         if print_prog:
             print("Identifying question text...")
         full_questions = [
@@ -197,4 +217,6 @@ async def fSearch(
         if print_prog:
             print("Identifying answers...")
         answers = await findAnswers(pages)
+        if print_prog:
+            print("Returning results...")
         return dict(zip(full_questions, answers))
