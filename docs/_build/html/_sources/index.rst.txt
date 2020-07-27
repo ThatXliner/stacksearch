@@ -13,7 +13,7 @@ GitHub: GitHub_
 
 .. toctree::
 
-   docs/quickstart.rst
+   semi-docs/quickstart.rst
 
 
 
