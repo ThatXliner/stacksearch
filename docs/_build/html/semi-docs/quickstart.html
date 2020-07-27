@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quickstart guide &#8212; stacksearch 1.2.4.1.alpha documentation</title>
+    <title>Quickstart guide &#8212; stacksearch 1.2.7.1.alpha documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -28,8 +28,8 @@
         <li class="right" >
           <a href="../index.html" title="Welcome to stacksearch’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.4.1.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide </a></li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.7.1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
       </ul>
     </div>  
 
@@ -38,30 +38,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="quickstart-guide-python-logo">
-<h1>Quickstart guide <img alt="python logo" src="../_images/py-logo.svg" /><a class="headerlink" href="#quickstart-guide-python-logo" title="Permalink to this headline">¶</a></h1>
-<p>Hello! It seems that you want to use the wonderful tool of <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>! Well, it’s
-quite a simple journey. But enough talk, let’s get started!</p>
+  <div class="section" id="quickstart-guide">
+<h1>Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
+<p>So, you’ve seen it on PyPi, you’ve noticed it on GitHub, and now want to know how to use <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>? This quickstart guide will help you understand most of the features of stacksearch. It’ll cover basic usage, options, and some of the API features. So, without further ado, let’s dive in!</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>This package can be easily installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span></code>.</p>
-<p><strong>Warning: This package relies on python 3.8 and above. You won’t be able to install this
-package if you are using anything lower.</strong></p>
-<p>To check your python version, run the following command:
-<code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-V</span></code></p>
-<p>it should say something like this:</p>
-<p><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.8.2</span></code></p>
-<p>if it doesn’t, try running <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-V</span></code> explicitly.</p>
-<hr class="docutils" />
-<p>After you ran <cite>pip install stacksearch</cite> (or <cite>python3.8 -m pip install stacksearch</cite>), you
-should be able to run the following command without any hassle:</p>
-<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code></p>
-<p>it would only show an error if the place your installation command isn’t in your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable. If so, just run <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span></code> for the rest of the tutorial.</p>
+<p>To install stacksearch, <strong>you must have python version 3.8 or higher</strong>.</p>
+<p>The reason for this is because <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> requires this feature of <code class="docutils literal notranslate"><span class="pre">argparse</span></code> that <strong>no other python version supports.</strong></p>
+<p>You can easily install <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> via <code class="docutils literal notranslate"><span class="pre">pip`</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">stacksearch</span> <span class="pre">`</span></code></p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python3.8</span> <span class="pre">-m</span> <span class="pre">install</span> <span class="pre">stacksearch`</span></code></p>
+<p>or you can install it manually via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`mkdir</span> <span class="pre">stacksearch`</span></code>
+<code class="docutils literal notranslate"><span class="pre">`git</span> <span class="pre">clone</span> <span class="pre">https://github.com/ThatXliner/stacksearch.git`</span></code></p>
+<p>Whatever you prefer.</p>
 </div>
 <div class="section" id="basic-tasks">
 <h2>Basic Tasks<a class="headerlink" href="#basic-tasks" title="Permalink to this headline">¶</a></h2>
-<p>A very common task to search StackOverflow directly. <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> makes it easy to do just that.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">what</span> <span class="pre">is</span> <span class="pre">foo</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with **ease*</em>.*</p>
+<p>To refer to the commands <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> provides (or the help menu), you can type <cite>stacksearch –help</cite> or <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">-h</span></code>.</p>
+<p>To search StackOverflow directly from the command-line, do <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> or <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> and replace ‘this is your query’ with the query string you want to search for.</p>
+<p><strong>NOTE: For the rest of this tutorial, we’ll refer your preferred ``stacksearch`` command as ``stacksearch`` for simplicity.</strong></p>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>You can also provide <em>additional</em> options to <cite>stacksearch</cite>.</p>
+<p>For example, say you want to search <em>all</em> of the StackExchange you know, then you would run <cite>stacksearch this is your query –sites …</cite> (replace ‘…’ with the sites you want to search)</p>
+<p>Or maybe you just don’t want so much debug information filling up your terminal, then you can pass the <cite>–silent</cite> option. Which could also be shortened to <cite>-s</cite>.</p>
+<p><strong>WARNING! DO NOT CONFUSE THE `-s` OPTION WITH THE `–sites` OPTION! THEY ARE NOT THE SAME!!</strong></p>
+<p>Or <em>maybe</em> you want JSON output that <em>you</em> can use. Then you can pass the <cite>–json</cite> option, the <cite>-j</cite> option, the <cite>–raw-data</cite> option, the <cite>–raw</cite> option, or the <cite>-r</cite> option. It’ll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.</p>
+<p><strong>NOTE: The feature mentioned above is subject to change (after all, this *is* alpha)</strong></p>
+</div>
+<div class="section" id="simple-api">
+<h2>Simple API<a class="headerlink" href="#simple-api" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -74,9 +84,11 @@ should be able to run the following command without any hassle:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Quickstart guide </a><ul>
+<li><a class="reference internal" href="#">Quickstart guide</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#basic-tasks">Basic Tasks</a></li>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#simple-api">Simple API</a></li>
 </ul>
 </li>
 </ul>
@@ -114,8 +126,8 @@ should be able to run the following command without any hassle:</p>
         <li class="right" >
           <a href="../index.html" title="Welcome to stacksearch’s documentation!"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.4.1.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide </a></li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.7.1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
