@@ -21,7 +21,11 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     # url="https://github.com/ThatXliner/stacksearch",
-    project_urls={"Source Code": "https://github.com/ThatXliner/stacksearch"},
+    project_urls={
+        "Source Code": "https://github.com/ThatXliner/stacksearch",
+        "Documentation": "https://stacksearch.readthedocs.io/en/latest/index.html",
+        "Tracker": "https://github.com/ThatXliner/stacksearch/issues",
+    },
     packages=find_packages(exclude=["tests"], include=["stacksearch"]),
     scripts=["scripts/stacksearch"],
     classifiers=[

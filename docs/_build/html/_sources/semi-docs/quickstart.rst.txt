@@ -11,18 +11,18 @@ To install stacksearch, **you must have python version 3.8 or higher**.
 
 The reason for this is because ``stacksearch`` requires this feature of ``argparse`` that **no other python version supports.**
 
-You can easily install ``stacksearch`` via ``pip```:
+You can easily install ``stacksearch`` via ``pip``:
 
-``` pip install stacksearch ```
+``pip install stacksearch``
 
 or
 
-```python3.8 -m install stacksearch```
+``python3.8 -m install stacksearch``
 
 or you can install it manually via ``git clone``:
 
-```mkdir stacksearch```
-```git clone https://github.com/ThatXliner/stacksearch.git```
+``mkdir stacksearch``
+``git clone https://github.com/ThatXliner/stacksearch.git``
 
 Whatever you prefer.
 
