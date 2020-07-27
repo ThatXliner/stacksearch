@@ -62,7 +62,7 @@ def Search(
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     r = requests.get(
-        f"https://{search_on_site}.com/search?q={Query}"
+        f"https://{search_on_site}.com/search?q={Query}", timeout=5,
     )  # NOTE: For python3.9, use the str.remove_suffix()
     r.raise_for_status()
     if print_prog:
@@ -79,7 +79,7 @@ def Search(
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     # _links_for_pages = (
-    #     requests.get(link)
+    #     requests.get(link, timeout=5,)
     #     for link in map(
     #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
     #     )
@@ -89,7 +89,9 @@ def Search(
         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
     ):
         sleep(0.01)
-        requests.get(link)
+        requests.get(
+            link, timeout=5,
+        )
 
     if print_prog:
         print("Parsing questions found (This may take a while)...")
@@ -179,7 +181,7 @@ async def fSearch(
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
         r = await client.get(
-            f"https://{search_on_site}.com/search?q={Query}"
+            f"https://{search_on_site}.com/search?q={Query}", timeout=5,
         )  # NOTE: For python3.9, use the str.remove_suffix()
         r.raise_for_status()
         if print_prog:
@@ -191,7 +193,7 @@ async def fSearch(
         if print_prog:
             print("Requesting questions found (This may take a while)...")
         # _links_for_pages = [  # We cannot have a generator
-        #     await client.get(link)
+        #     await client.get(link, timeout=5,)
         #     for link in map(
         #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
         #     )
