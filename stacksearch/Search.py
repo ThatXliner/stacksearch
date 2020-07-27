@@ -47,6 +47,9 @@ def Search(
 
     """
 
+    def rget(site):
+        return requests.get(site, timeout=5,)
+
     def _remove_dot_com(string: str) -> str:
         string = str(string)
         # Maybe a regex is better here...
@@ -57,25 +60,29 @@ def Search(
         else:
             return string
 
+    def _find_questions(soup):
+        return {  # The raw ingredients
+            question.string: question.get("href")
+            for question in soup.find_all(
+                attrs={"class": "question-hyperlink", "data-gps-track": None}
+            )
+        }
+
+    def s(content):
+        return bs(content.content)
+
     search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
-    r = requests.get(
-        f"https://{search_on_site}.com/search?q={Query}", timeout=5,
-    )  # NOTE: For python3.9, use the str.remove_suffix()
+    r = rget(f"https://{search_on_site}.com/search?q={Query}")
     r.raise_for_status()
     if print_prog:
         print("Parsing response HTML...")
-    soup = bs(r.content, "lxml")
+    soup = s(r)
     if print_prog:
         print("Collecting question links...")
-    questions = {  # The raw ingredients
-        question.string: question.get("href")
-        for question in soup.find_all(
-            attrs={"class": "question-hyperlink", "data-gps-track": None}
-        )
-    }
+    questions = _find_questions(soup)
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     # _links_for_pages = (
@@ -89,14 +96,11 @@ def Search(
         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
     ):
         sleep(0.01)
-        requests.get(
-            link, timeout=5,
-        )
-
+        _links_for_pages.append(rget(link))
     if print_prog:
         print("Parsing questions found (This may take a while)...")
     pages = [  # Pages of all the questions related to Query
-        bs(link.content, "lxml") for link in _links_for_pages
+        s(link) for link in _links_for_pages
     ]
     if print_prog:
         print("Identifying question text...")
@@ -175,18 +179,22 @@ async def fSearch(
             )
         }
 
+    async def rget(client, site):
+        return await client.get(site, timeout=5,)
+
+    async def s(content):
+        return bs(content.content)
+
     search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
-        r = await client.get(
-            f"https://{search_on_site}.com/search?q={Query}", timeout=5,
-        )  # NOTE: For python3.9, use the str.remove_suffix()
+        r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
-        soup = bs(r.content, "lxml")
+        soup = bs(r.content)
         if print_prog:
             print("Collecting question links...")
         questions = await findQuestions(soup)
@@ -203,11 +211,11 @@ async def fSearch(
             lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
         ):
             sleep(0.01)
-            await client.get(link)
+            _links_for_pages.append(await rget(client, link))
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            bs(link.content, "lxml") for link in _links_for_pages
+            bs(link.content) for link in _links_for_pages
         ]
         if print_prog:
             print("Identifying question text...")
