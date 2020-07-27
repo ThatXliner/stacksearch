@@ -12,10 +12,9 @@ GitHub: GitHub_
 
 
 .. toctree::
-
-   semi-docs/quickstart.rst
-   semi-docs/api-ref.rst
-   semi-docs/using-the-api.rst
+   docs/quickstart.rst
+   docs/api-ref.rst
+   docs/using-the-api.rst
 
 
 
