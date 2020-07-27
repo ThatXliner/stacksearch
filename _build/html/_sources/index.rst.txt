@@ -6,13 +6,12 @@
 Welcome to stacksearch's documentation!
 =======================================
 
-.. toctree::
-   :maxdepth: 2
+**NOTICE: the documentation is still a work in progress. You may contribute to improve it.**
 
-   usage/installation
-   usage/quickstart
-   usage/
-   :caption: Contents:
+
+.. toctree::
+
+   docs/quickstart.rst
 
 
 
