@@ -13,8 +13,6 @@ GitHub: GitHub_
 
 .. toctree::
    :numbered:
-   :caption: Table of contents
-   :name: index table of contents
    docs/quickstart.rst
    docs/api-ref.rst
    docs/using-the-api.rst
