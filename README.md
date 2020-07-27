@@ -53,14 +53,14 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 
 ## Future Features 🏃‍♂️
 
-- ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
-- Documentation
-- Object-oriented APIs
-- Python backwards-compatibility
-- Being able to scrape _all_ StackOverflow sites/pages
-- ~~A better README~~ (Done in v1.0.0.1)
-- Being able to output different formats of data (e.g. YAML, TOML, XML, etc)
-- And more command-line options
+- [x] ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
+- [ ] Documentation
+- [ ] Object-oriented APIs
+- [ ] Python backwards-compatibility
+- [ ] Being able to scrape _all_ StackOverflow sites/pages
+- [x] ~~A better README~~ (Done in v1.0.0.1)
+- [ ] Being able to output different formats of data (e.g. YAML, TOML, XML, etc)
+- [ ] And more command-line options
 
 ## Usage Examples
 
