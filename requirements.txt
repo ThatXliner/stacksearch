@@ -1,5 +1,4 @@
 requests
 bs4
 blessings
-lxml
 httpx==0.13.3
