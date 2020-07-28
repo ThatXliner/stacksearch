@@ -1,19 +1,29 @@
 language: python
 
 python:
+  - "nightly"
   - "3.8"
-  # - "3.7"
-  # - "3.6"  # Asyncio doesn't have run
+  - "3.7"
+  - "3.6"
+  - "pypy"
+  - "pypy3"
   # - "3.9"
   # 3.9 doesn't exist yet.
 
-install: #  Unnessecary
+install:
   - pip install pytest-asyncio
   - pip install -r requirements.txt
-#   - pytest-asyncio
 script:
   - pytest tests/ -vvv
 cache: pip
+matrix:
+    fast_finish: true
+    allow_failures:
+        - python: "nightly"
+        - python: "3.7"
+        - python: "3.6"
+        - python: "pypy"
+        - python: "pypy3"
 notifications:
   email:
     recipients:
