@@ -16,10 +16,9 @@ script:
 cache: pip
 matrix:
     allow_failures:
-        - python:
-          - "nightly"
-          - "3.7"
-          - "3.6"
+        - python: "nightly"
+        - python: "3.7"
+        - python: "3.6"
 notifications:
   email:
     recipients:
