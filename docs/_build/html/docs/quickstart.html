@@ -57,8 +57,10 @@ The reason for this is because <code class="docutils literal notranslate"><span 
 <p>or</p>
 <p><code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">install</span> <span class="pre">stacksearch</span></code></p>
 <p>or you can install it manually via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
-<p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">stacksearch</span></code>
-<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/ThatXliner/stacksearch.git</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir stacksearch
+git clone https://github.com/ThatXliner/stacksearch.git
+</pre></div>
+</div>
 <p>Whatever you prefer.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -67,7 +69,7 @@ The reason for this is because <code class="docutils literal notranslate"><span 
 </div>
 <div class="section" id="basic-tasks">
 <h2>Basic Tasks<a class="headerlink" href="#basic-tasks" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with **ease*</em>.*</p>
+<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with ease.</em></p>
 <p>To refer to the commands <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> provides (or the help menu), you can type <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">--help</span></code> or <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">-h</span></code>.</p>
 <p>To search StackOverflow directly from the command-line, do <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> or <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> and replace ‘this is your query’ with the query string you want to search for.</p>
 <div class="admonition note">
@@ -94,20 +96,21 @@ The reason for this is because <code class="docutils literal notranslate"><span 
 <h2>Simple API<a class="headerlink" href="#simple-api" title="Permalink to this headline">¶</a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<dl class="field-list simple">
-<dt class="field-odd">doc</dt>
-<dd class="field-odd"><p><cite>api-ref.rst</cite></p>
-</dd>
-</dl>
+<p><a class="reference internal" href="api-ref.html"><span class="doc">The API Reference</span></a></p>
 </div>
 <p>An example of how simple stacksearch’s API is:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">To prove how simple, yet powerful, stacksearch is</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stacksearch.Searcher</span> <span class="kn">import</span> <span class="n">Search</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s2">&quot;How do i code python&quot;</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
+</div>
 <p>And then, from just 2 lines of code, you can effectively search for answers on StackOverflow using the simple stacksearch API.</p>
 <p>But, if you want to search for multiple questions <em>asynchronously</em>, you can use the asynchronous stacksearch API instead:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">This is the asynchronous stacksearch API</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -129,6 +132,7 @@ The reason for this is because <code class="docutils literal notranslate"><span 
 <span class="nb">print</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
+</div>
 <p>If you want to.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
