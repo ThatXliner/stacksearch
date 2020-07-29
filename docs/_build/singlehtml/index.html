@@ -5,35 +5,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quickstart guide &#8212; stacksearch 1.2.11.alpha documentation</title>
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <title>stacksearch 1.2.11.alpha documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The API Reference" href="api-ref.html" />
-    <link rel="prev" title="Welcome to stacksearch’s documentation!" href="../index.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="api-ref.html" title="The API Reference"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="../index.html" title="Welcome to stacksearch’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.11.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
+        <li class="nav-item nav-item-0"><a href="#">stacksearch 1.2.11.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">stacksearch 1.2.11.alpha documentation</a></li> 
       </ul>
     </div>  
 
@@ -42,11 +31,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="quickstart-guide">
-<h1>Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-stacksearch-s-documentation">
+<h1>Welcome to stacksearch’s documentation!<a class="headerlink" href="#welcome-to-stacksearch-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p><strong>NOTICE: the documentation is still a work in progress. You may contribute to improve it.</strong></p>
+<p>GitHub: <a class="reference external" href="https://github.com/ThatXliner/stacksearch">GitHub</a></p>
+<div class="toctree-wrapper compound">
+<span id="document-docs/quickstart"></span><div class="section" id="quickstart-guide">
+<h2>Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h2>
 <p>So, you’ve seen it on PyPi, you’ve noticed it on GitHub, and now want to know how to use <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>? This quickstart guide will help you understand most of the features of stacksearch. It’ll cover basic usage, options, and some of the API features. So, without further ado, let’s dive in!</p>
 <div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To install stacksearch, <strong>you must have python version 3.8 or higher</strong>.
@@ -68,7 +62,7 @@ git clone https://github.com/ThatXliner/stacksearch.git
 </div>
 </div>
 <div class="section" id="basic-tasks">
-<h2>Basic Tasks<a class="headerlink" href="#basic-tasks" title="Permalink to this headline">¶</a></h2>
+<h3>Basic Tasks<a class="headerlink" href="#basic-tasks" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with ease.</em></p>
 <p>To refer to the commands <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> provides (or the help menu), you can type <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">--help</span></code> or <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">-h</span></code>.</p>
 <p>To search StackOverflow directly from the command-line, do <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> or <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> and replace ‘this is your query’ with the query string you want to search for.</p>
@@ -78,7 +72,7 @@ git clone https://github.com/ThatXliner/stacksearch.git
 </div>
 </div>
 <div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<h3>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
 <p>You can also provide <em>additional</em> options to <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>.</p>
 <p>For example, say you want to search <em>all</em> of the StackExchange you know, then you would run <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span> <span class="pre">--sites</span> <span class="pre">...</span></code> (replace ‘…’ with the sites you want to search)</p>
 <p>Or maybe you just don’t want so much debug information filling up your terminal, then you can pass the <cite>–silent</cite> option. Which could also be shortened to <cite>-s</cite>.</p>
@@ -93,10 +87,10 @@ git clone https://github.com/ThatXliner/stacksearch.git
 </div>
 </div>
 <div class="section" id="simple-api">
-<h2>Simple API<a class="headerlink" href="#simple-api" title="Permalink to this headline">¶</a></h2>
+<h3>Simple API<a class="headerlink" href="#simple-api" title="Permalink to this headline">¶</a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="api-ref.html"><span class="doc">The API Reference</span></a></p>
+<p><a class="reference internal" href="index.html#document-docs/api-ref"><span class="doc">The API Reference</span></a></p>
 </div>
 <p>An example of how simple stacksearch’s API is:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
@@ -140,6 +134,35 @@ git clone https://github.com/ThatXliner/stacksearch.git
 </div>
 </div>
 </div>
+<span id="document-docs/api-ref"></span><div class="section" id="the-api-reference">
+<span id="api-ref"></span><h2>The API Reference<a class="headerlink" href="#the-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>This document will list all available APIs and their documentation.</p>
+<hr class="docutils" />
+<dl class="py function">
+<dt id="Search">
+<code class="sig-name descname">Search</code><span class="sig-paren">(</span><em class="sig-param">Query</em><span class="optional">[</span>, <em class="sig-param">print_prog = True</em>, <em class="sig-param">search_on_site = &quot;stackoverflow&quot;</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is the main “meat” of stacksearch. It will search stackoverflow (or any other StackExchange site specified) for your search query.</p>
+<p>If you want to print the progress (which by default is true), then you can set the argument “print_prog” to “true”.</p>
+<p>If you want to search on other StackExchange sites, you can set the argument “search_on” to the URL of the StackExchange site to search (including or excluding the <code class="docutils literal notranslate"><span class="pre">.com</span></code> suffix).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="fSearch">
+<code class="sig-name descname">fSearch</code><span class="sig-paren">(</span><em class="sig-param">Query</em><span class="optional">[</span>, <em class="sig-param">print_prog = True</em>, <em class="sig-param">search_on_site = &quot;stackoverflow&quot;</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is almost identical to the <code class="docutils literal notranslate"><span class="pre">Search</span></code> function defined above except that it is <em>asynchronous</em>.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
 
 
             <div class="clearer"></div>
@@ -148,40 +171,18 @@ git clone https://github.com/ThatXliner/stacksearch.git
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Quickstart guide</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#basic-tasks">Basic Tasks</a></li>
-<li><a class="reference internal" href="#options">Options</a></li>
-<li><a class="reference internal" href="#simple-api">Simple API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-docs/quickstart">Quickstart guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#basic-tasks">Basic Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#options">Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#simple-api">Simple API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-docs/api-ref">The API Reference</a></li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">Welcome to stacksearch’s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="api-ref.html"
-                        title="next chapter">The API Reference</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/docs/quickstart.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -189,17 +190,8 @@ git clone https://github.com/ThatXliner/stacksearch.git
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="api-ref.html" title="The API Reference"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="../index.html" title="Welcome to stacksearch’s documentation!"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.11.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
+        <li class="nav-item nav-item-0"><a href="#">stacksearch 1.2.11.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">stacksearch 1.2.11.alpha documentation</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

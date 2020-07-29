@@ -10,7 +10,6 @@ Welcome to stacksearch's documentation!
 
 GitHub: GitHub_
 
-
 .. toctree::
    docs/quickstart.rst
    docs/api-ref.rst

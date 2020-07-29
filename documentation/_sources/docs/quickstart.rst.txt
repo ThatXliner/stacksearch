@@ -21,8 +21,10 @@ or
 
 or you can install it manually via ``git clone``:
 
-``mkdir stacksearch``
-``git clone https://github.com/ThatXliner/stacksearch.git``
+.. code-block:: bash
+
+   mkdir stacksearch
+   git clone https://github.com/ThatXliner/stacksearch.git
 
 Whatever you prefer.
 
@@ -33,7 +35,7 @@ Whatever you prefer.
 Basic Tasks
 ----------------
 
-``stacksearch`` is designed so that *anyone can use it, with **ease**.*
+``stacksearch`` is designed so that *anyone can use it, with ease.*
 
 To refer to the commands ``stacksearch`` provides (or the help menu), you can type ``stacksearch --help`` or ``stacksearch -h``.
 
@@ -60,14 +62,16 @@ Or *maybe* you want JSON output that *you* can use. Then you can pass the ``--js
 
 Simple API
 ----------------
+
 .. seealso::
 
-   :doc: `api-ref.rst`
+   :doc:`api-ref`
 
 An example of how simple stacksearch's API is:
 
 .. code-block:: python
    :linenos:
+   :caption: To prove how simple, yet powerful, stacksearch is
 
    from stacksearch.Searcher import Search
    print(Search("How do i code python"))
@@ -78,6 +82,7 @@ But, if you want to search for multiple questions *asynchronously*, you can use 
 
 .. code-block:: python
    :linenos:
+   :caption: This is the asynchronous stacksearch API
 
    from stacksearch.Searcher import fSearch
    import asyncio
