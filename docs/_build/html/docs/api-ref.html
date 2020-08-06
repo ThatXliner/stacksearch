@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The API Reference &#8212; stacksearch 1.2.10.dev1.alpha documentation</title>
+    <title>The API Reference &#8212; stacksearch 1.2.12.dev1.alpha documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -17,7 +17,6 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Using The API" href="using-the-api.html" />
     <link rel="prev" title="Quickstart guide" href="quickstart.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -27,12 +26,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="using-the-api.html" title="Using The API"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
           <a href="quickstart.html" title="Quickstart guide"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.10.dev1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.12.dev1.alpha documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">The API Reference</a></li> 
       </ul>
     </div>  
@@ -43,7 +39,23 @@
           <div class="body" role="main">
             
   <div class="section" id="the-api-reference">
-<h1>The API Reference<a class="headerlink" href="#the-api-reference" title="Permalink to this headline">¶</a></h1>
+<span id="api-ref"></span><h1>The API Reference<a class="headerlink" href="#the-api-reference" title="Permalink to this headline">¶</a></h1>
+<p>This document will list all available APIs and their documentation.</p>
+<hr class="docutils" />
+<dl class="py function">
+<dt id="Search">
+<code class="sig-name descname">Search</code><span class="sig-paren">(</span><em class="sig-param">Query</em><span class="optional">[</span>, <em class="sig-param">print_prog = True</em>, <em class="sig-param">search_on_site = &quot;stackoverflow&quot;</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is the main “meat” of stacksearch. It will search stackoverflow (or any other StackExchange site specified) for your search query.</p>
+<p>If you want to print the progress (which by default is true), then you can set the argument “print_prog” to “true”.</p>
+<p>If you want to search on other StackExchange sites, you can set the argument “search_on” to the URL of the StackExchange site to search (including or excluding the <code class="docutils literal notranslate"><span class="pre">.com</span></code> suffix).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="fSearch">
+<code class="sig-name descname">fSearch</code><span class="sig-paren">(</span><em class="sig-param">Query</em><span class="optional">[</span>, <em class="sig-param">print_prog = True</em>, <em class="sig-param">search_on_site = &quot;stackoverflow&quot;</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is almost identical to the <code class="docutils literal notranslate"><span class="pre">Search</span></code> function defined above except that it is <em>asynchronous</em>.</p>
+</dd></dl>
+
 </div>
 
 
@@ -56,9 +68,6 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="quickstart.html"
                         title="previous chapter">Quickstart guide</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="using-the-api.html"
-                        title="next chapter">Using The API</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -87,12 +96,9 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="using-the-api.html" title="Using The API"
-             >next</a> |</li>
-        <li class="right" >
           <a href="quickstart.html" title="Quickstart guide"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.10.dev1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.2.12.dev1.alpha documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">The API Reference</a></li> 
       </ul>
     </div>
