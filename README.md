@@ -54,7 +54,7 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 ## Future Features 🏃‍♂️
 
 - [x] ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
-- [x] Documentation (_Sort of_ added in v1.2.8)
+- [x] [Documentation](https://stacksearch.readthedocs.io/en/latest/) (_Sort of_ added in v1.2.8)
 - [ ] Object-oriented APIs
 - [ ] Python backwards-compatibility
 - [ ] Being able to scrape _all_ StackOverflow sites/pages
