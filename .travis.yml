@@ -7,7 +7,6 @@ python:
   - "3.8"
   # - "3.9"
   # 3.9 doesn't exist yet.
-
 install:
   - pip install pytest-asyncio
   - pip install -r requirements.txt
