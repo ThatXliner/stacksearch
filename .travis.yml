@@ -1,5 +1,7 @@
 language: python
-
+os:
+  - linux
+  - osx
 python:
   - "nightly"
   - "3.8"
