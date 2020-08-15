@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup as bs
 from typing import Any
 import httpx  # We probably should switch to aiohttp in the future
 from time import sleep
+from random import randint
 
 
 def Search(
@@ -30,7 +31,8 @@ def Search(
     Query : str
         This is the query to search the stackexchange website for.
     print_prog : bool
-        If True, prints the progress. Otherwise, it does not print the progress (the default is True).
+        If True, prints the progress. Otherwise, it does not print the progress
+        (the default is True).
     search_on_site : str
         The stackexchange website to search on (the default is "stackoverflow").
     *args : Any
@@ -46,17 +48,15 @@ def Search(
         }
 
     """
-
+    # noqa
     def rget(site):
         return requests.get(site, timeout=5,)
 
     def _remove_dot_com(string: str) -> str:
         string = str(string)
         # Maybe a regex is better here...
-        if string.endswith(".com"):
-            return string[0 : len(string) - 4]
-        elif string.endswith(".org"):
-            return string[0 : len(string) - 4]
+        if string.endswith(".com") or string.endswith(".org"):
+            return string[0 : len(string) - 4]  # noqa
         else:
             return string
 
@@ -70,6 +70,8 @@ def Search(
 
     def s(content):
         return bs(content.content, "lxml")
+
+    # TODO: Beautify this code
 
     search_on_site = _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -85,17 +87,11 @@ def Search(
     questions = _find_questions(soup)
     if print_prog:
         print("Requesting questions found (This may take a while)...")
-    # _links_for_pages = (
-    #     requests.get(link, timeout=5,)
-    #     for link in map(
-    #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
-    #     )
-    # )
     _links_for_pages = []
     for link in map(
         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
     ):
-        sleep(0.01)
+        sleep(randint(1, 10) / 100)
         _links_for_pages.append(rget(link))
     if print_prog:
         print("Parsing questions found (This may take a while)...")
@@ -133,7 +129,8 @@ async def fSearch(
     Query : str
         This is the query to search the stackexchange website for.
     print_prog : bool
-        If True, prints the progress. Otherwise, it does not print the progress (the default is True).
+        If True, prints the progress. Otherwise, it does not print the progress
+        (the default is True).
     search_on_site : str
         The stackexchange website to search on (the default is "stackoverflow").
     *args : Any
@@ -149,14 +146,12 @@ async def fSearch(
         }
 
     """
-
+    # noqa
     async def _remove_dot_com(string: str) -> str:
         string = str(string)
         # Maybe a regex is better here...
-        if string.endswith(".com"):
-            return string[0 : len(string) - 4]
-        elif string.endswith(".org"):
-            return string[0 : len(string) - 4]
+        if string.endswith(".com") or string.endswith(".org"):
+            return string[0 : len(string) - 4]  # noqa
         else:
             return string
 
@@ -190,6 +185,7 @@ async def fSearch(
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
+        # TODO: Clean this code
         r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
         r.raise_for_status()
         if print_prog:
@@ -200,17 +196,11 @@ async def fSearch(
         questions = await findQuestions(soup)
         if print_prog:
             print("Requesting questions found (This may take a while)...")
-        # _links_for_pages = [  # We cannot have a generator
-        #     await client.get(link, timeout=5,)
-        #     for link in map(
-        #         lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
-        #     )
-        # ]
         _links_for_pages = []
         for link in map(
             lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
         ):
-            sleep(0.01)
+            sleep(randint(1, 10) / 100)
             _links_for_pages.append(await rget(client, link))
         if print_prog:
             print("Parsing questions found (This may take a while)...")

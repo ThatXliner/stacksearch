@@ -103,7 +103,8 @@ def _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE):
             print(t.bold("Answers from {}"))
             for question, answers in answer.items():
                 print(
-                    f"{t.bold}{t.bright_green}Question #{question_number / 10}: {question}{t.normal}",
+                    f"{t.bold}{t.bright_green}Question #{question_number / 10}: "
+                    f"{question}{t.normal}",
                     file=FILE,
                 )
                 print("\n")
@@ -127,7 +128,8 @@ def _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE):
                         )
                 except IndexError:
                     print(
-                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                        f"{t.bright_red}There were no answers for "
+                        f"this question{t.normal}\n",
                         file=FILE,
                     )
                 else:
@@ -149,7 +151,6 @@ def custom_main(args_: list) -> None:
     None
 
     """
-
     args = parser.parse_args(args_)
 
     if args.version:
