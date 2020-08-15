@@ -5,6 +5,7 @@ os:
 python:
   - "nightly"
   - "3.8"
+  - "3.9-dev"
   # - "3.9"
   # 3.9 doesn't exist yet.
 install:
@@ -14,11 +15,10 @@ script:
   - pytest tests/ -vvv
 cache: pip
 matrix:
-    fast_finish: true
-    allow_failures:
-        - python: "nightly"
-        - python: 3.8
-          - os: osx
+  fast_finish: true
+  allow_failures:
+    - python: "nightly"
+    - python: "3.9-dev"
 notifications:
   email:
     recipients:
