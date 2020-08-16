@@ -26,7 +26,10 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
  - Python Version [e.g. python.3.8, 3.8, 3.8.2]
+ - Python Implementation
 
 
 **Additional context**
 Add any other context about the problem here.
+
+
