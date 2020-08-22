@@ -6,18 +6,19 @@ from setuptools import setup, find_packages
 from stacksearch import __version__
 
 # The directory containing this file
-HERE = Path(__file__).parent
+HERE = Path(Path(__file__).parent)
 
 # The text of the README file
-README = (HERE / "README.md").read_text()
-REQUIREMENTS = (HERE / "requirements.txt").read_text().split("\n")
+README = Path(HERE / "README.md").read_text()
+REQUIREMENTS = Path(HERE / "requirements.txt").read_text().split("\n")
 
 setup(
     name="stacksearch",  # Replace with your own username
     version=__version__,
     author="Bryan Hu",
     author_email="bryan.hu.cn@gmail.com",
-    description="StackSearch is a python module that provides a way to search StackOverflow.",
+    description="StackSearch is a python module that "
+    "provides a way to search StackOverflow.",
     long_description=README,
     long_description_content_type="text/markdown",
     # url="https://github.com/ThatXliner/stacksearch",
