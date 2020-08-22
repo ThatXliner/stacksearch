@@ -11,7 +11,7 @@ install:
   - pip install pytest-asyncio
   - pip install -r requirements.txt
 script:
-  - pytest tests/ -vvv --durations=5 --show-capture
+  - pytest tests/ -vvv --durations=5
 cache: pip
 matrix:
   fast_finish: true
