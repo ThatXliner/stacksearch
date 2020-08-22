@@ -23,7 +23,7 @@ copyright = "2020, Bryan Hu"
 author = "Bryan Hu"
 
 # The full version, including alpha/beta/rc tags
-release = "1.2.15.alpha"
+release = "1.2.16.alpha"
 
 
 # -- General configuration ---------------------------------------------------
