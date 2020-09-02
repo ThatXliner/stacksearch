@@ -50,7 +50,10 @@ def Search(
     """
     # noqa
     def rget(site):
-        return requests.get(site, timeout=5,)
+        return requests.get(
+            site,
+            timeout=5,
+        )
 
     def _remove_dot_com(string: str) -> str:
         string = str(string)
@@ -175,7 +178,10 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(site, timeout=5,)
+        return await client.get(
+            site,
+            timeout=5,
+        )
 
     async def s(content):
         return bs(content.content, "lxml")
