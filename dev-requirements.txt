@@ -1,6 +1,6 @@
+wheel
 pytest
 black
 flake8
 twine
-wheel
 setuptools
