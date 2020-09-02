@@ -71,8 +71,8 @@ def Search(
             )
         }
 
-    def s(content):
-        return bs(content.content, "lxml")
+    def s(t):
+        return bs(t.content, "lxml")
 
     # TODO: Beautify this code
 
