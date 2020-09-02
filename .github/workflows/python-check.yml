@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9.0-rc.1', '3.9.0-beta.5', '3.9.0-beta.4', '3.8.5', '3.8.4', '3.8.3', '3.8.2', '3.8.1', '3.8.0']
+        python-version: ['3.9.0-rc.1', '3.8.5', '3.8.4', '3.8.3', '3.8.2', '3.8.1', '3.8.0']
     steps:
       - uses: actions/cache@v2
         id: cache
@@ -34,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install -r dev-requirements.txt
-          sudo apt-get libxml2 libxslt
+
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
