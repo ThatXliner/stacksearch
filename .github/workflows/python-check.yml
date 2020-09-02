@@ -34,6 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install -r dev-requirements.txt
+          sudo apt-get libxml2 libxslt
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
