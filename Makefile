@@ -1,8 +1,10 @@
 PYTHON := python3
-PROJECT_NAME := package_name
+PROJECT_NAME := stacksearch
 
 test:
-	@pytest tests/ -vvv --durations=3 --cov=src/package_name
+	@make deps
+	@$(PYTHON) -m ensure pip && $(PYTHON) -m pip install pytest-cov pytest-asyncio
+	@pytest tests/ -vvv --durations=3 --cov=stacksearch
 deps:
 	@$(PYTHON) -m ensurepip
 	@echo "Installing dependencies..."
