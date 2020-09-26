@@ -38,10 +38,7 @@ this script's wonderful functions and objects.""",
 )
 try:
     parser.add_argument(  # Query
-        "query",
-        help="The query to search.",
-        nargs="*",
-        action="extend",
+        "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
     raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")

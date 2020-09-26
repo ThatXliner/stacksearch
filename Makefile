@@ -24,3 +24,9 @@ develop:
 	@$(PYTHON) -m ensurepip
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@$(PYTHON) -m pip install -e .
+plush:
+	@git pull --all
+	@git push --all
+sync:  # Made by (and for) ThatXliner
+	@git checkout master && git merge Stable && make plush
+	@git checkout preStable && git merge Stable && make plush
