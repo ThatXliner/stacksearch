@@ -48,12 +48,9 @@ def Search(
         }
 
     """
-    # noqa
+
     def rget(site):
-        return requests.get(
-            site,
-            timeout=5,
-        )
+        return requests.get(site, timeout=5)
 
     def _remove_dot_com(string: str) -> str:
         string = str(string)
@@ -72,7 +69,7 @@ def Search(
         }
 
     def s(t):
-        return bs(t.content, "lxml")
+        return bs(t.text, "lxml")
 
     # TODO: Beautify this code
 
@@ -92,7 +89,7 @@ def Search(
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = []
     for link in map(
-        lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+        lambda x: f"https://{search_on_site}.com{x}", iter(questions.values())
     ):
         sleep(randint(1, 10) / 100)
         _links_for_pages.append(rget(link))
@@ -178,13 +175,11 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(
-            site,
-            timeout=5,
-        )
+        return await client.get(site, timeout=5,)
 
     async def s(content):
-        return bs(content.content, "lxml")
+
+        return bs(await content.text(), "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
     TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
@@ -193,13 +188,15 @@ async def fSearch(
     async with httpx.AsyncClient() as client:
         # TODO: Clean this code
         r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
+
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
-        soup = bs(r.content, "lxml")
+        soup = bs(r, "lxml")
         if print_prog:
             print("Collecting question links...")
         questions = await findQuestions(soup)
+
         if print_prog:
             print("Requesting questions found (This may take a while)...")
         _links_for_pages = []
@@ -208,16 +205,19 @@ async def fSearch(
         ):
             sleep(randint(1, 10) / 100)
             _links_for_pages.append(await rget(client, link))
+
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            bs(link.content, "lxml") for link in _links_for_pages
+            bs(link) for link in _links_for_pages
         ]
+
         if print_prog:
             print("Identifying question text...")
         full_questions = [
             page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
         ]
+
         if print_prog:
             print("Identifying answers...")
         answers = await findAnswers(pages)

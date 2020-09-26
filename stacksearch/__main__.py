@@ -36,10 +36,7 @@ this script's wonderful functions and objects.""",
 )
 try:
     parser.add_argument(  # Query
-        "query",
-        help="The query to search.",
-        nargs="*",
-        action="extend",
+        "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
     raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
@@ -179,9 +176,8 @@ def custom_main(args_: list) -> None:
                         search_on_site=site,
                     )
                 )
-        except TypeError:
-            raise UnknownError("This should never happen")
-
+        except TypeError as e:
+            raise e
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
@@ -222,8 +218,8 @@ async def fcustom_main(args_: list) -> None:
                         search_on_site=site,
                     )
                 )
-        except TypeError:
-            raise UnknownError("This should never happen")
+        except TypeError as e:
+            raise e
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
