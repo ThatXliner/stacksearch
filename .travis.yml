@@ -1,21 +1,27 @@
 language: python
-
+os:
+  - linux
+dist:
+  - xenial
+  - bionic
+  - focal
 python:
   - "nightly"
   - "3.8"
+  - "3.9-dev"
   # - "3.9"
   # 3.9 doesn't exist yet.
-
 install:
   - pip install pytest-asyncio
   - pip install -r requirements.txt
 script:
-  - pytest tests/ -vvv
+  - pytest tests/ -vvv --durations=5
 cache: pip
 matrix:
-    fast_finish: true
-    allow_failures:
-        - python: "nightly"
+  fast_finish: true
+  allow_failures:
+    - python: "nightly"
+    - python: "3.9-dev"
 notifications:
   email:
     recipients:

@@ -13,13 +13,15 @@ Version: See __init__.py
 Desc: The main file to use/execute when trying to search StackOverflow.
 
 """
-import sys
 import argparse
-from blessings import Terminal
+import sys
 from pprint import pprint
+
+from blessings import Terminal
+
 from stacksearch import __version__
-from stacksearch.Search import Search
 from stacksearch.errors import UnknownError, UnsupportedPythonVersion
+from stacksearch.Search import Search
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",

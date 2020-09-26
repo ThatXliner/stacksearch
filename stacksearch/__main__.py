@@ -13,13 +13,15 @@ Version: See __init__.py
 Desc: The main file to use/execute when trying to search StackOverflow.
 
 """
-import sys
 import argparse
-from blessings import Terminal
+import sys
 from pprint import pprint
+
+from blessings import Terminal
+
 from . import __version__
-from .Search import Search, fSearch
 from .errors import UnknownError, UnsupportedPythonVersion
+from .Search import Search, fSearch
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
@@ -36,7 +38,10 @@ this script's wonderful functions and objects.""",
 )
 try:
     parser.add_argument(  # Query
-        "query", help="The query to search.", nargs="*", action="extend",
+        "query",
+        help="The query to search.",
+        nargs="*",
+        action="extend",
     )
 except ValueError:
     raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
@@ -103,7 +108,8 @@ def _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE):
             print(t.bold("Answers from {}"))
             for question, answers in answer.items():
                 print(
-                    f"{t.bold}{t.bright_green}Question #{question_number / 10}: {question}{t.normal}",
+                    f"{t.bold}{t.bright_green}Question #{question_number / 10}: "
+                    f"{question}{t.normal}",
                     file=FILE,
                 )
                 print("\n")
@@ -127,7 +133,8 @@ def _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE):
                         )
                 except IndexError:
                     print(
-                        f"{t.bright_red}There were no answers for this question{t.normal}\n",
+                        f"{t.bright_red}There were no answers for "
+                        f"this question{t.normal}\n",
                         file=FILE,
                     )
                 else:
@@ -149,7 +156,6 @@ def custom_main(args_: list) -> None:
     None
 
     """
-
     args = parser.parse_args(args_)
 
     if args.version:
@@ -175,9 +181,8 @@ def custom_main(args_: list) -> None:
                         search_on_site=site,
                     )
                 )
-        except TypeError:
-            raise UnknownError("This should never happen")
-
+        except TypeError as e:
+            raise e
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
@@ -218,8 +223,8 @@ async def fcustom_main(args_: list) -> None:
                         search_on_site=site,
                     )
                 )
-        except TypeError:
-            raise UnknownError("This should never happen")
+        except TypeError as e:
+            raise e
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
