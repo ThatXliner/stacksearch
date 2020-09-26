@@ -9,14 +9,15 @@ Made with love by Bryan hu .
 
 The primitive functions to use. # API
 """
+from json import loads
+from pathlib import Path
+from random import randint
+from time import sleep
+from typing import Any
+
+import httpx  # We probably should switch to aiohttp in the future
 import requests
 from bs4 import BeautifulSoup as bs
-from typing import Any
-import httpx  # We probably should switch to aiohttp in the future
-from time import sleep
-from random import randint
-from pathlib import Path
-from json import loads
 
 # NOTE: This will need to be updated accordingly
 TEXT_REQUIREMENTS = loads(

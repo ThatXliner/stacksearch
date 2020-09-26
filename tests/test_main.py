@@ -13,10 +13,9 @@ Version: TEST
 Desc: YOU SHOULD NOT USE THIS FILE. IT IS A TEST.
 
 """
-from sys import path
-from pathlib import Path
 from asyncio import run
-
+from pathlib import Path
+from sys import path
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 from stacksearch.__main__ import custom_main as MAIN
