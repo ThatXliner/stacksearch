@@ -2,9 +2,9 @@ name: PythonCI
 
 on:
   push:
-    branches: [master]
+    branches: [master, Stable]
   pull_request:
-    branches: [master]
+    branches: [master, Stable]
 jobs:
   pytest:
     strategy:
