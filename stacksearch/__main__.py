@@ -169,17 +169,16 @@ def custom_main(args_: list) -> None:
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        try:
-            for site in map(str, SITES_TO_SEARCH):
-                ANSWERS.append(
-                    Search(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-        except TypeError as e:
-            raise e
+            )
+
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
@@ -211,17 +210,15 @@ async def fcustom_main(args_: list) -> None:
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        try:
-            for site in map(str, SITES_TO_SEARCH):
-                ANSWERS.append(
-                    await fSearch(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                await fSearch(
+                    " ".join(args.query),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-        except TypeError as e:
-            raise e
+            )
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 

@@ -115,11 +115,11 @@ def Search(
         full_questions = [
             page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
         ]
-    except AttributeError:  # The TEXT_REQUIREMENTS has changed
+    except AttributeError:
         raise RuntimeError(
-            "Oh no! It appears that the StackOverflow's question text requirements have"
-            " changed. Please go to the Git repository and submit a pull request to update "
-            "the TEXT_REQUIREMENTS"
+            "Oh no! It appears that the StackOverflow's question text requirements "
+            "have changed. Please go to the Git repository and submit a pull request to "
+            "update the TEXT_REQUIREMENTS"
         )
     if print_prog:
         print("Identifying answers...")
@@ -195,11 +195,14 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(site, timeout=5,)
+        return await client.get(
+            site,
+            timeout=5,
+        )
 
     async def s(content):
 
-        return bs(await content.text(), "lxml")
+        return bs(await content.text, "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
 
@@ -240,9 +243,9 @@ async def fSearch(
             ]
         except AttributeError:
             raise RuntimeError(
-                "Oh no! It appears that the StackOverflow's question text requirements have"
-                " changed. Please go to the Git repository and submit a pull request to update "
-                "the TEXT_REQUIREMENTS"
+                "Oh no! It appears that the StackOverflow's question text requirements "
+                "have changed. Please go to the Git repository and submit a pull request to "
+                "update the TEXT_REQUIREMENTS"
             )
         if print_prog:
             print("Identifying answers...")
