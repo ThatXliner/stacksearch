@@ -10,10 +10,12 @@ python:
 - '3.8'
 - 3.9-dev
 install:
-- pip install pytest-asyncio
+- pip install pytest-asyncio codecov pytest-cov
 - pip install -r requirements.txt
 script:
-- pytest tests/ -vvv --durations=5
+- pytest tests/ -vvv --durations=5  --cov=stacksearch
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 cache: pip
 matrix:
   fast_finish: true
