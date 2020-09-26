@@ -115,11 +115,12 @@ def Search(
         full_questions = [
             page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
         ]
-    except AttributeError:
+    except AttributeError as e:
         raise RuntimeError(
             "Oh no! It appears that the StackOverflow's question text requirements "
-            "have changed. Please go to the Git repository and submit a pull request to "
-            "update the TEXT_REQUIREMENTS"
+            "have changed. Please go to the Git repository and submit a pull request "
+            "to update the TEXT_REQUIREMENTS"
+            f"\n(Actual exception: {e})"
         )
     if print_prog:
         print("Identifying answers...")
