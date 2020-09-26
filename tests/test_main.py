@@ -21,9 +21,6 @@ from asyncio import run
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
-from rich.traceback import install
-
-install()
 
 
 class TestClass:
