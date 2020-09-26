@@ -24,4 +24,3 @@ develop:
 	@$(PYTHON) -m ensurepip
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@$(PYTHON) -m pip install -e .
-	
