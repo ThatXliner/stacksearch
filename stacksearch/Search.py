@@ -15,6 +15,9 @@ from typing import Any
 import httpx  # We probably should switch to aiohttp in the future
 from time import sleep
 from random import randint
+from rich.traceback import install
+
+install()
 
 
 def Search(
@@ -74,7 +77,7 @@ def Search(
     # TODO: Beautify this code
 
     search_on_site = _remove_dot_com(search_on_site)
-    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
+    TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     r = rget(f"https://{search_on_site}.com/search?q={Query}")
@@ -100,7 +103,9 @@ def Search(
     ]
     if print_prog:
         print("Identifying question text...")
+
     full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
+
     if print_prog:
         print("Identifying answers...")
     answers = [
@@ -185,7 +190,7 @@ async def fSearch(
         return bs(await content.text(), "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
-    TEXT_REQUIREMENTS = {"class": "post-text", "itemprop": "text"}
+    TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
     async with httpx.AsyncClient() as client:
