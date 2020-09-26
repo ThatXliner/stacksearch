@@ -195,13 +195,9 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(
-            site,
-            timeout=5,
-        )
+        return await client.get(site, timeout=5,)
 
     async def s(content):
-
         return bs(content.text, "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
@@ -224,7 +220,7 @@ async def fSearch(
             print("Requesting questions found (This may take a while)...")
         _links_for_pages = []
         for link in map(
-            lambda x: f"https://{search_on_site}.com" + x, iter(questions.values())
+            lambda x: f"https://{search_on_site}.com{x}", iter(questions.values())
         ):
             sleep(randint(1, 10) / 100)
             _links_for_pages.append(await rget(client, link))
@@ -232,7 +228,7 @@ async def fSearch(
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            await s(r) for link in _links_for_pages
+            await s(link) for link in _links_for_pages
         ]
 
         if print_prog:
@@ -241,11 +237,12 @@ async def fSearch(
             full_questions = [
                 page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
             ]
-        except AttributeError:
+        except AttributeError as e:
             raise RuntimeError(
                 "Oh no! It appears that the StackOverflow's question text requirements "
-                "have changed. Please go to the Git repository and submit a pull request to "
-                "update the TEXT_REQUIREMENTS"
+                "have changed. Please go to the Git repository and submit a pull request "
+                "to update the TEXT_REQUIREMENTS"
+                f"\n(Actual exception: {e})"
             )
         if print_prog:
             print("Identifying answers...")
