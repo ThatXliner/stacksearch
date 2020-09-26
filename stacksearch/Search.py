@@ -15,9 +15,13 @@ from typing import Any
 import httpx  # We probably should switch to aiohttp in the future
 from time import sleep
 from random import randint
+from pathlib import Path
+from json import loads
 
 # NOTE: This will need to be updated accordingly
-TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
+TEXT_REQUIREMENTS = loads(
+    Path(Path(Path(__file__).parent) / "txt_req.json").read_text()
+)
 
 
 def Search(
@@ -73,8 +77,6 @@ def Search(
 
     def s(t):
         return bs(t.text, "lxml")
-
-    # TODO: Beautify this code
 
     search_on_site = _remove_dot_com(search_on_site)
 
@@ -247,6 +249,7 @@ async def fSearch(
         if print_prog:
             print("Identifying answers...")
         answers = await findAnswers(pages)
+
         if print_prog:
             print("Returning results...")
         return dict(zip(full_questions, answers))
