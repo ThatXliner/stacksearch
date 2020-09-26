@@ -38,10 +38,7 @@ this script's wonderful functions and objects.""",
 )
 try:
     parser.add_argument(  # Query
-        "query",
-        help="The query to search.",
-        nargs="*",
-        action="extend",
+        "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
     raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
@@ -172,17 +169,16 @@ def custom_main(args_: list) -> None:
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        try:
-            for site in map(str, SITES_TO_SEARCH):
-                ANSWERS.append(
-                    Search(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                Search(
+                    " ".join(args.query),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-        except TypeError as e:
-            raise e
+            )
+
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
@@ -214,20 +210,23 @@ async def fcustom_main(args_: list) -> None:
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
         ANSWERS = []
-        try:
-            for site in map(str, SITES_TO_SEARCH):
-                ANSWERS.append(
-                    await fSearch(
-                        " ".join(args.query),
-                        print_prog=PRINT_PROGRESS,
-                        search_on_site=site,
-                    )
+
+        for site in map(str, SITES_TO_SEARCH):
+            ANSWERS.append(
+                await fSearch(
+                    " ".join(args.query),
+                    print_prog=PRINT_PROGRESS,
+                    search_on_site=site,
                 )
-        except TypeError as e:
-            raise e
+            )
 
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
-if __name__ == "__main__":
+def cli_main():
+    """The cli."""
     custom_main(sys.argv[1:])
+
+
+if __name__ == "__main__":
+    cli_main()
