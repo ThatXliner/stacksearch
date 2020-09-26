@@ -20,8 +20,12 @@ from pprint import pprint
 from blessings import Terminal
 
 from . import __version__
-from .errors import UnknownError, UnsupportedPythonVersion
+from .errors import UnsupportedPythonVersion
 from .Search import Search, fSearch
+
+if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
+    raise UnsupportedPythonVersion("This version of python is not supported (for now).")
+
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
@@ -36,15 +40,10 @@ another python script, it'll return some parsable JSON. Assuming you are utilizi
 this script's wonderful functions and objects.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
-try:
-    parser.add_argument(  # Query
-        "query",
-        help="The query to search.",
-        nargs="*",
-        action="extend",
-    )
-except ValueError:
-    raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
+
+parser.add_argument(  # Query
+    "query", help="The query to search.", nargs="*", action="extend",
+)
 parser.add_argument(  # JSON
     "-j",
     "--json",
@@ -73,16 +72,14 @@ parser.add_argument(  # Silent
     help="Don't print the progress.",
     dest="s",
 )
-try:
-    parser.add_argument(  # Sites
-        "--sites",
-        action="extend",
-        default=["stackoverflow"],
-        nargs="+",
-        help="The StackExchange sites to search.",
-    )
-except ValueError:
-    raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
+
+parser.add_argument(  # Sites
+    "--sites",
+    action="extend",
+    default=["stackoverflow"],
+    nargs="+",
+    help="The StackExchange sites to search.",
+)
 parser.add_argument(  # Version
     "-v",
     "-V",
@@ -164,10 +161,8 @@ def custom_main(args_: list) -> None:
         parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
-        try:
-            SITES_TO_SEARCH = set(args.sites)
-        except TypeError:
-            raise UnknownError("This should never happen")
+
+        SITES_TO_SEARCH = set(args.sites)
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
@@ -205,10 +200,8 @@ async def fcustom_main(args_: list) -> None:
         parser.print_help(file=args.OUTPUT)
     else:
         PRINT_PROGRESS = not args.s
-        try:
-            SITES_TO_SEARCH = set(args.sites)
-        except TypeError:
-            raise UnknownError("This should never happen")
+
+        SITES_TO_SEARCH = set(args.sites)
         FILE = args.OUTPUT
         if PRINT_PROGRESS:
             print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
