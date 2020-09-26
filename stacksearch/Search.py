@@ -195,10 +195,7 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(
-            site,
-            timeout=5,
-        )
+        return await client.get(site, timeout=5,)
 
     async def s(content):
 
@@ -214,7 +211,7 @@ async def fSearch(
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
-        soup = bs(r, "lxml")
+        soup = await s(r)
 
         if print_prog:
             print("Collecting question links...")
@@ -232,7 +229,7 @@ async def fSearch(
         if print_prog:
             print("Parsing questions found (This may take a while)...")
         pages = [  # Pages of all the questions related to Query
-            bs(link) for link in _links_for_pages
+            await s(r) for link in _links_for_pages
         ]
 
         if print_prog:
