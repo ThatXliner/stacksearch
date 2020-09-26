@@ -6,64 +6,7 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  "pytest (Ubuntu)":
-    strategy:
-      matrix:
-        python-version:  # 3.6 to 3.9
-         - "3.9.0-rc.1"
-         - "3.9.0-beta.5"
-         - "3.9.0-beta.4"
-         - "3.8.5"
-         - "3.8.4"
-         - "3.8.3"
-         - "3.8.2"
-         - "3.8.1"
-         - "3.8.0"
-         - "3.7.9"
-         - "3.7.8"
-         - "3.7.7"
-         - "3.7.6"
-         - "3.7.5"
-         - "3.6.12"
-         - "3.6.11"
-         - "3.6.10"
-         - "3.6.9"
-         - "3.6.8"
-         - "3.6.7"
-        os:
-         - "ubuntu-latest"
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: 'x64'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev-requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev-requirements.txt') }}-2
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-            ${{ runner.os }}-pip-${{ hashFiles('**/dev-requirements.txt') }}
-            ${{ runner.os }}-pip-key
-            ${{ runner.os }}-
-            ${{ runner.os }}-restore
-            ${{ runner.os }}-restore-pip
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install pytest pytest-cov
-          python3 -m pip install -r requirements.txt
-      - name: Test with pytest
-        run: |
-          make test || pytest tests/ -vvv --durations=3 --cov=src/package_name
-      - name: Codecov Upload
-        run: curl -s https://codecov.io/bash | bash
-  "pytest (MacOS)":
+  pytest:
     strategy:
       matrix:
         python-version:  # 3.6 to 3.9
@@ -89,6 +32,10 @@ jobs:
          - "3.6.7"
         os:
          - "macos-latest"
+         - "ubuntu-latest"
+        include:
+          - os: windows-latest
+            architecture: x64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -97,9 +44,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
+
+      # Because the directory may change according to the OS, we need to dynamically
+      # adapt to it
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(python -m pip cache dir)"
       - uses: actions/cache@v2
         with:
-          path: ~/Library/Caches/pip
+          path: ${{ steps.pip-cache.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev-requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip
@@ -112,72 +66,15 @@ jobs:
             ${{ runner.os }}-restore-pip
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install pytest pytest-cov
-          python3 -m pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-cov
+          python -m pip install -r requirements.txt
       - name: Test with pytest
         run: |
           make test || pytest tests/ -vvv --durations=3 --cov=src/package_name
       - name: Codecov Upload
         run: curl -s https://codecov.io/bash | bash
-  "pytest (Windows)":
-    strategy:
-      matrix:
-        python-version:  # 3.6 to 3.9
-         - "3.9.0-rc.1"
-         - "3.9.0-beta.5"
-         - "3.9.0-beta.4"
-         - "3.8.5"
-         - "3.8.4"
-         - "3.8.3"
-         - "3.8.2"
-         - "3.8.1"
-         - "3.8.0"
-         - "3.7.9"
-         - "3.7.8"
-         - "3.7.7"
-         - "3.7.6"
-         - "3.7.5"
-         - "3.6.12"
-         - "3.6.11"
-         - "3.6.10"
-         - "3.6.9"
-         - "3.6.8"
-         - "3.6.7"
-        os:
-         - windows-latest
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: 'x64'
-      - uses: actions/cache@v2
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev-requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev-requirements.txt') }}-2
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-            ${{ runner.os }}-pip-${{ hashFiles('**/dev-requirements.txt') }}
-            ${{ runner.os }}-pip-key
-            ${{ runner.os }}-
-            ${{ runner.os }}-restore
-            ${{ runner.os }}-restore-pip
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install pytest pytest-cov
-          python3 -m pip install -r requirements.txt
-      - name: Test with pytest
-        run: |
-          make test || pytest tests/ -vvv --durations=3 --cov=src/package_name
-      - name: Codecov Upload
-        run: curl -s https://codecov.io/bash | bash
-  "flake8":
+  flake8:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
