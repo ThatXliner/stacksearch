@@ -30,7 +30,7 @@ setup(
         "Tracker": "https://github.com/ThatXliner/stacksearch/issues",
     },
     packages=find_packages(exclude=["tests"], include=["stacksearch"]),
-    scripts=["scripts/stacksearch"],
+    # scripts=["scripts/stacksearch"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
@@ -53,5 +53,5 @@ setup(
     include_package_data=True,
     install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
     keywords="api stackexchange stackoverflow python webscrape webscrap",
-    # entry_points={"console_scripts": ["stacksearch=stacksearch.__main__:main"]},
+    entry_points={"console_scripts": ["stacksearch=stacksearch.__main__:cli_main"]},
 )

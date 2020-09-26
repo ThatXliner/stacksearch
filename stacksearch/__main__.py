@@ -38,10 +38,7 @@ this script's wonderful functions and objects.""",
 )
 try:
     parser.add_argument(  # Query
-        "query",
-        help="The query to search.",
-        nargs="*",
-        action="extend",
+        "query", help="The query to search.", nargs="*", action="extend",
     )
 except ValueError:
     raise UnsupportedPythonVersion("This program only supports python 3.8 (for now).")
@@ -229,5 +226,10 @@ async def fcustom_main(args_: list) -> None:
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
-if __name__ == "__main__":
+def cli_main():
+    """The cli."""
     custom_main(sys.argv[1:])
+
+
+if __name__ == "__main__":
+    cli_main()
