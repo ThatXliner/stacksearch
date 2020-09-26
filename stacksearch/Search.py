@@ -199,7 +199,7 @@ async def fSearch(
 
     async def s(content):
 
-        return bs(await content.text, "lxml")
+        return bs(content.text, "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
 
