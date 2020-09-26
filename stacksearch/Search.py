@@ -175,7 +175,10 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(site, timeout=5,)
+        return await client.get(
+            site,
+            timeout=5,
+        )
 
     async def s(content):
 
