@@ -72,8 +72,6 @@ jobs:
       - name: Test with pytest
         run: |
           make test || pytest tests/ -vvv --durations=3 --cov=src/package_name
-      - name: Codecov Upload
-        run: curl -s https://codecov.io/bash | bash
   flake8:
     runs-on: ubuntu-latest
     steps:
