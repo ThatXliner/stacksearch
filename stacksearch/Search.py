@@ -15,9 +15,9 @@ from typing import Any
 import httpx  # We probably should switch to aiohttp in the future
 from time import sleep
 from random import randint
-from rich.traceback import install
 
-install()
+# NOTE: This will need to be updated accordingly
+TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
 
 
 def Search(
@@ -77,35 +77,47 @@ def Search(
     # TODO: Beautify this code
 
     search_on_site = _remove_dot_com(search_on_site)
-    TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
+
     if print_prog:
         print(f"Requesting results from {search_on_site}...")
+    # Fetches site
     r = rget(f"https://{search_on_site}.com/search?q={Query}")
     r.raise_for_status()
     if print_prog:
         print("Parsing response HTML...")
     soup = s(r)
+
     if print_prog:
         print("Collecting question links...")
     questions = _find_questions(soup)
+
     if print_prog:
         print("Requesting questions found (This may take a while)...")
     _links_for_pages = []
     for link in map(
         lambda x: f"https://{search_on_site}.com{x}", iter(questions.values())
     ):
-        sleep(randint(1, 10) / 100)
+        sleep(randint(1, 10) / 100)  # We need to look like a human
         _links_for_pages.append(rget(link))
+
     if print_prog:
         print("Parsing questions found (This may take a while)...")
     pages = [  # Pages of all the questions related to Query
         s(link) for link in _links_for_pages
     ]
+
     if print_prog:
         print("Identifying question text...")
-
-    full_questions = [page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages]
-
+    try:
+        full_questions = [
+            page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
+        ]
+    except AttributeError:  # The TEXT_REQUIREMENTS has changed
+        raise RuntimeError(
+            "Oh no! It appears that the StackOverflow's question text requirements have"
+            " changed. Please go to the Git repository and submit a pull request to update "
+            "the TEXT_REQUIREMENTS"
+        )
     if print_prog:
         print("Identifying answers...")
     answers = [
@@ -151,7 +163,7 @@ async def fSearch(
         }
 
     """
-    # noqa
+    # noqa: D202
     async def _remove_dot_com(string: str) -> str:
         string = str(string)
         # Maybe a regex is better here...
@@ -180,27 +192,24 @@ async def fSearch(
         }
 
     async def rget(client, site):
-        return await client.get(
-            site,
-            timeout=5,
-        )
+        return await client.get(site, timeout=5,)
 
     async def s(content):
 
         return bs(await content.text(), "lxml")
 
     search_on_site = await _remove_dot_com(search_on_site)
-    TEXT_REQUIREMENTS = {"class": "s-prose js-post-body", "itemprop": "text"}
-    if print_prog:
-        print(f"Requesting results from {search_on_site}...")
+
     async with httpx.AsyncClient() as client:
-        # TODO: Clean this code
+        if print_prog:
+            print(f"Requesting results from {search_on_site}...")
         r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
 
         r.raise_for_status()
         if print_prog:
             print("Parsing response HTML...")
         soup = bs(r, "lxml")
+
         if print_prog:
             print("Collecting question links...")
         questions = await findQuestions(soup)
@@ -222,10 +231,16 @@ async def fSearch(
 
         if print_prog:
             print("Identifying question text...")
-        full_questions = [
-            page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
-        ]
-
+        try:
+            full_questions = [
+                page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
+            ]
+        except AttributeError:
+            raise RuntimeError(
+                "Oh no! It appears that the StackOverflow's question text requirements have"
+                " changed. Please go to the Git repository and submit a pull request to update "
+                "the TEXT_REQUIREMENTS"
+            )
         if print_prog:
             print("Identifying answers...")
         answers = await findAnswers(pages)
