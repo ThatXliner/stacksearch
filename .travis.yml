@@ -15,7 +15,6 @@ install:
 script:
 - make test || pytest tests/ -vvv --durations=5  --cov=stacksearch
 after_success:
-  - make clean
   - bash <(curl -s https://codecov.io/bash)
 cache: pip
 matrix:
@@ -29,6 +28,8 @@ notifications:
     - bryan.hu.2020@gmail.com
     on_success: change
     on_failure: always
+before_deploy:
+ - make clean
 deploy:
   provider: pypi
   username: __token__
