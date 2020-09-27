@@ -1,5 +1,5 @@
-cmd: /Users/bryanhu/Library/Python/3.8/bin/pytest
+cmd: /usr/bin/make
 sh: false
 atomCommandName: build:pytest
-arguments: --verbose
+arguments: test
 keymap: f5
