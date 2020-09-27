@@ -42,7 +42,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          INPUT_FORCE: true
+          force: true
 
   Isort:  # For sorting python module imports
       runs-on: ubuntu-latest
@@ -73,6 +73,7 @@ jobs:
           run: python3 -m isort .
         - name: git pull
           run: |
+            git config pull.ff only
             git pull --all
         - name: Commit
           run: |
@@ -83,3 +84,4 @@ jobs:
           uses: ad-m/github-push-action@master
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
+            force: true
