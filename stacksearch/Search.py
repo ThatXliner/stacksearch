@@ -14,7 +14,7 @@ from pathlib import Path
 from random import randint
 from time import sleep
 from typing import Any
-
+from warnings import warn
 import httpx  # We probably should switch to aiohttp in the future
 import requests
 from bs4 import BeautifulSoup as bs
@@ -85,7 +85,16 @@ def Search(
         print(f"Requesting results from {search_on_site}...")
     # Fetches site
     r = rget(f"https://{search_on_site}.com/search?q={Query}")
-    r.raise_for_status()
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        if "429" in str(e):
+            warn(
+                "Error: 429: You have reached the maximum number of requests t"
+                f"o {search_on_site}. Please try again later.",
+                RuntimeWarning,
+            )
+            return {}
     if print_prog:
         print("Parsing response HTML...")
     soup = s(r)
@@ -207,8 +216,16 @@ async def fSearch(
         if print_prog:
             print(f"Requesting results from {search_on_site}...")
         r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
-
-        r.raise_for_status()
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            if "429" in str(e):
+                warn(
+                    "Error: 429: You have reached the maximum number of requests t"
+                    f"o {search_on_site}. Please try again later.",
+                    RuntimeWarning,
+                )
+                return {}
         if print_prog:
             print("Parsing response HTML...")
         soup = await s(r)
