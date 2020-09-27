@@ -15,6 +15,7 @@ from random import randint
 from time import sleep
 from typing import Any
 from warnings import warn
+
 import httpx  # We probably should switch to aiohttp in the future
 import requests
 from bs4 import BeautifulSoup as bs
