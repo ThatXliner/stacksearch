@@ -40,7 +40,8 @@ deploy:
   on:
     branch:
       - master
-      # We only PyPi upload master
+      - Stable
+      # Stable and master get uploaded but master is basically the last working version. The VERY stable version.
 
 git:
   quiet: true
