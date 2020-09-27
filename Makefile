@@ -2,8 +2,8 @@ PYTHON := python3
 PROJECT_NAME := stacksearch
 
 test:
-	@make deps
-	@$(PYTHON) -m ensurepip && $(PYTHON) -m pip install pytest-cov pytest-asyncio pytest-random
+	@make deps > /dev/null
+	@$(PYTHON) -m ensurepip > /dev/null && $(PYTHON) -m pip install pytest-cov pytest-asyncio pytest-random > /dev/null
 	@pytest tests/ -vvv --durations=3 --cov=stacksearch
 deps:
 	@$(PYTHON) -m ensurepip
@@ -19,9 +19,9 @@ build:
 	@$(PYTHON) setup.py sdist bdist_wheel
 
 clean:
-	@$(PYTHON) -m ensurepip
 	@find . -type d \( -name '__pycache__' -or -name '*.egg-info' -or -name 'dist' -or -name 'build' -or -name '.pytest_cache' \)  -exec rm -rf {} +
-	@black . || @$(PYTHON) -m pip install black > /dev/null || @echo "Black failed."
+	@rm ".coverage" || echo ""
+	@black . || $(PYTHON) -m ensurepip && $(PYTHON) -m pip install black > /dev/null || echo "Black failed."
 develop:
 	@$(PYTHON) -m ensurepip
 	@$(PYTHON) setup.py sdist bdist_wheel
