@@ -38,7 +38,7 @@ deploy:
   on:
     branch:
       - master
-      - Stable
+      # We only PyPi upload master
 
 git:
   quiet: true
