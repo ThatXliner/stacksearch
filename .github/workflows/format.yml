@@ -1,8 +1,6 @@
 name: Format
 
-on:
-  push:
-    branches: [master]
+on: push
 jobs:
 
   Blacken:  # For formatting python files
@@ -25,8 +23,8 @@ jobs:
             ${{ runner.os }}-restore-pip
       - name: Install black
         run: |
-          sudo apt-get install -y python-setuptools
-          python3 -m pip install --upgrade pip setuptools black
+          python3 -m pip install --upgrade pip
+          python3 -m pip install black
 
       # The fun stuff
       - name: Blacken
