@@ -25,8 +25,7 @@ jobs:
             ${{ runner.os }}-restore-pip
       - name: Install black
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install black
+          python3 -m pip install --upgrade pip setuptools black
 
       # The fun stuff
       - name: Blacken

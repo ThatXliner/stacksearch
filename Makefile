@@ -30,7 +30,7 @@ plush:
 	@git pull --all
 	@git push --all
 sync:  # Made by (and for) ThatXliner
-	@git merge --ff -m "Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
-	@git checkout master && git merge --ff -m "Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
-	@git checkout preStable && git merge --ff -m "Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
+	@git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
+	@git checkout master && git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
+	@git checkout preStable && git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
 	@git checkout Stable
