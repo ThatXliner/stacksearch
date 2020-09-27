@@ -3,7 +3,7 @@ PROJECT_NAME := stacksearch
 
 test:
 	@make deps
-	@$(PYTHON) -m ensure pip && $(PYTHON) -m pip install pytest-cov pytest-asyncio pytest-random
+	@$(PYTHON) -m ensurepip && $(PYTHON) -m pip install pytest-cov pytest-asyncio pytest-random
 	@pytest tests/ -vvv --durations=3 --cov=stacksearch
 deps:
 	@$(PYTHON) -m ensurepip
