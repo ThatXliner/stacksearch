@@ -42,6 +42,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_FORCE: true
 
   Isort:  # For sorting python module imports
       runs-on: ubuntu-latest
