@@ -31,7 +31,7 @@ jobs:
         run: python3 -m black .
       - name: git pull
         run: |
-          git config pull.ff only
+
           git pull --all
       - name: Commit
         run: |
