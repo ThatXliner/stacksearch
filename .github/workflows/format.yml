@@ -72,7 +72,6 @@ jobs:
           run: python3 -m isort .
         - name: git pull
           run: |
-            git config pull.ff only
             git pull --all
         - name: Commit
           run: |
