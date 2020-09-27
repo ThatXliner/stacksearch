@@ -25,6 +25,7 @@ jobs:
             ${{ runner.os }}-restore-pip
       - name: Install black
         run: |
+          sudo apt-get install -y python-setuptools
           python3 -m pip install --upgrade pip setuptools black
 
       # The fun stuff
