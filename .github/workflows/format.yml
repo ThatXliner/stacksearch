@@ -38,10 +38,12 @@ jobs:
           git config --global user.name 'Formatter'
           git config --global user.email 'ThatXliner@users.noreply.github.com'
           git commit -am ":robot: | :art: - :black_circle: -> Blackened files! [skip ci]" >  /dev/null || echo "Already blackened! 👍"
+          git pull --all
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
 
   Isort:  # For sorting python module imports
       runs-on: ubuntu-latest
@@ -72,13 +74,16 @@ jobs:
           run: python3 -m isort .
         - name: git pull
           run: |
+            git config pull.ff only
             git pull --all
         - name: Commit
           run: |
             git config --global user.name 'Formatter'
             git config --global user.email 'ThatXliner@users.noreply.github.com'
             git commit -am ":robot: | :art: -> Isorted files! [skip ci]" >  /dev/null || echo "Already Isorted! 👍"
+            git pull --all
         - name: Push changes
           uses: ad-m/github-push-action@master
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
+            force: true
