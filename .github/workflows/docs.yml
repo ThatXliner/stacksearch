@@ -32,3 +32,18 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Make the docs
         run: cd docs && make html
+      - name: git pull
+        run: |
+          git config pull.ff only
+          git pull --all
+      - name: Commit
+        run: |
+          git config --global user.name 'Doc Updater[bot]'
+          git config --global user.email 'ThatXliner@users.noreply.github.com'
+          git commit -am ":robot: | :memo: -> Updated docs! [skip ci]" >  /dev/null || echo "Already up to date 👍"
+          git pull --all
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
