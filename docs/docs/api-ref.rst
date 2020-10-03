@@ -8,6 +8,5 @@ This document will list all available APIs and their documentation.
 
 ----------------------------------------------------------------
 
-.. autofunction:: Search.Search
-
-.. autofunction:: Search.fSearch
+.. automodule:: stacksearch.Search
+   :members:

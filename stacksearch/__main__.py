@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# type: ignore
 """
 Author: Bryan Hu .
 
@@ -22,6 +23,8 @@ from blessings import Terminal
 from . import __version__
 from .errors import UnsupportedPythonVersion
 from .Search import Search, fSearch
+
+# from typing import Iterable
 
 if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
@@ -96,7 +99,7 @@ parser.add_argument(  # Version
 t = Terminal()
 
 
-def _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE):
+def _cmd_line_stuff(ANSWERS: list[str], PRINT_PROGRESS: bool, args, FILE: str) -> None:
     if args.json:
         pprint(ANSWERS, stream=FILE, width=79)  # You will get unprocessed, raw JSON
     else:  # We got some parsing to do

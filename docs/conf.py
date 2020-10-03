@@ -12,9 +12,11 @@
 #
 import os
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.abspath("."))
-
+sys.path.insert(1, str(Path(Path(__file__).parent.parent / "stacksearch")))
+from stacksearch import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +25,8 @@ copyright = "2020, Bryan Hu"
 author = "Bryan Hu"
 
 # The full version, including alpha/beta/rc tags
-release = "1.3.5.1.alpha"
+
+release = __version__ + "alpha"
 
 
 # -- General configuration ---------------------------------------------------

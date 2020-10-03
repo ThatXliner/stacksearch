@@ -4,28 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The API Reference &#8212; stacksearch 1.3.5.1.alpha documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.3.5.1.alpha',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Quickstart guide" href="quickstart.html" /> 
-  </head>
-  <body>
+    <link rel="prev" title="Quickstart guide" href="quickstart.html" />
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -33,21 +27,81 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="quickstart.html" title="Quickstart guide"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The API Reference</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <div class="section" id="the-api-reference">
 <span id="api-ref"></span><h1>The API Reference<a class="headerlink" href="#the-api-reference" title="Permalink to this headline">¶</a></h1>
 <p>This document will list all available APIs and their documentation.</p>
 <hr class="docutils" />
+<span class="target" id="module-stacksearch.Search"></span><p>Author: Bryan hu .</p>
+<p>&#64;Bryan hu .</p>
+<p>Made with love by Bryan hu .</p>
+<p>The primitive functions to use. # API</p>
+<dl class="py function">
+<dt id="stacksearch.Search.Search">
+<code class="sig-prename descclassname">stacksearch.Search.</code><code class="sig-name descname">Search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Query</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">print_prog</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">search_on_site</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'stackoverflow'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#stacksearch.Search.Search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this. This is the official API for the stacksearch module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Query</strong> (<em>str</em>) – This is the query to search the stackexchange website for.</p></li>
+<li><p><strong>print_prog</strong> (<em>bool</em>) – If True, prints the progress. Otherwise, it does not print the progress
+(the default is True).</p></li>
+<li><p><strong>search_on_site</strong> (<em>str</em>) – The stackexchange website to search on (the default is “stackoverflow”).</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – For backwards compatibility.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – For backwards compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>In the format: {
+‘question’: [‘answer1’, ‘answer2’, …], ‘question2’: [‘answer1’, …]
+}</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stacksearch.Search.fSearch">
+<em class="property">async </em><code class="sig-prename descclassname">stacksearch.Search.</code><code class="sig-name descname">fSearch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Query</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">print_prog</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">search_on_site</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'stackoverflow'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#stacksearch.Search.fSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this. This is the async version of the Search API function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Query</strong> (<em>str</em>) – This is the query to search the stackexchange website for.</p></li>
+<li><p><strong>print_prog</strong> (<em>bool</em>) – If True, prints the progress. Otherwise, it does not print the progress
+(the default is True).</p></li>
+<li><p><strong>search_on_site</strong> (<em>str</em>) – The stackexchange website to search on (the default is “stackoverflow”).</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – For backwards compatibility.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – For backwards compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>In the format: {
+‘question’: [‘answer1’, ‘answer2’, …], ‘question2’: [‘answer1’, …]
+}</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -87,9 +141,13 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="quickstart.html" title="Quickstart guide"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The API Reference</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
