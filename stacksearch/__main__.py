@@ -45,7 +45,10 @@ this script's wonderful functions and objects.""",
 )
 
 parser.add_argument(  # Query
-    "query", help="The query to search.", nargs="*", action="extend",
+    "query",
+    help="The query to search.",
+    nargs="*",
+    action="extend",
 )
 parser.add_argument(  # JSON
     "-j",
