@@ -1,24 +1,25 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quickstart guide &#8212; stacksearch 1.3.5.1.alpha documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
+
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/language_data.js"></script>
-    
+
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="The API Reference" href="api-ref.html" />
-    <link rel="prev" title="Welcome to stacksearch’s documentation!" href="../index.html" /> 
+    <link rel="prev" title="Welcome to stacksearch’s documentation!" href="../index.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -33,77 +34,77 @@
           <a href="../index.html" title="Welcome to stacksearch’s documentation!"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <div class="section" id="quickstart-guide">
 <h1>Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
-<p>So, you’ve seen it on PyPi, you’ve noticed it on GitHub, and now want to know how to use <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>? This quickstart guide will help you understand most of the features of stacksearch. It’ll cover basic usage, options, and some of the API features. So, without further ado, let’s dive in!</p>
+<p>So, you’ve seen it on PyPi, you’ve noticed it on GitHub, and now want to know how to use <code class="docutils literal"><span class="pre">stacksearch</span></code>? This quickstart guide will help you understand most of the features of stacksearch. It’ll cover basic usage, options, and some of the API features. So, without further ado, let’s dive in!</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To install stacksearch, <strong>you must have python version 3.8 or higher</strong>.
-The reason for this is because <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> requires this feature of <code class="docutils literal notranslate"><span class="pre">argparse</span></code> that <strong>no other python version supports.</strong></p>
+<p class="first admonition-title">Warning</p>
+<p class="last">To install stacksearch, <strong>you must have python version 3.8 or higher</strong>.
+The reason for this is because <code class="docutils literal"><span class="pre">stacksearch</span></code> requires this feature of <code class="docutils literal"><span class="pre">argparse</span></code> that <strong>no other python version supports.</strong></p>
 </div>
-<p>You can easily install <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> via <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">stacksearch</span></code></p>
+<p>You can easily install <code class="docutils literal"><span class="pre">stacksearch</span></code> via <code class="docutils literal"><span class="pre">pip</span></code>:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">stacksearch</span></code></p>
 <p>or</p>
-<p><code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">install</span> <span class="pre">stacksearch</span></code></p>
-<p>or you can install it manually via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir stacksearch
+<p><code class="docutils literal"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">install</span> <span class="pre">stacksearch</span></code></p>
+<p>or you can install it manually via <code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir stacksearch
 git clone https://github.com/ThatXliner/stacksearch.git
 </pre></div>
 </div>
 <p>Whatever you prefer.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you want to install stacksearch via git, make sure to install the latest <em>stable</em> version</p>
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to install stacksearch via git, make sure to install the latest <em>stable</em> version</p>
 </div>
 </div>
 <div class="section" id="basic-tasks">
 <h2>Basic Tasks<a class="headerlink" href="#basic-tasks" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with ease.</em></p>
-<p>To refer to the commands <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code> provides (or the help menu), you can type <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">--help</span></code> or <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">-h</span></code>.</p>
-<p>To search StackOverflow directly from the command-line, do <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> or <code class="docutils literal notranslate"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> and replace ‘this is your query’ with the query string you want to search for.</p>
+<p><code class="docutils literal"><span class="pre">stacksearch</span></code> is designed so that <em>anyone can use it, with ease.</em></p>
+<p>To refer to the commands <code class="docutils literal"><span class="pre">stacksearch</span></code> provides (or the help menu), you can type <code class="docutils literal"><span class="pre">stacksearch</span> <span class="pre">--help</span></code> or <code class="docutils literal"><span class="pre">stacksearch</span> <span class="pre">-h</span></code>.</p>
+<p>To search StackOverflow directly from the command-line, do <code class="docutils literal"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> or <code class="docutils literal"><span class="pre">python3.8</span> <span class="pre">-m</span> <span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span></code> and replace ‘this is your query’ with the query string you want to search for.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the rest of this tutorial, we’ll refer your preferred stacksearch command as stacksearch for simplicity</p>
+<p class="first admonition-title">Note</p>
+<p class="last">For the rest of this tutorial, we’ll refer your preferred stacksearch command as stacksearch for simplicity</p>
 </div>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
-<p>You can also provide <em>additional</em> options to <code class="docutils literal notranslate"><span class="pre">stacksearch</span></code>.</p>
-<p>For example, say you want to search <em>all</em> of the StackExchange you know, then you would run <code class="docutils literal notranslate"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span> <span class="pre">--sites</span> <span class="pre">...</span></code> (replace ‘…’ with the sites you want to search)</p>
+<p>You can also provide <em>additional</em> options to <code class="docutils literal"><span class="pre">stacksearch</span></code>.</p>
+<p>For example, say you want to search <em>all</em> of the StackExchange you know, then you would run <code class="docutils literal"><span class="pre">stacksearch</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">your</span> <span class="pre">query</span> <span class="pre">--sites</span> <span class="pre">...</span></code> (replace ‘…’ with the sites you want to search)</p>
 <p>Or maybe you just don’t want so much debug information filling up your terminal, then you can pass the <cite>–silent</cite> option. Which could also be shortened to <cite>-s</cite>.</p>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>DO NOT CONFUSE THE <code class="docutils literal notranslate"><span class="pre">-s</span></code> OPTION WITH THE <code class="docutils literal notranslate"><span class="pre">--sites</span></code> OPTION! THEY ARE NOT THE SAME!!</p>
+<p class="first admonition-title">Warning</p>
+<p class="last">DO NOT CONFUSE THE <code class="docutils literal"><span class="pre">-s</span></code> OPTION WITH THE <code class="docutils literal"><span class="pre">--sites</span></code> OPTION! THEY ARE NOT THE SAME!!</p>
 </div>
-<p>Or <em>maybe</em> you want JSON output that <em>you</em> can use. Then you can pass the <code class="docutils literal notranslate"><span class="pre">--json</span></code> option, the <code class="docutils literal notranslate"><span class="pre">-j</span></code> option, the <code class="docutils literal notranslate"><span class="pre">--raw-data</span></code> option, the <code class="docutils literal notranslate"><span class="pre">--raw</span></code> option, or the <code class="docutils literal notranslate"><span class="pre">-r</span></code> option. It’ll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.</p>
+<p>Or <em>maybe</em> you want JSON output that <em>you</em> can use. Then you can pass the <code class="docutils literal"><span class="pre">--json</span></code> option, the <code class="docutils literal"><span class="pre">-j</span></code> option, the <code class="docutils literal"><span class="pre">--raw-data</span></code> option, the <code class="docutils literal"><span class="pre">--raw</span></code> option, or the <code class="docutils literal"><span class="pre">-r</span></code> option. It’ll output raw JSON data instead of beautifully formatted (and elegantly colorized) question-and-answers.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The feature mentioned above may be subject to change</p>
+<p class="first admonition-title">Note</p>
+<p class="last">The feature mentioned above may be subject to change</p>
 </div>
 </div>
 <div class="section" id="simple-api">
 <h2>Simple API<a class="headerlink" href="#simple-api" title="Permalink to this headline">¶</a></h2>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="api-ref.html"><span class="doc">The API Reference</span></a></p>
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="api-ref.html"><span class="doc">The API Reference</span></a></p>
 </div>
 <p>An example of how simple stacksearch’s API is:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">To prove how simple, yet powerful, stacksearch is</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stacksearch.Searcher</span> <span class="kn">import</span> <span class="n">Search</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s2">&quot;How do i code python&quot;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s2">&quot;How do i code python&quot;</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -111,7 +112,7 @@ git clone https://github.com/ThatXliner/stacksearch.git
 <p>But, if you want to search for multiple questions <em>asynchronously</em>, you can use the asynchronous stacksearch API instead:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">This is the asynchronous stacksearch API</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -122,33 +123,32 @@ git clone https://github.com/ThatXliner/stacksearch.git
  9
 10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stacksearch.Searcher</span> <span class="kn">import</span> <span class="n">fSearch</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">stuff</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;How do i code python&#39;</span><span class="p">))</span>
-    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;How do make my own object&#39;</span><span class="p">))</span>
-    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;What are objects&#39;</span><span class="p">))</span>
-    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;[python] lists&#39;</span><span class="p">))</span>
+    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;How do i code python&#39;</span><span class="p">))</span>
+    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;How do make my own object&#39;</span><span class="p">))</span>
+    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;What are objects&#39;</span><span class="p">))</span>
+    <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">await</span> <span class="n">fSearch</span><span class="p">(</span><span class="s1">&#39;[python] lists&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">stuff</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 <p>If you want to.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The asynchronous API is only decently stable. The StackExchange server may stop requests from too much asynchronous operations.</p>
+<p class="first admonition-title">Note</p>
+<p class="last">The asynchronous API is only decently stable. The StackExchange server may stop requests from too much asynchronous operations.</p>
 </div>
 </div>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Quickstart guide</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
@@ -173,15 +173,15 @@ git clone https://github.com/ThatXliner/stacksearch.git
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -199,12 +199,12 @@ git clone https://github.com/ThatXliner/stacksearch.git
           <a href="../index.html" title="Welcome to stacksearch’s documentation!"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">stacksearch 1.3.5.1.alpha documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Quickstart guide</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Bryan Hu.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>
