@@ -12,9 +12,11 @@
 #
 import os
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.abspath("."))
-
+sys.path.insert(1, str(Path(Path(__file__).parent.parent / "stacksearch")))
+from stacksearch import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +25,8 @@ copyright = "2020, Bryan Hu"
 author = "Bryan Hu"
 
 # The full version, including alpha/beta/rc tags
-release = "1.2.17.alpha"
+
+release = __version__ + "alpha"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +34,7 @@ release = "1.2.17.alpha"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon"]
 master_doc = "index"
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
