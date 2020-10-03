@@ -113,6 +113,8 @@ SOFTWARE.
 
 [Black](https://github.com/psf/black). We (I, right now.) use the black formatter to format our code. **It's pretty strict.**
 
+We also use NumPy style docstrings.
+
 ## Contributing ✏️
 
 ![GitHub contributors](https://img.shields.io/github/contributors/ThatXliner/stacksearch)
