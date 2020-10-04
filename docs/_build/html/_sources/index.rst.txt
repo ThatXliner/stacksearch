@@ -13,6 +13,7 @@ GitHub: GitHub_
 .. toctree::
    docs/quickstart.rst
    docs/api-ref.rst
+   docs/modules.rst
 
 
 
