@@ -27,11 +27,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: autodoc
-        run: sphinx-apidoc -f -o docs/source .
+        run: |
+          cd docs
+          sphinx-apidoc -f -o docs ..
 
       # Runs a set of commands using the runners shell
       - name: Make the docs
-        run: cd docs && make html
+        run: make html
       - name: git pull
         run: |
           git config pull.ff only

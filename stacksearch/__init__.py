@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-stacksearch is a library that provides a easy way to search on all stackexchange sites.
+Welcome to stacksearch.
 
-What it does is it sends a request to the stackexchange website, does some fancy HTML
-parsing, then returns a python dict containing questions and answers.
-
-
+Stacksearch is a simple tool aimed for people who never want to leave the terminal.
+Stacksearch can also search other Stack Exchange websites, not just StackOverflow.
 """
 
-__version__ = "1.3.7"
+__version__ = "1.3.8"
 
-__author__ = ["Bryan Hu"]
+__author__ = ["Bryan Hu", "KomodoKode"]
+
+__all__ = ["__main__", "Search"]

@@ -16,8 +16,8 @@ REQUIREMENTS = Path(HERE / "requirements.txt").read_text().split("\n")
 setup(
     name="stacksearch",  # Replace with your own username
     version=__version__,
-    author="Bryan Hu",
-    author_email="bryan.hu.cn@gmail.com",
+    author="Bryan Hu",  # Co authors: KomodoKode
+    author_email="bryan.hu.2020@gmail.com",
     description="StackSearch is a python module that "
     "provides a way to search StackOverflow.",
     long_description=README,

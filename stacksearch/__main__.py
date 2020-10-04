@@ -37,10 +37,10 @@ parser = argparse.ArgumentParser(
 For searching StackOverflow and getting results that you can use.
 
 There are many other libraries/modules available that do the same
-thing. The reason you should use this is because this returns results that you can
-use. If ran from the command line, it'll return human readable results. If ran from
-another python script, it'll return some parsable JSON. Assuming you are utilizing
-this script's wonderful functions and objects.""",
+thing. The reason you should use this is because this returns results
+that you can use. If ran from the command line, it'll return human readable
+results. If ran from another python script, it'll return some parsable JSON.
+Assuming you are utilizing this script's wonderful functions and objects.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
 
@@ -144,7 +144,10 @@ def _cmd_line_stuff(ANSWERS: List[str], PRINT_PROGRESS: bool, args, FILE: str) -
 
 
 def custom_main(args_: list) -> None:
-    """For simulating the command line with custom arguments in your program.
+    """A customizable version of the main CLI.
+
+    This is for if you want to embed stacksearch's CLI in your program
+    ("but using custom arguments").
 
     Parameters
     ----------
@@ -183,12 +186,14 @@ def custom_main(args_: list) -> None:
         _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
 
 
-async def fcustom_main(args_: list) -> None:
-    """For simulating the command line with custom arguments in your program using fSearch.
+async def fcustom_main(args: list) -> None:
+    """The is synchronous sister of :py:func:`stacksearch.custom_main`.
+
+    Asynchronous via :py:func:`Search.fSearch`
 
     Parameters
     ----------
-    args_ : list
+    args : list
         The list of arguments.
 
     Returns
@@ -196,7 +201,7 @@ async def fcustom_main(args_: list) -> None:
     None
 
     """
-    args = parser.parse_args(args_)
+    args = parser.parse_args(args)
     if args.version:
         print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
     elif not args.query:
@@ -223,7 +228,7 @@ async def fcustom_main(args_: list) -> None:
 
 
 def cli_main():
-    """The cli."""
+    """Be the main entry point for the CLI tool."""
     custom_main(sys.argv[1:])
 
 
