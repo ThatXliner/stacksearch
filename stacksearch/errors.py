@@ -16,8 +16,7 @@ Desc: The errors stacksearch may raise.
 
 
 class UnsupportedPythonVersion(Exception):
-    """This error is raised when your python version is not supported."""
-
-
-class UnknownError(Exception):
-    """This error is raised when it should be covered by an earlier error."""
+    """
+    This error is raised when your python version is not supported.
+    This may be thrown if your python version is below verison 3.8.
+    """
