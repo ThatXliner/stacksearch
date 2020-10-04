@@ -33,7 +33,9 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Make the docs
-        run: make html
+        run: |
+          cd docs
+          make html
       - name: git pull
         run: |
           git config pull.ff only
