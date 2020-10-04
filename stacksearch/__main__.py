@@ -17,14 +17,13 @@ Desc: The main file to use/execute when trying to search StackOverflow.
 import argparse
 import sys
 from pprint import pprint
+from typing import List
 
 from blessings import Terminal
 
 from . import __version__
 from .errors import UnsupportedPythonVersion
 from .Search import Search, fSearch
-
-from typing import List
 
 if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
