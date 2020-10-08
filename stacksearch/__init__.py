@@ -13,4 +13,4 @@ __author__ = "Bryan Hu"
 
 __all__ = ["__main__", "Search"]
 
-__credits__: str = ["KomodoKOde"]
+__credits__: str = ["KomodoKode"]
