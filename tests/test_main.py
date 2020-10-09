@@ -52,17 +52,17 @@ def run(main, *, debug=None):
             asyncio.tasks.gather(*to_cancel, loop=loop, return_exceptions=True)
         )
 
-    for task in to_cancel:
-        if task.cancelled():
-            continue
-        if task.exception() is not None:
-            loop.call_exception_handler(
-                {
-                    "message": "unhandled exception during asyncio.run() shutdown",
-                    "exception": task.exception(),
-                    "task": task,
-                }
-            )
+        for task in to_cancel:
+            if task.cancelled():
+                continue
+            if task.exception() is not None:
+                loop.call_exception_handler(
+                    {
+                        "message": "unhandled exception during asyncio.run() shutdown",
+                        "exception": task.exception(),
+                        "task": task,
+                    }
+                )
     if asyncio.events._get_running_loop() is not None:
         raise RuntimeError("asyncio.run() cannot be called from a running event loop")
 
