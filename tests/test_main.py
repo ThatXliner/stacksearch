@@ -94,9 +94,7 @@ class TestClass:
 
     def amain(self, args: str = "") -> None:
         """You should not use this. IT'S A TEST. This is the main async function."""
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(FMAIN([arg for arg in args.split() if arg]))
-        loop.close()
+        run(FMAIN([arg for arg in args.split() if arg]))
 
     def test_stable(self):
         """A test with Search."""
