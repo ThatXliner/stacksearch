@@ -20,6 +20,8 @@ from sys import path
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
+
+
 def run(main, *, debug=None):
     """Execute the coroutine and return the result.
     This function runs the passed coroutine, taking care of
@@ -37,6 +39,7 @@ def run(main, *, debug=None):
             print('hello')
         asyncio.run(main())
     """
+
     def _cancel_all_tasks(loop):
         to_cancel = asyncio.tasks.all_tasks(loop)
         if not to_cancel:
@@ -46,20 +49,22 @@ def run(main, *, debug=None):
             asyncio.task.cancel()
 
         loop.run_until_complete(
-            asyncio.tasks.gather(*to_cancel, loop=loop, return_exceptions=True))
+            asyncio.tasks.gather(*to_cancel, loop=loop, return_exceptions=True)
+        )
 
     for task in to_cancel:
         if task.cancelled():
             continue
         if task.exception() is not None:
-            loop.call_exception_handler({
-                'message': 'unhandled exception during asyncio.run() shutdown',
-                'exception': task.exception(),
-                'task': task,
-            })
+            loop.call_exception_handler(
+                {
+                    "message": "unhandled exception during asyncio.run() shutdown",
+                    "exception": task.exception(),
+                    "task": task,
+                }
+            )
     if asyncio.events._get_running_loop() is not None:
-        raise RuntimeError(
-            "asyncio.run() cannot be called from a running event loop")
+        raise RuntimeError("asyncio.run() cannot be called from a running event loop")
 
     if not asyncio.coroutines.iscoroutine(main):
         raise ValueError("a coroutine was expected, got {!r}".format(main))
@@ -78,6 +83,7 @@ def run(main, *, debug=None):
         finally:
             asyncio.events.set_event_loop(None)
             loop.close()
+
 
 class TestClass:
     """For testing."""
