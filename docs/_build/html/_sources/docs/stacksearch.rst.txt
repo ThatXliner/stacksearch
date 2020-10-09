@@ -20,6 +20,13 @@ stacksearch.errors module
    :undoc-members:
    :show-inheritance:
 
+stacksearch.\_\_main\_\_ module
+-------------------------
+.. automodule:: stacksearch.\_\_main\_\_
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
