@@ -47,7 +47,7 @@ parser.add_argument(  # Query
     "query",
     help="The query to search.",
     nargs="*",
-#     action="append",
+    #     action="append",
 )
 parser.add_argument(  # JSON
     "-j",
