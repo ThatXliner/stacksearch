@@ -14,6 +14,8 @@
 <a href="https://codecov.io/gh/ThatXliner/stacksearch"> <img src="https://codecov.io/gh/ThatXliner/stacksearch/branch/Stable/graph/badge.svg" /> </a>
 </p>
 
+**NOTE: STACKSEARCH IS NO LONGER ACTIVELY MAINTAINED. There will still be the occasional bug fixes and updates, but not as much.**
+
 
 StackSearch is a python module that provides a way to search [StackOverflow](https://stackoverflow.com/).
 
@@ -112,6 +114,8 @@ SOFTWARE.
 ## Code style guide 😳
 
 [Black](https://github.com/psf/black). We (I, right now.) use the black formatter to format our code. **It's pretty strict.**
+
+We also use NumPy style docstrings.
 
 ## Contributing ✏️
 

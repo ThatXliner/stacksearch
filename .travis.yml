@@ -15,7 +15,6 @@ install:
 script:
 - make test || pytest tests/ -vvv --durations=5  --cov=stacksearch
 after_success:
-  - make clean
   - bash <(curl -s https://codecov.io/bash)
 cache: pip
 matrix:
@@ -29,16 +28,20 @@ notifications:
     - bryan.hu.2020@gmail.com
     on_success: change
     on_failure: always
+before_deploy:
+ - make clean
 deploy:
   provider: pypi
   username: __token__
   password:
     secure: emmSvlqEEmPITbg3Ub/U7bx1QJTkHyzCUWVKuXqwgIw/MXgpVcV8udgCf3hzqVpFtUlp57nWNtNRa0DzEhHREBmC8OkIltMEKw8PEoXGb9rcIap84kogjcakX3KvGyHmM6NITJZuUl+nVgktKJ1cQxB3Og+5c+l2Y3IyepCenhu8JmTSbZoY1gibk48fpc+UV+Ec/zQEcUJi92SqQS0/uVpZKFYk0ZZiRUFxD038NUSm4kPzZXuBy82qQOUBcUCMsizEpKfLwoZ43jW1ELAygBdhF0bMuiBlIUrdUpGH6UMY8jFfzpsVbshOlTls2T/yXJj8v9y8HSRFafBw1EEbRh+pb0AflnHvKrjTfYdkN4C3uyzbwn34sC0LElVsUq6GU0G80F1wZZeisRWoyLuJGLJMiEkWEFw4Hav3zfgfUd0f+c6el9ABCquZuSRPLeccFnIwLI7Xx4sm1549syWjQ3NcP+o0kyixO9AhBB1SfeZvB/2IRPvqWRKymZ0Mn7sqdrSZY+dl2LDH96Vax6MAE9rA4uuTtlWsjqgakVvrgrBFdeegzFS1LIRIZHLpkyDt4Nz16HepRvVGJWjwz7dh5n3r7fn61xPYhuEiKq0rFZkfrdtkPudFIxcyvpQRkSJM+CeWqzPbnoc6pFx8AxBKIUyuthffi7zvoVqf2gIjohQ=
   distributions: "sdist bdist_wheel"
+  skip_existing: true
   on:
     branch:
       - master
       - Stable
+      # Stable and master get uploaded but master is basically the last working version. The VERY stable version.
 
 git:
   quiet: true
