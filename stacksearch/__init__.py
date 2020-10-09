@@ -7,7 +7,8 @@ Stacksearch is a simple tool aimed for people who never want to leave the termin
 Stacksearch can also search other Stack Exchange websites, not just StackOverflow.
 """
 
-__version__ = "1.3.9"
+
+__version__ = "1.3.10"
 
 __author__ = "Bryan Hu"
 
