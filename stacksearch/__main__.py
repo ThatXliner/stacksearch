@@ -80,7 +80,7 @@ parser.add_argument(  # Silent
 
 parser.add_argument(  # Sites
     "--sites",
-    action="extend",
+#     action="extend",
     default=["stackoverflow"],
     nargs="+",
     help="The StackExchange sites to search.",
