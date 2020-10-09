@@ -63,6 +63,7 @@ def run(main, *, debug=None):
                         "task": task,
                     }
                 )
+
     if asyncio.events._get_running_loop() is not None:
         raise RuntimeError("asyncio.run() cannot be called from a running event loop")
 
