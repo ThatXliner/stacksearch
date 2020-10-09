@@ -49,7 +49,7 @@ jobs:
           sudo apt-get install libxml2-dev libxslt-dev python-dev && python3 -m pip install -r requirements.txt
       - name: Test with pytest
         run: |
-          make test || pytest tests/ -vvv --durations=3
+          make test
   "pytest-MacOS":
     strategy:
       matrix:
@@ -90,7 +90,7 @@ jobs:
           python3 -m pip install -r requirements.txt -r bot-tester-requirements.txt
       - name: Test with pytest
         run: |
-          make test || pytest tests/ -vvv --durations=3
+          make test
   "pytest-Windows":
     strategy:
       matrix:
@@ -128,4 +128,4 @@ jobs:
           python -m pip install  --no-warn-script-location -r requirements.txt -r bot-tester-requirements.txt
       - name: Test with pytest
         run: |
-          make test || pytest tests/ -vvv --durations=3
+          make test
