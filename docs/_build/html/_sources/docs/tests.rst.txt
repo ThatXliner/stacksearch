@@ -12,7 +12,6 @@ tests.test\_main module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

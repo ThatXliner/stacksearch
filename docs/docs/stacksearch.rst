@@ -1,8 +1,6 @@
 stacksearch package
 ===================
 
-.. note:: This is documentation generated from sphinx autodoc.
-
 Submodules
 ----------
 
@@ -18,15 +16,6 @@ stacksearch.errors module
 -------------------------
 
 .. automodule:: stacksearch.errors
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-stacksearch.\_\_main\_\_ module
--------------------------
-
-.. automodule:: stacksearch.__main__
    :members:
    :undoc-members:
    :show-inheritance:
