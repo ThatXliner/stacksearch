@@ -22,7 +22,7 @@ jobs:
           python-version: '3.9.0' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
       - name: Install deps
-        run: python3 -m pip install wheel && sudo apt-get install libxml2-dev libxslt-dev python-dev python3-lxml python3-sphinx && python3 -m pip install stacksearch
+        run: python3 -m pip install wheel stacksearch sphinx
 
 
       # Runs a single command using the runners shell
