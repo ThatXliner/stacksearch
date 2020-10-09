@@ -13,7 +13,7 @@ Version: TEST
 Desc: YOU SHOULD NOT USE THIS FILE. IT IS A TEST.
 
 """
-from asyncio import run
+import asyncio
 from pathlib import Path
 from sys import path
 
@@ -31,7 +31,9 @@ class TestClass:
 
     def amain(self, args: str = "") -> None:
         """You should not use this. IT'S A TEST. This is the main async function."""
-        run(FMAIN([arg for arg in args.split() if arg]))
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(FMAIN([arg for arg in args.split() if arg]))
+        loop.close()
 
     def test_stable(self):
         """A test with Search."""
