@@ -8,7 +8,7 @@ Stacksearch can also search other Stack Exchange websites, not just StackOverflo
 """
 
 
-__version__ = "1.4.1"
+__version__ = "1.4.2"
 
 __author__ = "Bryan Hu"
 
