@@ -74,8 +74,8 @@ def run(main, *, debug=None):
     try:
         asyncio.events.set_event_loop(loop)
         if debug is not None:
-            asyncio.loop.set_debug(debug)
-        return asyncio.loop.run_until_complete(main)
+            loop.set_debug(debug)
+        return loop.run_until_complete(main)
     finally:
         try:
             _cancel_all_tasks(loop)
