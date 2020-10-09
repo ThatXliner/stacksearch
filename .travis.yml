@@ -15,7 +15,7 @@ install:
 - pip install pytest-asyncio codecov pytest-cov pytest-random
 - pip install -r requirements.txt
 script:
-- make test
+- pytest tests/ -vvv --durations=5  --cov=stacksearch
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 cache: pip
