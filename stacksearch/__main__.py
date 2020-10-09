@@ -107,7 +107,7 @@ def _cmd_line_stuff(ANSWERS: List[str], PRINT_PROGRESS: bool, args, FILE: str) -
         question_number = 0
         for answer in ANSWERS:
             question_number += 10
-            print(t.bold("Answers from {}"))
+            # print(t.bold("Answers from {}"))  # To implement this, we'll need to make some internal changes.
             for question, answers in answer.items():
                 print(
                     f"{t.bold}{t.bright_green}Question #{question_number / 10}: "
