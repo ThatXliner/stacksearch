@@ -18,11 +18,10 @@ from pathlib import Path
 from sys import path
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
+from typing import Any, Awaitable, Coroutine, TypeVar, Union
+
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
-
-
-from typing import Any, Awaitable, Coroutine, TypeVar, Union
 
 _T = TypeVar("_T")
 
@@ -58,9 +57,8 @@ def run(
     try:
         from asyncio import get_running_loop  # noqa Python >=3.7
     except ImportError:  # pragma: no cover
-        from asyncio.events import (
-            _get_running_loop as get_running_loop,
-        )  # pragma: no cover
+        from asyncio.events import \
+            _get_running_loop as get_running_loop  # pragma: no cover
 
     def _cancel_all_tasks(loop, tasks):
         to_cancel = [task for task in tasks if not task.done()]
