@@ -1,16 +1,16 @@
 <h1 align="center">stacksearch 🔎</h1>
 
 <p align="center">
-<a href="https://travis-ci.com/ThatXliner/stacksearch"> <img src="https://travis-ci.com/ThatXliner/stacksearch.svg?branch=Stable" alt="Build Status"> </a>
-<a href="https://github.com/psf/black"> <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"> </a>
-<img src="https://img.shields.io/github/languages/code-size/ThatXliner/stacksearch" alt="GitHub code size in bytes">
-<img src="https://img.shields.io/pypi/v/stacksearch" alt="PyPI">
-<img src="https://img.shields.io/pypi/implementation/stacksearch" alt="PyPI - Implementation">
-<img src="https://img.shields.io/pypi/pyversions/stacksearch" alt="PyPI - Python Version">
-<img src="https://img.shields.io/pypi/l/stacksearch" alt="PyPI - License">
-<img src="https://img.shields.io/github/languages/top/ThatXliner/stacksearch" alt="GitHub top language">
-<img src="https://img.shields.io/github/languages/count/ThatXliner/stacksearch" alt="GitHub language count">
-<a href="https://stacksearch.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/stacksearch/badge/?version=latest" alt="Documentation Status"></a>
+<a href="https://travis-ci.com/ThatXliner/stacksearch"><img src="https://travis-ci.com/ThatXliner/stacksearch.svg?branch=Stable" alt="Build Status"></a>
+<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/code-size/ThatXliner/stacksearch" alt="GitHub code size in bytes"></a>
+<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/v/stacksearch" alt="PyPI"></a>
+<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/implementation/stacksearch" alt="PyPI - Implementation"></a>
+<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/pyversions/stacksearch" alt="PyPI - Python Version"></a>
+<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/l/stacksearch" alt="PyPI - License"></a>
+<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/top/ThatXliner/stacksearch" alt="GitHub top language"></a>
+<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/count/ThatXliner/stacksearch" alt="GitHub language count"><a>
+<a href="https://stacksearch.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/stacksearch/badge/?version=latest" alt="Documentation Status"></a>
 <a href="https://codecov.io/gh/ThatXliner/stacksearch"> <img src="https://codecov.io/gh/ThatXliner/stacksearch/branch/Stable/graph/badge.svg" /> </a>
 </p>
 
@@ -71,7 +71,7 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 - [x] ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
 - [x] [Documentation](https://stacksearch.readthedocs.io/en/latest/) (_Sort of_ added in v1.2.8)
 - [ ] Object-oriented APIs
-- [ ] Python backwards-compatibility
+- [ ] Python backwards-compatibility (3.6 to 3.9)
 - [ ] Being able to scrape _all_ StackOverflow sites/pages
 - [x] ~~A better README~~ (Done in v1.0.0.1)
 - [ ] Being able to output different formats of data (e.g. YAML, TOML, XML, etc)
