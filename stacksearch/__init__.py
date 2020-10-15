@@ -8,10 +8,10 @@ Stacksearch can also search other Stack Exchange websites, not just StackOverflo
 """
 
 
-__version__ = "1.4.2"
+__version__ = "1.4.3"
 
 __author__ = "Bryan Hu"
 
-__all__ = ["__main__", "Search"]
+# __all__ = ["__main__", "Search"]
 
 __credits__: str = ["KomodoKode"]
