@@ -4,7 +4,6 @@ os:
 dist:
 - xenial
 - bionic
-- focal
 python:
 - nightly
 - "3.8"
@@ -20,6 +19,10 @@ after_success:
 cache: pip
 matrix:
   fast_finish: true
+  include:
+  - dist: focal
+    group: edge
+    arch: arm64-graviton2
   allow_failures:
   - python: nightly
   - python: 3.9-dev
