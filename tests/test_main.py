@@ -18,17 +18,17 @@ from pathlib import Path
 from sys import path
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
+from typing import Any, Awaitable, Coroutine, TypeVar, Union
+
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
 
-
-from typing import Any, Awaitable, Coroutine, TypeVar, Union
 _T = TypeVar("_T")
 
 
-def run(main: Union[Coroutine[Any, None, _T], Awaitable[_T]],
-        *,
-        debug: bool = False) -> _T:
+def run(
+    main: Union[Coroutine[Any, None, _T], Awaitable[_T]], *, debug: bool = False
+) -> _T:
     """Run a coroutine.
 
     This function runs the passed coroutine, taking care of
@@ -53,10 +53,12 @@ def run(main: Union[Coroutine[Any, None, _T], Awaitable[_T]],
         asyncio.run(main())
     """
     import weakref
+
     try:
         from asyncio import get_running_loop  # noqa Python >=3.7
     except ImportError:  # pragma: no cover
-        from asyncio.events import _get_running_loop as get_running_loop  # pragma: no cover
+        from asyncio.events import \
+            _get_running_loop as get_running_loop  # pragma: no cover
 
     def _cancel_all_tasks(loop, tasks):
         to_cancel = [task for task in tasks if not task.done()]
@@ -68,34 +70,34 @@ def run(main: Union[Coroutine[Any, None, _T], Awaitable[_T]],
             task.cancel()
 
         loop.run_until_complete(
-            asyncio.gather(*to_cancel, loop=loop, return_exceptions=True))
+            asyncio.gather(*to_cancel, loop=loop, return_exceptions=True)
+        )
 
         for task in to_cancel:
             if task.cancelled():
                 continue
             if task.exception() is not None:
-                loop.call_exception_handler({
-                    "message":
-                    "unhandled exception during asyncio.run() shutdown",
-                    "exception":
-                    task.exception(),
-                    "task":
-                    task,
-                })
+                loop.call_exception_handler(
+                    {
+                        "message": "unhandled exception during asyncio.run() shutdown",
+                        "exception": task.exception(),
+                        "task": task,
+                    }
+                )
 
     def _patch_loop(loop):
         """
-      This function is designed to work around https://bugs.python.org/issue36607
+        This function is designed to work around https://bugs.python.org/issue36607
 
-      It's job is to keep a thread safe variable tasks up to date with any tasks that
-      are created for the given loop. This then lets you cancel them as _all_tasks
-      was intended for.
+        It's job is to keep a thread safe variable tasks up to date with any tasks that
+        are created for the given loop. This then lets you cancel them as _all_tasks
+        was intended for.
 
-      We also need to patch the {get,set}_task_factory functions because we can't allow
-      Other users of it to overwrite our factory function. This function will pretend
-      like there is no factory set but in reality our factory is always set and we will
-      call the provided one set
-      """
+        We also need to patch the {get,set}_task_factory functions because we can't allow
+        Other users of it to overwrite our factory function. This function will pretend
+        like there is no factory set but in reality our factory is always set and we will
+        call the provided one set
+        """
         tasks = weakref.WeakSet()
 
         task_factory = [None]
@@ -131,8 +133,7 @@ def run(main: Union[Coroutine[Any, None, _T], Awaitable[_T]],
     except RuntimeError:
         loop = None
     if loop is not None:
-        raise RuntimeError(
-            "asyncio.run() cannot be called from a running event loop")
+        raise RuntimeError("asyncio.run() cannot be called from a running event loop")
 
     if not asyncio.iscoroutine(main):
         raise ValueError("a coroutine was expected, got {!r}".format(main))
@@ -151,7 +152,6 @@ def run(main: Union[Coroutine[Any, None, _T], Awaitable[_T]],
         finally:
             asyncio.set_event_loop(None)  # type: ignore
             loop.close()
-
 
 
 class TestClass:
