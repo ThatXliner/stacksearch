@@ -58,8 +58,9 @@ def run(
     try:
         from asyncio import get_running_loop  # noqa Python >=3.7
     except ImportError:  # pragma: no cover
-        from asyncio.events import \
-            _get_running_loop as get_running_loop  # pragma: no cover
+        from asyncio.events import (
+            _get_running_loop as get_running_loop,
+        )  # pragma: no cover
 
     def _cancel_all_tasks(loop, tasks):
         to_cancel = [task for task in tasks if not task.done()]
@@ -154,10 +155,43 @@ def run(
             asyncio.set_event_loop(None)  # type: ignore
             loop.close()
 
+
 def _get_random_sites() -> List[str]:
-    SITES = ['stackoverflow.com', 'serverfault.com', 'superuser.com', 'meta.stackexchange.com', 'webapps.stackexchange.com', 'webapps.meta.stackexchange.com', 'gaming.stackexchange.com', 'gaming.meta.stackexchange.com', 'webmasters.stackexchange.com', 'webmasters.meta.stackexchange.com', 'cooking.stackexchange.com', 'cooking.meta.stackexchange.com', 'gamedev.stackexchange.com', 'gamedev.meta.stackexchange.com', 'photo.stackexchange.com', 'photo.meta.stackexchange.com', 'stats.stackexchange.com', 'stats.meta.stackexchange.com', 'math.stackexchange.com', 'math.meta.stackexchange.com', 'diy.stackexchange.com', 'diy.meta.stackexchange.com', 'meta.superuser.com', 'meta.serverfault.com', 'gis.stackexchange.com', 'gis.meta.stackexchange.com', 'tex.stackexchange.com', 'tex.meta.stackexchange.com', 'askubuntu.com', 'meta.askubuntu.com']
+    SITES = [
+        "stackoverflow.com",
+        "serverfault.com",
+        "superuser.com",
+        "meta.stackexchange.com",
+        "webapps.stackexchange.com",
+        "webapps.meta.stackexchange.com",
+        "gaming.stackexchange.com",
+        "gaming.meta.stackexchange.com",
+        "webmasters.stackexchange.com",
+        "webmasters.meta.stackexchange.com",
+        "cooking.stackexchange.com",
+        "cooking.meta.stackexchange.com",
+        "gamedev.stackexchange.com",
+        "gamedev.meta.stackexchange.com",
+        "photo.stackexchange.com",
+        "photo.meta.stackexchange.com",
+        "stats.stackexchange.com",
+        "stats.meta.stackexchange.com",
+        "math.stackexchange.com",
+        "math.meta.stackexchange.com",
+        "diy.stackexchange.com",
+        "diy.meta.stackexchange.com",
+        "meta.superuser.com",
+        "meta.serverfault.com",
+        "gis.stackexchange.com",
+        "gis.meta.stackexchange.com",
+        "tex.stackexchange.com",
+        "tex.meta.stackexchange.com",
+        "askubuntu.com",
+        "meta.askubuntu.com",
+    ]
     return set([random.choice(SITES) for x in range(random.randint(1, 3))])
-            
+
+
 class TestClass:
     """For testing."""
 
