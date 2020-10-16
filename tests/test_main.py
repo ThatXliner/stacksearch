@@ -179,11 +179,11 @@ class TestClass:
 
     def test_stable_lots_of_sites(self):
         """A test with Search. For lots of sites."""
-        self.main(f"python list --sites {' '.join(_get_random_sies())}")
+        self.main(f"python list --sites {' '.join(_get_random_sites())}")
 
     def test_async_lots_of_sites(self):
         """A test with Search. For lots of sites."""
-        self.amain(f"python list --sites {' '.join(_get_random_sies())}")
+        self.amain(f"python list --sites {' '.join(_get_random_sites())}")
 
     def test_version(self):
         """To test the version."""
