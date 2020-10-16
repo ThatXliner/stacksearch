@@ -18,10 +18,11 @@ from pathlib import Path
 from sys import path
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
-from typing import Any, Awaitable, Coroutine, TypeVar, Union
+from typing import Any, Awaitable, Coroutine, TypeVar, Union, List
 
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
+import random
 
 _T = TypeVar("_T")
 
@@ -153,7 +154,10 @@ def run(
             asyncio.set_event_loop(None)  # type: ignore
             loop.close()
 
-
+def _get_random_sites() -> List[str]:
+    SITES = ['stackoverflow.com', 'serverfault.com', 'superuser.com', 'meta.stackexchange.com', 'webapps.stackexchange.com', 'webapps.meta.stackexchange.com', 'gaming.stackexchange.com', 'gaming.meta.stackexchange.com', 'webmasters.stackexchange.com', 'webmasters.meta.stackexchange.com', 'cooking.stackexchange.com', 'cooking.meta.stackexchange.com', 'gamedev.stackexchange.com', 'gamedev.meta.stackexchange.com', 'photo.stackexchange.com', 'photo.meta.stackexchange.com', 'stats.stackexchange.com', 'stats.meta.stackexchange.com', 'math.stackexchange.com', 'math.meta.stackexchange.com', 'diy.stackexchange.com', 'diy.meta.stackexchange.com', 'meta.superuser.com', 'meta.serverfault.com', 'gis.stackexchange.com', 'gis.meta.stackexchange.com', 'tex.stackexchange.com', 'tex.meta.stackexchange.com', 'askubuntu.com', 'meta.askubuntu.com']
+    return set([random.choice(SITES) for x in range(random.randint(1, 3))])
+            
 class TestClass:
     """For testing."""
 
@@ -175,11 +179,11 @@ class TestClass:
 
     def test_stable_lots_of_sites(self):
         """A test with Search. For lots of sites."""
-        self.main("python list --sites superuser.com stackoverflow")
+        self.main(f"python list --sites {' '.join(_get_random_sies())}")
 
     def test_async_lots_of_sites(self):
         """A test with Search. For lots of sites."""
-        self.amain("python list --sites superuser.com stackoverflow")
+        self.amain(f"python list --sites {' '.join(_get_random_sies())}")
 
     def test_version(self):
         """To test the version."""
