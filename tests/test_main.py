@@ -18,11 +18,11 @@ from pathlib import Path
 from sys import path
 
 path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
-from typing import Any, Awaitable, Coroutine, TypeVar, Union, List
+import random
+from typing import Any, Awaitable, Coroutine, List, TypeVar, Union
 
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
-import random
 
 _T = TypeVar("_T")
 
