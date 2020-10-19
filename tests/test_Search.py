@@ -177,4 +177,6 @@ def _get_random_sites() -> str:
     
 class TestSearch(object):
     def test_search(self):
-        assert Search("python list")
+        assert Search("search")
+    def test_async_search(self):
+        assert run(fSearch("search"))
