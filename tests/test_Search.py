@@ -176,6 +176,6 @@ def _get_random_sites() -> str:
     
 class TestSearch(object):
     def test_search(self):
-        assert Search("search")
+        assert Search("tensorflow")
     def test_async_search(self):
-        assert run(fSearch("search"))
+        assert run(fSearch("tensorflow"))
