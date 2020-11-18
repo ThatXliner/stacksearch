@@ -21,9 +21,9 @@ from typing import List
 
 from blessings import Terminal
 
-from . import __version__
-from .errors import UnsupportedPythonVersion
-from .Search import Search, fSearch
+from stacksearch import __version__
+from stacksearch.errors import UnsupportedPythonVersion
+from stacksearch.Search import Search, fSearch
 
 # if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
 #     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
