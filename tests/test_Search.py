@@ -44,8 +44,9 @@ def run(
     try:
         from asyncio import get_running_loop  # noqa Python >=3.7
     except ImportError:  # pragma: no cover
-        from asyncio.events import \
-            _get_running_loop as get_running_loop  # pragma: no cover
+        from asyncio.events import (
+            _get_running_loop as get_running_loop,
+        )  # pragma: no cover
 
     def _cancel_all_tasks(loop, tasks):
         to_cancel = [task for task in tasks if not task.done()]
@@ -173,9 +174,11 @@ def _get_random_sites() -> str:
         "meta.askubuntu.com",
     ]
     return random.choice(SITES)
-    
+
+
 class TestSearch(object):
     def test_search(self):
         assert Search("tensorflow")
+
     def test_async_search(self):
         assert run(fSearch("tensorflow"))
