@@ -20,6 +20,7 @@ from pprint import pprint
 from typing import List
 
 from blessings import Terminal
+
 from stacksearch import __version__
 from stacksearch.errors import UnsupportedPythonVersion
 from stacksearch.Search import Search, fSearch
