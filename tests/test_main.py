@@ -17,9 +17,10 @@ from asyncio import run
 from pathlib import Path
 from sys import path
 
-path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 from stacksearch.__main__ import custom_main as MAIN
 from stacksearch.__main__ import fcustom_main as FMAIN
+
+path.insert(0, Path(Path(Path(__file__).parent).parent / "stacksearch"))
 
 
 class TestClass:

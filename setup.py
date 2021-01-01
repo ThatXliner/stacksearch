@@ -4,7 +4,6 @@
 from pathlib import Path
 
 from setuptools import find_packages, setup
-
 from stacksearch import __version__
 
 # The directory containing this file

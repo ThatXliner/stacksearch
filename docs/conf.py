@@ -14,9 +14,10 @@ import os
 import sys
 from pathlib import Path
 
+from stacksearch import __version__  # noqa: E402
+
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, str(Path(Path(__file__).parent.parent / "stacksearch")))
-from stacksearch import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 

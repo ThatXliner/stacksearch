@@ -18,7 +18,6 @@ import sys
 from pprint import pprint
 
 from blessings import Terminal
-
 from stacksearch import __version__
 from stacksearch.errors import UnknownError, UnsupportedPythonVersion
 from stacksearch.Search import Search
