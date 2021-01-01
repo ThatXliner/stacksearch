@@ -4,6 +4,7 @@
 from pathlib import Path
 
 from setuptools import find_packages, setup
+
 from stacksearch import __version__
 
 # The directory containing this file
@@ -33,6 +34,8 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
@@ -48,7 +51,7 @@ setup(
         "Natural Language :: English",
         "Topic :: Utilities",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.6",
     include_package_data=True,
     install_requires=[line for line in REQUIREMENTS if not line.startswith("#")],
     keywords="api stackexchange stackoverflow python webscrape webscrap",

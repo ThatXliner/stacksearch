@@ -20,13 +20,12 @@ from pprint import pprint
 from typing import List
 
 from blessings import Terminal
+from stacksearch import __version__
+from stacksearch.errors import UnsupportedPythonVersion
+from stacksearch.Search import Search, fSearch
 
-from . import __version__
-from .errors import UnsupportedPythonVersion
-from .Search import Search, fSearch
-
-if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
-    raise UnsupportedPythonVersion("This version of python is not supported (for now).")
+# if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
+#     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
 
 
 parser = argparse.ArgumentParser(
@@ -47,7 +46,7 @@ parser.add_argument(  # Query
     "query",
     help="The query to search.",
     nargs="*",
-    action="extend",
+    #     action="append",
 )
 parser.add_argument(  # JSON
     "-j",
@@ -80,7 +79,7 @@ parser.add_argument(  # Silent
 
 parser.add_argument(  # Sites
     "--sites",
-    action="extend",
+    #     action="extend",
     default=["stackoverflow"],
     nargs="+",
     help="The StackExchange sites to search.",
@@ -107,7 +106,7 @@ def _cmd_line_stuff(ANSWERS: List[str], PRINT_PROGRESS: bool, args, FILE: str) -
         question_number = 0
         for answer in ANSWERS:
             question_number += 10
-            print(t.bold("Answers from {}"))
+            # print(t.bold("Answers from {}"))  # To implement this, we'll need to make some internal changes.
             for question, answers in answer.items():
                 print(
                     f"{t.bold}{t.bright_green}Question #{question_number / 10}: "

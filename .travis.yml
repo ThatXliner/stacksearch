@@ -1,19 +1,26 @@
 language: python
+sudo: false
 os:
 - linux
 dist:
 - xenial
 - bionic
-- focal
+- trusty
+# - focal
+#   group: edge
+#   arch: arm64-graviton2
+#   virt: vm
 python:
 - nightly
-- '3.8'
-- 3.9-dev
+- "3.8"
+- "3.7"
+- "3.9-dev"
+- "3.6"
 install:
 - pip install pytest-asyncio codecov pytest-cov pytest-random
 - pip install -r requirements.txt
 script:
-- make test || pytest tests/ -vvv --durations=5  --cov=stacksearch
+- pytest tests/ -vvv --durations=5  --cov=stacksearch
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 cache: pip
