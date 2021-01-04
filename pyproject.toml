@@ -19,10 +19,6 @@ classifiers = ["Programming Language :: Python :: Implementation :: CPython",
 "Environment :: Console",
 "Natural Language :: English",
 "Topic :: Utilities"]
-#     "Source Code"= "https://github.com/ThatXliner/stacksearch",
-#     "Documentation"= "https://stacksearch.readthedocs.io/en/latest/index.html",
-#     "Tracker"= "https://github.com/ThatXliner/stacksearch/issues"
-# }
 include = ["stacksearch/txt_req.json", "README.md", "LICENSE"]
 [tool.poetry.scripts]
 stacksearch = "stacksearch.__main__:main"
