@@ -1,4 +1,0 @@
-requests
-bs4
-blessings
-httpx==0.13.3
