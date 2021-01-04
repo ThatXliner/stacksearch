@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stacksearch"
-version = "0.1.0"
+version = "1.5"
 license = "MIT"
 description = "StackSearch is a python module that provides a way to search StackOverflow."
 authors = ["Bryan Hu <bryan.hu.2020@gmail.com>"]
@@ -26,8 +26,8 @@ stacksearch = "stacksearch.__main__:main"
 [tool.poetry.dependencies]
 python = "^3.6"
 blessings = "^1.7"
-httpx = "^0.16.1"
 beautifulsoup4 = "^4.9.3"
+aiohttp = "^3.7.3"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.6.0"

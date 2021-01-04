@@ -9,159 +9,39 @@ Made with love by Bryan hu .
 
 The primitive functions to use. # API
 """
-from json import loads
+import asyncio
+import json
+import random
+import time
 from pathlib import Path
-from random import randint
-from time import sleep
-from typing import Any
-from warnings import warn
+from typing import Dict, List
 
-import httpx  # We probably should switch to aiohttp in the future
-import requests
-from bs4 import BeautifulSoup as bs
+import aiohttp
+from bs4 import BeautifulSoup
 
-# NOTE: This will need to be updated accordingly
-TEXT_REQUIREMENTS = loads(
-    Path(Path(Path(__file__).parent) / "txt_req.json").read_text()
-)
+TEXT_REQUIREMENTS = Path(__file__).parent.joinpath("txt_req.json").read_text()
 
 
-def Search(
-    Query: str,
-    print_prog: bool = True,
-    search_on_site: str = "stackoverflow",
-    *args: Any,
-    **kwargs: Any,
-) -> dict:
-    """Use this. This is the official API for the stacksearch module.
-
-    Parameters
-    ----------
-    Query : str
-        This is the query to search the stackexchange website for.
-    print_prog : bool
-        If True, prints the progress. Otherwise, it does not print the progress
-        (the default is True).
-    search_on_site : str
-        The stackexchange website to search on (the default is "stackoverflow").
-    *args : Any
-        For backwards compatibility.
-    **kwargs : Any
-        For backwards compatibility.
-
-    Returns
-    -------
-    dict
-        In the format: {
-        'question': ['answer1', 'answer2', ...], 'question2': ['answer1', ...]
-        }
-
-    """
-
-    def rget(site):
-        return requests.get(site, timeout=5)
-
-    def _remove_dot_com(string: str) -> str:
-        string = str(string)
-        # Maybe a regex is better here...
-        if string.endswith(".com") or string.endswith(".org"):
-            return string[0 : len(string) - 4]  # noqa
-        else:
-            return string
-
-    def _find_questions(soup):
-        return {  # The raw ingredients
-            question.string: question.get("href")
-            for question in soup.find_all(
-                attrs={"class": "question-hyperlink", "data-gps-track": None}
-            )
-        }
-
-    def s(t):
-        return bs(t.text)
-
-    search_on_site = _remove_dot_com(search_on_site)
-
-    if print_prog:
-        print(f"Requesting results from {search_on_site}...")
-    # Fetches site
-    r = rget(f"https://{search_on_site}.com/search?q={Query}")
-    try:
-        r.raise_for_status()
-    except requests.exceptions.HTTPError as e:
-        if "429" in str(e):
-            warn(
-                "Error: 429: You have reached the maximum number of requests t"
-                f"o {search_on_site}. Please try again later.",
-                RuntimeWarning,
-            )
-            return {}
-    if print_prog:
-        print("Parsing response HTML...")
-    soup = s(r)
-
-    if print_prog:
-        print("Collecting question links...")
-    questions = _find_questions(soup)
-
-    if print_prog:
-        print("Requesting questions found (This may take a while)...")
-    _links_for_pages = []
-    for link in map(
-        lambda x: f"https://{search_on_site}.com{x}", iter(questions.values())
-    ):
-        sleep(randint(1, 10) / 100)  # We need to look like a human
-        _links_for_pages.append(rget(link))
-
-    if print_prog:
-        print("Parsing questions found (This may take a while)...")
-    pages = [  # Pages of all the questions related to Query
-        s(link) for link in _links_for_pages
-    ]
-
-    if print_prog:
-        print("Identifying question text...")
-    try:
-        full_questions = [
-            page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
-        ]
-    except AttributeError as e:
-        raise RuntimeError(
-            "Oh no! It appears that the StackOverflow's question text requirements "
-            "have changed. Please go to the Git repository and submit a pull request "
-            "to update the TEXT_REQUIREMENTS"
-            f"\n(Actual exception: {e})"
-        )
-    if print_prog:
-        print("Identifying answers...")
-    answers = [
-        [
-            answer.find(attrs=TEXT_REQUIREMENTS).get_text()
-            for answer in page.find_all(attrs={"itemtype": "http://schema.org/Answer"})
-        ]
-        for page in pages
-    ]
-    if print_prog:
-        print("Returning results...")
-    return dict(zip(full_questions, answers))
+def search(*args, **kwargs) -> Dict[str, List[str]]:
+    loop = asyncio.get_event_loop()
+    return loop.run_until_complete(fsearch(*args, **kwargs))
 
 
-async def fSearch(
-    Query: str,
-    print_prog: bool = True,
-    search_on_site: str = "stackoverflow",
-    *args: Any,
-    **kwargs: Any,
-) -> dict:
+# from stacksearch import Search;Search.search("e")
+async def fsearch(
+    query: str,
+    verbose: bool = False,
+    search_on_site: str = "stackoverflow.com",
+) -> Dict[str, List[str]]:
     """Use this. This is the async version of the Search API function.
 
     Parameters
     ----------
-    Query : str
+    query : str
         This is the query to search the stackexchange website for.
-    print_prog : bool
+    verbose : bool
         If True, prints the progress. Otherwise, it does not print the progress
-        (the default is True).
+        (the default is False).
     search_on_site : str
         The stackexchange website to search on (the default is "stackoverflow").
     *args : Any
@@ -177,99 +57,70 @@ async def fSearch(
         }
 
     """
-    # noqa: D202
-    async def _remove_dot_com(string: str) -> str:
-        string = str(string)
-        # Maybe a regex is better here...
-        if string.endswith(".com") or string.endswith(".org"):
-            return string[0 : len(string) - 4]  # noqa
-        else:
-            return string
 
-    async def findAnswers(pages):
-        return [
-            [
-                answer.find(attrs=TEXT_REQUIREMENTS).get_text()
-                for answer in page.find_all(
-                    attrs={"itemtype": "http://schema.org/Answer"}
-                )
-            ]
-            for page in pages
-        ]
-
-    async def findQuestions(soup):
-        return {  # The raw ingredients
-            question.string: question.get("href")
+    async def find_questions(soup: BeautifulSoup) -> Dict[str, str]:
+        return {
+            question.string: question["href"]
             for question in soup.find_all(
                 attrs={"class": "question-hyperlink", "data-gps-track": None}
             )
         }
 
-    async def rget(client, site):
-        return await client.get(
-            site,
-            timeout=5,
-        )
+    async def soupify(content: str) -> BeautifulSoup:
+        return BeautifulSoup(content, features="html.parser")
 
-    async def s(content):
-        return bs(content.text)
-
-    search_on_site = await _remove_dot_com(search_on_site)
-
-    async with httpx.AsyncClient() as client:
-        if print_prog:
-            print(f"Requesting results from {search_on_site}...")
-        r = await rget(client, f"https://{search_on_site}.com/search?q={Query}")
+    def get_answers_and_questions(page):
         try:
-            r.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            if "429" in str(e):
-                warn(
-                    "Error: 429: You have reached the maximum number of requests t"
-                    f"o {search_on_site}. Please try again later.",
-                    RuntimeWarning,
-                )
-                return {}
-        if print_prog:
-            print("Parsing response HTML...")
-        soup = await s(r)
-
-        if print_prog:
-            print("Collecting question links...")
-        questions = await findQuestions(soup)
-
-        if print_prog:
-            print("Requesting questions found (This may take a while)...")
-        _links_for_pages = []
-        for link in map(
-            lambda x: f"https://{search_on_site}.com{x}", iter(questions.values())
-        ):
-            sleep(randint(1, 10) / 100)
-            _links_for_pages.append(await rget(client, link))
-
-        if print_prog:
-            print("Parsing questions found (This may take a while)...")
-        pages = [  # Pages of all the questions related to Query
-            await s(link) for link in _links_for_pages
-        ]
-
-        if print_prog:
-            print("Identifying question text...")
-        try:
-            full_questions = [
-                page.find(attrs=TEXT_REQUIREMENTS).get_text() for page in pages
-            ]
-        except AttributeError as e:
+            stuff = page.find_all("div", attrs=json.loads(TEXT_REQUIREMENTS))
+        except AttributeError as exception:
             raise RuntimeError(
                 "Oh no! It appears that the StackOverflow's question text requirements "
                 "have changed. Please go to the Git repository and submit a pull request "
                 "to update the TEXT_REQUIREMENTS"
-                f"\n(Actual exception: {e})"
-            )
-        if print_prog:
-            print("Identifying answers...")
-        answers = await findAnswers(pages)
+            ) from exception
+        return stuff[0].get_text(), [answer.get_text() for answer in stuff[1:]]
 
-        if print_prog:
+    async with aiohttp.ClientSession() as client:
+        ###
+        # Get site
+        ###
+        if not search_on_site.endswith(".com") or not search_on_site.endswith(".org"):
+            search_on_site = search_on_site + ".com"
+
+        if verbose:
+            print(f"Requesting results from {search_on_site}...")
+        async with client.get(f"https://{search_on_site}/search?q={query}") as request:
+            if request.status == 429:
+                raise RuntimeError(
+                    f"You have reached the maximum number of requests to {search_on_site}. Please try again later."
+                )
+
+            ###
+            # Parse response
+            ###
+            if verbose:
+                print("Parsing response HTML...")
+            soup = await soupify(await request.text())
+            if soup.find("div", class_="fs-body2 mb24"):
+                raise RuntimeError("StackOverflow realized that we are not human")
+            if verbose:
+                print("Collecting question links...")
+            question_links = await find_questions(soup)
+
+            if verbose:
+                print("Requesting questions found (This may take a while)...")
+        question_html = []
+        for link in map(
+            lambda x: f"https://{search_on_site}{x}", iter(question_links.values())
+        ):
+            time.sleep(random.randint(1, 10) / 100)
+            async with client.get(link) as request:
+                question_html.append(await request.text())
+
+        if verbose:
+            print("Parsing questions found (This may take a while)...")
+        pages = [await soupify(page) for page in question_html]
+
+        if verbose:
             print("Returning results...")
-        return dict(zip(full_questions, answers))
+        return dict(map(get_answers_and_questions, pages))
