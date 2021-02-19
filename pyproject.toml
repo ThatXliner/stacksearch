@@ -1,25 +1,19 @@
+[build-system]
+requires = [ "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "stacksearch"
 version = "1.5"
 license = "MIT"
 description = "StackSearch is a python module that provides a way to search StackOverflow."
-authors = ["Bryan Hu <bryan.hu.2020@gmail.com>"]
+authors = [ "Bryan Hu <bryan.hu.2020@gmail.com>",]
 readme = "README.md"
 documentation = "https://stacksearch.readthedocs.io/en/latest/index.html"
-keywords=["stackexchange", "webscrape", "api"]
-classifiers = ["Programming Language :: Python :: Implementation :: CPython",
-"License :: OSI Approved :: MIT License",
-"Operating System :: OS Independent",
-"Development Status :: 3 - Alpha",
-"Intended Audience :: Developers",
-"Intended Audience :: End Users/Desktop",
-"Intended Audience :: Information Technology",
-"Intended Audience :: Science/Research",
-"Intended Audience :: System Administrators",
-"Environment :: Console",
-"Natural Language :: English",
-"Topic :: Utilities"]
-include = ["stacksearch/txt_req.json", "README.md", "LICENSE"]
+keywords = [ "stackexchange", "webscrape", "api",]
+classifiers = [ "Programming Language :: Python :: Implementation :: CPython", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Development Status :: 3 - Alpha", "Intended Audience :: Developers", "Intended Audience :: End Users/Desktop", "Intended Audience :: Information Technology", "Intended Audience :: Science/Research", "Intended Audience :: System Administrators", "Environment :: Console", "Natural Language :: English", "Topic :: Utilities",]
+include = [ "stacksearch/txt_req.json", "README.md", "LICENSE",]
+
 [tool.poetry.scripts]
 stacksearch = "stacksearch.__main__:main"
 
@@ -39,7 +33,3 @@ pytest-cov = "^2.10.1"
 pytest-asyncio = "^0.14.0"
 toml = "^0.10.2"
 Sphinx = "^3.4.2"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
