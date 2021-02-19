@@ -22,13 +22,12 @@ from bs4 import BeautifulSoup
 TEXT_REQUIREMENTS = Path(__file__).parent.joinpath("txt_req.json").read_text()
 
 
-def search(*args, **kwargs) -> Dict[str, List[str]]:
+def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
+    """A synchronous version of search for synchronous code"""
     loop = asyncio.get_event_loop()
-    return loop.run_until_complete(fsearch(*args, **kwargs))
+    return loop.run_until_complete(search(*args, **kwargs))
 
-
-# from stacksearch import Search;Search.search("e")
-async def fsearch(
+async def search(
     query: str,
     verbose: bool = False,
     search_on_site: str = "stackoverflow.com",
@@ -38,16 +37,12 @@ async def fsearch(
     Parameters
     ----------
     query : str
-        This is the query to search the stackexchange website for.
+        This is the query to search the StackExchange website for.
     verbose : bool
         If True, prints the progress. Otherwise, it does not print the progress
         (the default is False).
     search_on_site : str
-        The stackexchange website to search on (the default is "stackoverflow").
-    *args : Any
-        For backwards compatibility.
-    **kwargs : Any
-        For backwards compatibility.
+        The StackExchange website to search on (the default is "stackoverflow").
 
     Returns
     -------
