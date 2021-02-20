@@ -21,13 +21,12 @@ from . import __version__, errors, sync_search
 parser = argparse.ArgumentParser(
     prog="StackSearch",
     formatter_class=argparse.RawDescriptionHelpFormatter,
-    description="""For searching StackOverflow and getting results that you can use.""",
+    description="""For searching StackExchange and getting results that you can use.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
 
 parser.add_argument(  # Query
-    "query",
-    help="The query to search for.",
+    "query", help="The query to search for.", nargs="?", default=None
 )
 parser.add_argument(  # JSON
     "-j",
@@ -67,22 +66,11 @@ parser.add_argument(
 console = rich.console.Console()
 
 
-def custom_main(args_: List[str]) -> NoReturn:
-    """A customizable version of the main CLI. Usually for testing purposes
+def main() -> NoReturn:
+    """The main entry point"""
+    args = parser.parse_args()
 
-    Parameters
-    ----------
-    args_ : List[str]
-        The list of arguments.
-
-    Returns
-    -------
-    NoReturn
-
-    """
-    args = parser.parse_args(args_)
-
-    if not args.query:
+    if args.query is None or args.query == "":
         parser.print_help()
     else:
         sites = set(args.sites)
@@ -91,6 +79,8 @@ def custom_main(args_: List[str]) -> NoReturn:
                 returned_data = {
                     site: sync_search(args.query, search_on_site=site) for site in sites
                 }
+        except errors.RecaptchaError as error:
+            raise error
         except errors.StackSearchBaseError as error:
             console.print(rich.markup.escape(repr(error)), style="bold red")
             sys.exit(1)
@@ -119,11 +109,6 @@ def custom_main(args_: List[str]) -> NoReturn:
                 print_questions_and_answers(returned_data)
         else:
             print_questions_and_answers(returned_data)
-
-
-def main():
-    """Be the main entry point for the CLI tool."""
-    custom_main(sys.argv[1:])
 
 
 if __name__ == "__main__":

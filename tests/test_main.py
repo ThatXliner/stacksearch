@@ -15,10 +15,11 @@ Desc: YOU SHOULD NOT USE THIS FILE. IT IS A TEST.
 
 """
 import random
+import subprocess
+import sys
 from typing import List
 
 from stacksearch import errors
-from stacksearch.__main__ import custom_main as main
 
 
 def _get_random_sites() -> List[str]:
@@ -57,32 +58,28 @@ def _get_random_sites() -> List[str]:
     return {random.choice(SITES) for x in range(random.randint(1, 3))}
 
 
-def captchas(func):
-    def wrapper(*args, **kwargs):
-        try:
-            func(*args, **kwargs)
-        except errors.RecaptchaError:
-            pass
-
-    return wrapper
-
-
 class TestClass:
     """For testing."""
 
     def main(self, args: str = "") -> None:
         """You should not use this. IT'S A TEST. This is the main function."""
-        main([arg for arg in args.split() if arg])
+        run_args = [sys.executable, "-m", "stacksearch"]
+        run_args.extend(args.split(" "))
+        subprocess.run(run_args, check=True)
 
-    @captchas
     def test_stable(self):
         """A test with Search."""
-        self.main("python list")
+        try:
+            self.main('"list"')
+        except subprocess.CalledProcessError as error:
+            assert error.returncode == 1
 
-    @captchas
     def test_stable_lots_of_sites(self):
         """A test with Search. For lots of sites."""
-        self.main(f"python list --sites {' '.join(_get_random_sites())}")
+        try:
+            self.main(f'"list" --sites {" ".join(_get_random_sites())}')
+        except subprocess.CalledProcessError as error:
+            assert error.returncode == 1
 
     def test_version(self):
         """To test the version."""

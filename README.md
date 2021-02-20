@@ -1,17 +1,12 @@
 <h1 align="center">stacksearch 🔎</h1>
 
 <p align="center">
-<a href="https://travis-ci.com/ThatXliner/stacksearch"><img src="https://travis-ci.com/ThatXliner/stacksearch.svg?branch=Stable" alt="Build Status"></a>
-<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
-<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/code-size/ThatXliner/stacksearch" alt="GitHub code size in bytes"></a>
-<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/v/stacksearch" alt="PyPI"></a>
-<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/implementation/stacksearch" alt="PyPI - Implementation"></a>
-<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/pyversions/stacksearch" alt="PyPI - Python Version"></a>
-<a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/l/stacksearch" alt="PyPI - License"></a>
-<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/top/ThatXliner/stacksearch" alt="GitHub top language"></a>
-<a href="https://github.com/ThatXliner/stacksearch"><img src="https://img.shields.io/github/languages/count/ThatXliner/stacksearch" alt="GitHub language count"><a>
-<a href="https://stacksearch.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/stacksearch/badge/?version=latest" alt="Documentation Status"></a>
-<a href="https://codecov.io/gh/ThatXliner/stacksearch"> <img src="https://codecov.io/gh/ThatXliner/stacksearch/branch/Stable/graph/badge.svg" /> </a>
+    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+    <a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/v/stacksearch" alt="PyPI"></a>
+    <a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/pyversions/stacksearch" alt="PyPI - Python Version"></a>
+    <a href="https://pypi.org/project/stacksearch/"><img src="https://img.shields.io/pypi/l/stacksearch" alt="PyPI - License"></a>
+    <a href="https://stacksearch.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/stacksearch/badge/?version=latest" alt="Documentation Status"></a>
+    <a href="https://codecov.io/gh/ThatXliner/stacksearch"> <img src="https://codecov.io/gh/ThatXliner/stacksearch/branch/master/graph/badge.svg" /> </a>
 </p>
 
 **NOTE: STACKSEARCH IS NO LONGER ACTIVELY MAINTAINED. There will still be the occasional bug fixes and updates, but not as much.**
