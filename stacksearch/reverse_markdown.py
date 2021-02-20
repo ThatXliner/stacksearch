@@ -7,10 +7,6 @@ from typing import Optional, Union
 from bs4 import BeautifulSoup, NavigableString
 
 
-def reverse_markdown(html: BeautifulSoup) -> str:
-    return generate_from_html(html.div)
-
-
 def generate_from_html(html: Union[NavigableString, BeautifulSoup]) -> str:
     """The backend for `reverse_markdown`
 
@@ -20,17 +16,20 @@ def generate_from_html(html: Union[NavigableString, BeautifulSoup]) -> str:
         return html
     output = ""
     for child in html.children:
-        if isinstance(child, NavigableString):
+        if isinstance(child, NavigableString):  # Strings
             output += child
-        elif child.name == "p":
+        elif child.name == "div":  # Other text
+            for item in child.children:
+                output += generate_from_html(item)
+        elif child.name == "p":  # Normal text
             output += generate_from_html(child)
-        elif child.name == "pre":
+        elif child.name == "pre":  # Code blocks
             output += parse_code_block(child)
-        elif child.name == "code":
+        elif child.name == "code":  # Inline Code
             output += f"`{generate_from_html(child)}`"
-        elif child.name == "hr":
+        elif child.name == "hr":  # One of those line thingies
             output += "\n---\n"
-        elif child.name.startswith("h"):
+        elif child.name.startswith("h"):  # Headers
             output += (
                 "\n"
                 + "#" * int(child.name[1:])
@@ -38,26 +37,31 @@ def generate_from_html(html: Union[NavigableString, BeautifulSoup]) -> str:
                 + generate_from_html(child)
                 + "\n"
             )
-        elif child.name in {"b", "strong"}:
+        elif child.name in {"b", "strong"}:  # Bold
             output += "**"
             for item in child.children:
                 assert item is not None, "bold"
                 output += generate_from_html(item)
             output += "**"
-        elif child.name in {"i", "em"}:
+        elif child.name in {"i", "em"}:  # Italics
             output += "*"
             for item in child.children:
                 assert item is not None, "italic"
                 output += generate_from_html(item)
             output += "*"
-        elif child.name == "a":
+        elif child.name == "a":  # Link
             output += f"[{generate_from_html(child)}]({child['href']})"
-        elif child.name == "img":
+        elif child.name == "img":  # Images
             output += f"![{child.get('alt')}]({child['src']})"
-        elif child.name == "ul":
+        elif child.name == "ul":  # Bullet list
             for item in child("li"):
                 output += f"\n * {generate_from_html(item)}"
-        else:
+        elif child.name == "ol":  # Number list
+            for index, item in enumerate(child("li")):
+                output += f"\n{index + 1}. {generate_from_html(item)}"
+        elif child.name == "br":
+            output += "\n\n"
+        else:  # Other HTML tags that weren't mentioned here
             output += str(child)
 
     return output
@@ -76,7 +80,7 @@ def detect_language(html: BeautifulSoup) -> Optional[str]:
     if classes is None:
         return None
     classes = classes[:]  # Copy it
-    for item in ("default", "s-code-block", "hljs", "lang-sh"):
+    for item in ("default", "s-code-block", "hljs", "lang-sh", "prettyprint-override"):
         try:
             classes.remove(item)
         except ValueError:

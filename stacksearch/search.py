@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """The main API for StackSearch"""
 import asyncio
-import json
-import logging
 import random
 import time
 from typing import Dict, List, Tuple
@@ -11,18 +9,23 @@ from typing import Dict, List, Tuple
 import aiohttp
 from bs4 import BeautifulSoup
 
-from . import reverse_markdown
+from . import errors, reverse_markdown
 
 TEXT_REQUIREMENTS: Dict[str, str] = {
     "class": "s-prose js-post-body",
     "itemprop": "text",
 }
-formatter = logging.Formatter("%(message)s")
-handler = logging.NullHandler()
-handler.setFormatter(formatter)
-handler.setLevel(logging.CRITICAL)
 
-logger = logging.getLogger("stacksearch").addHandler(handler)
+
+def from_html_to_markdown(html: BeautifulSoup) -> str:
+    """A more specialized version of `reverse_markdown.generate_from_html`"""
+    stackexchange_excuse = html.select(
+        "div > aside > div > div > div.grid--cell.wmn0.fl1.lh-lg"
+    )
+    if stackexchange_excuse:
+        info_text = stackexchange_excuse[0]
+        html.div.aside.replace_with(info_text.contents[0])
+    return reverse_markdown.generate_from_html(html).strip()
 
 
 def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
@@ -33,18 +36,14 @@ def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
 
 async def search(  # TODO: Use logger
     query: str,
-    verbose: bool = False,
     search_on_site: str = "stackoverflow",
-) -> Dict[str, List[str]]:  # TODO: Refactor
+) -> Dict[str, List[str]]:
     """Use this. This is the async version of the Search API function.
 
     Parameters
     ----------
     query : str
         This is the query to search the StackExchange website for.
-    verbose : bool
-        If True, prints the progress. Otherwise, it does not print the progress
-        (the default is False).
     search_on_site : str
         The StackExchange website to search on (the default is "stackoverflow").
 
@@ -60,8 +59,6 @@ async def search(  # TODO: Use logger
             }
 
     """
-    if verbose:
-        logger.setLevel(logging.INFO)
 
     async def find_questions(soup: BeautifulSoup) -> Dict[str, str]:
         return {
@@ -76,15 +73,15 @@ async def search(  # TODO: Use logger
 
     def get_answers_and_questions(page: BeautifulSoup) -> Tuple[str, List[str]]:
         try:
-            stuff = page("div", attrs=json.loads(TEXT_REQUIREMENTS))
+            stuff = page("div", attrs=TEXT_REQUIREMENTS)
         except AttributeError as exception:
-            raise RuntimeError(
+            raise errors.HTMLParseError(
                 "Oh no! It appears that the StackOverflow's question text requirements "
                 "have changed. Please go to the Git repository and submit a pull request "
                 "to update the TEXT_REQUIREMENTS"
             ) from exception
-        return reverse_markdown.generate_from_html(stuff[0]), [
-            reverse_markdown.generate_from_html(answer) for answer in stuff[1:]
+        return from_html_to_markdown(stuff[0]), [
+            from_html_to_markdown(answer) for answer in stuff[1:]
         ]
 
     async with aiohttp.ClientSession() as client:
@@ -94,24 +91,24 @@ async def search(  # TODO: Use logger
         if not (search_on_site.endswith(".com") or search_on_site.endswith(".org")):
             search_on_site += ".com"
 
-        logger.info(f"Requesting results from {search_on_site}...")
         async with client.get(f"https://{search_on_site}/search?q={query}") as request:
             if request.status == 429:
-                raise RuntimeError(
+                raise errors.RateLimitedError(
                     f"You have reached the maximum number of requests to {search_on_site}. Please try again later."
                 )
 
             ###
             # Parse response
             ###
-            logger.info("Parsing response HTML...")
+
             soup = await soupify(await request.text())
             if soup.find("div", class_="fs-body2 mb24"):  # Captcha test
-                raise RuntimeError("StackOverflow realized that we are not human")
-            logger.info("Collecting question links...")
+                raise errors.RecaptchaError(
+                    f"{search_on_site} realized that we are not human"
+                )
+
             question_links = await find_questions(soup)
 
-            logger.info("Requesting questions found (This may take a while)...")
         question_html = []
         for link in map(
             lambda x: f"https://{search_on_site}{x}", iter(question_links.values())
@@ -120,8 +117,6 @@ async def search(  # TODO: Use logger
             async with client.get(link) as request:
                 question_html.append(await request.text())
 
-        logger.info("Parsing questions found (This may take a while)...")
         pages = [await soupify(page) for page in question_html]
 
-        logger.info("Returning results...")
         return dict(map(get_answers_and_questions, pages))

@@ -7,6 +7,6 @@ Stacksearch is a simple tool aimed for people who never want to leave the termin
 Stacksearch can also search other Stack Exchange websites, not just StackOverflow.
 """
 
-import Search
+from .search import search, sync_search
 
 __version__ = "1.5"
