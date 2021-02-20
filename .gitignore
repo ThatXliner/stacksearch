@@ -3,3 +3,4 @@ stacksearch/__pycache__/
 tests/__pycache__/
 .venv/
 build
+dist
