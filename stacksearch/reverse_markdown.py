@@ -80,15 +80,24 @@ def detect_language(html: BeautifulSoup) -> Optional[str]:
     if classes is None:
         return None
     classes = classes[:]  # Copy it
-    for item in ("default", "s-code-block", "hljs", "lang-sh", "prettyprint-override"):
+    for item in (
+        "default",
+        "s-code-block",
+        "hljs",
+        "lang-sh",
+        "snippet-code-js",
+        "prettyprint-override",
+    ):
         try:
             classes.remove(item)
         except ValueError:
             pass
     if len(classes) == 0:
         return None
-    assert len(classes) == 1, classes
-    output = classes[0]
+    # assert len(classes) < 3, classes
+    output = classes[-1]
     if output.startswith("lang-"):
         output = output[5:]
+    if output.startswith("snippet-code-"):
+        output = output[13:]
     return output
