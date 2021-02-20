@@ -2,4 +2,4 @@ stacksearch/egg-info
 stacksearch/__pycache__/
 tests/__pycache__/
 .venv/
-docs/
+build

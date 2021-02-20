@@ -17,8 +17,8 @@ TEXT_REQUIREMENTS: Dict[str, str] = {
 }
 
 
-def from_html_to_markdown(html: BeautifulSoup) -> str:
-    """A more specialized version of `reverse_markdown.generate_from_html`"""
+def reverse_html(html: BeautifulSoup) -> str:
+    """A more specialized version of :func:`stacksearch.reverse_markdown.generate_from_html`"""
     stackexchange_excuse = html.select(
         "div > aside > div > div > div.grid--cell.wmn0.fl1.lh-lg"
     )
@@ -29,7 +29,14 @@ def from_html_to_markdown(html: BeautifulSoup) -> str:
 
 
 def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
-    """A synchronous version of search for synchronous code"""
+    """A synchronous version of search for synchronous code
+
+
+    See Also
+    --------
+    :func:`stacksearch.search`
+
+    """
     loop = asyncio.get_event_loop()
     return loop.run_until_complete(search(*args, **kwargs))
 
@@ -40,6 +47,7 @@ async def search(  # TODO: Use logger
 ) -> Dict[str, List[str]]:
     """Use this. This is the async version of the Search API function.
 
+
     Parameters
     ----------
     query : str
@@ -49,7 +57,7 @@ async def search(  # TODO: Use logger
 
     Returns
     -------
-    dict
+    Dict[str, List[str]]
         In the format of
 
         .. code::
@@ -57,6 +65,17 @@ async def search(  # TODO: Use logger
             {
                 'question': ['answer1', 'answer2', ...], 'question2': ['answer1', ...]
             }
+
+    Raises
+    ------
+    errors.RateLimitedError
+        You got rate limited by StackExchange
+
+    errors.HTMLParseError
+        StackExchange has changed their site structure
+
+    errors.RecaptchaError
+        StackExchange realizes that we're a bot
 
     """
 
@@ -80,9 +99,7 @@ async def search(  # TODO: Use logger
                 "have changed. Please go to the Git repository and submit a pull request "
                 "to update the TEXT_REQUIREMENTS"
             ) from exception
-        return from_html_to_markdown(stuff[0]), [
-            from_html_to_markdown(answer) for answer in stuff[1:]
-        ]
+        return reverse_html(stuff[0]), [reverse_html(answer) for answer in stuff[1:]]
 
     async with aiohttp.ClientSession() as client:
         ###

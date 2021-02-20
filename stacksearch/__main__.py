@@ -14,10 +14,6 @@ import rich.markup
 
 from . import __version__, errors, sync_search
 
-# if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
-#     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
-
-
 parser = argparse.ArgumentParser(
     prog="StackSearch",
     formatter_class=argparse.RawDescriptionHelpFormatter,
