@@ -12,65 +12,54 @@
 **NOTE: STACKSEARCH IS NO LONGER ACTIVELY MAINTAINED. There will still be the occasional bug fixes and updates, but not as much.**
 
 
-StackSearch is a python module that provides a way to search [StackOverflow](https://stackoverflow.com/).
+StackSearch is a python module that provides a way to search [StackExchange](https://stackexchange.com) sites such as [StackOverflow](https://stackoverflow.com).
 
-The reason this is better than other modules is that this module provides a modern API, a beautiful command-line interface via argparse and blessings, all in pure Python.
+## Installation
 
-It is also available as a standalone command-line tool, so you may run it directly like so:
+You know the drill
 
 ```bash
-stacksearch This is the query
+$ pip install stacksearch
 ```
+## Usage
+### CLI
 
-without the `python3 -m` prefix, if desired.
-
-It also has an API which you can use via
+```bash
+$ stacksearch "This is the query"
+```
+or
+```bash
+$ python3 -m stacksearch "This is the query"
+```
+### Python API
 
 ```python
->>> from stackoverflow import Search
->>> Search.Search("This is the query")
+>>> from stacksearch import sync_search
+>>> sync_search("This is the query")
 ```
+or the asynchronous version
 
+```python
+>>> import asyncio
+>>> from stacksearch import search
+>>> async def main():
+...    await search("This is the query")
+
+>>> asyncio.run(main())
+```
 Have fun!
 
-## Benefits 👍
+## Features
 
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
 
 - The ability to return a dictionary of _ALL_ the search results found, **not just the first result**
-- The ability to return results from a variety of different [StackExchange](https://stackexchange.com/) sites
-- A **beautiful command-line interface _for humans_**
-- A decently documented API
-- An optional **asynchronous API**
-- Decently easy-to-read code (formatted with [Black](https://github.com/psf/black))
-- And **open source code on [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable)**
+- The ability to return results from all [StackExchange](https://stackexchange.com/) sites
+- A **beautiful command-line interface _for humans_** via [argparse](https://docs.python.org/3/library/argparse.html) and [**Rich**](https://github.com/willmcgugan/rich)
+- An optional **asynchronous Python API**
+- The ability to **crank out raw [JSON](https://www.json.org/json-en.html) data** to use
+- Fully [type hinted](https://www.python.org/dev/peps/pep-0585/)
 
-## Downsides 👎
-
-- Possibly _slower_ than the other modules
-- **The first PyPi project ever made by ThatXliner**
-- Not _fully_ (completely) optimized (well, after all, it's python)
-- ~~A big list of dependencies~~ (shortened in version 1.0.0 or so)
-
-## Current Features 😁
-
-- **Everything listed in the 'Benefits' section of the README above**
-- Mostly, **if not fully**, [type-hinted](https://www.python.org/dev/peps/pep-0585/)
-- A **beautiful, simple, yet powerful command-line interface** (via [argparse](https://docs.python.org/3/library/argparse.html) and [blessings](https://pypi.org/project/blessings/))
-- **Asynchronous** StackOverflow requests!
-- The ability to **crank out raw [JSON](https://www.json.org/json-en.html) data** to **_use_**
-- And an **API**
-
-## Future Features 🏃‍♂️
-
-- [x] ~~Asynchronous StackOverflow requests!~~ (Done in v1.1.0)
-- [x] [Documentation](https://stacksearch.readthedocs.io/en/latest/) (_Sort of_ added in v1.2.8)
-- [ ] Object-oriented APIs
-- [ ] Python backwards-compatibility (3.6 to 3.9)
-- [ ] Being able to scrape _all_ StackOverflow sites/pages
-- [x] ~~A better README~~ (Done in v1.0.0.1)
-- [ ] Being able to output different formats of data (e.g. YAML, TOML, XML, etc)
-- [ ] And more command-line options
 
 ## Usage Examples
 
@@ -82,46 +71,11 @@ The benefits of this module as opposed to the other StackOverflow-searching modu
 
 ## License
 
-MIT License
-
-```text
-Copyright (c) 2020 ThatXliner
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-## Code style guide 😳
-
-[Black](https://github.com/psf/black). We (I, right now.) use the black formatter to format our code. **It's pretty strict.**
-
-We also use NumPy style docstrings.
-
-## Contributing ✏️
-
-![GitHub contributors](https://img.shields.io/github/contributors/ThatXliner/stacksearch)
+[MIT](https://choosealicense.com/licenses/mit/)
 
 Please feel free to contribute!
 
 ## Links 📎
 
-[GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable) (Possibly this page)
-
-[PyPi](https://pypi.org/project/stacksearch/) (Possibly this page)
-
-[Travis-CI](https://travis-ci.com/github/ThatXliner/stacksearch)
+ - [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable)
+ - [PyPi](https://pypi.org/project/stacksearch/)
