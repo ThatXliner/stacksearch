@@ -22,7 +22,7 @@ copyright = "2021, Bryan Hu"
 author = "Bryan Hu"
 
 # The full version, including alpha/beta/rc tags
-release = "1.5"
+release = "2b"
 
 
 # -- General configuration ---------------------------------------------------

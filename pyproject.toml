@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "stacksearch"
-version = "1.5"
+version = "2"
 license = "MIT"
 description = "StackSearch is a python CLI and library that provides a way to search StackExchange sites."
 authors = [ "Bryan Hu <bryan.hu.2020@gmail.com>",]
