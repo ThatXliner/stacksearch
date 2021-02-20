@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup, NavigableString
 
 
 def generate_from_html(html: Union[NavigableString, BeautifulSoup]) -> str:
-    """The backend for `reverse_markdown`
+    """The backend for :func:`stacksearch.search.reverse_html`
 
     Specialized for StackExchange
     """

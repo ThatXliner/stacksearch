@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""A file defining the errors this might raise"""
+"""The errors StackSearch may raise are"""
 
 
 class StackSearchBaseError(Exception):
-    """The base error type"""
+    """The base error type for StackSearch errors."""
 
 
 class RecaptchaError(StackSearchBaseError):
-    """When StackExchange realizes we are a robot"""
+    """When StackExchange realizes we are a robot."""
 
 
 class RateLimitedError(StackSearchBaseError):
-    """We got rate limited"""
+    """We got rate limited."""
 
 
 class HTMLParseError(StackSearchBaseError):
-    """We couldn't parse the HTML"""
+    """I couldn't parse the HTML."""
