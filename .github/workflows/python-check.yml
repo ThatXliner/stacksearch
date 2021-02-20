@@ -1,12 +1,7 @@
 name: PythonCI
 
-# Pypi upload and coverage covered in Travis-CI
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: [push, pull_request]
 jobs:
   "pytest-Ubuntu":
     strategy:
