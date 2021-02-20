@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Author: Bryan hu .
-
-@Bryan hu .
-
-Made with love by Bryan hu .
-
-The primitive functions to use. # API
-"""
+"""The main API for StackSearch"""
 import asyncio
 import json
+import logging
 import random
 import time
-from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import aiohttp
 from bs4 import BeautifulSoup
 
-TEXT_REQUIREMENTS = Path(__file__).parent.joinpath("txt_req.json").read_text()
+from . import reverse_markdown
+
+TEXT_REQUIREMENTS: Dict[str, str] = {
+    "class": "s-prose js-post-body",
+    "itemprop": "text",
+}
+formatter = logging.Formatter("%(message)s")
+handler = logging.NullHandler()
+handler.setFormatter(formatter)
+handler.setLevel(logging.CRITICAL)
+
+logger = logging.getLogger("stacksearch").addHandler(handler)
 
 
 def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
@@ -27,11 +30,12 @@ def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
     loop = asyncio.get_event_loop()
     return loop.run_until_complete(search(*args, **kwargs))
 
-async def search(
+
+async def search(  # TODO: Use logger
     query: str,
     verbose: bool = False,
-    search_on_site: str = "stackoverflow.com",
-) -> Dict[str, List[str]]:
+    search_on_site: str = "stackoverflow",
+) -> Dict[str, List[str]]:  # TODO: Refactor
     """Use this. This is the async version of the Search API function.
 
     Parameters
@@ -47,11 +51,17 @@ async def search(
     Returns
     -------
     dict
-        In the format: {
-        'question': ['answer1', 'answer2', ...], 'question2': ['answer1', ...]
-        }
+        In the format of
+
+        .. code::
+
+            {
+                'question': ['answer1', 'answer2', ...], 'question2': ['answer1', ...]
+            }
 
     """
+    if verbose:
+        logger.setLevel(logging.INFO)
 
     async def find_questions(soup: BeautifulSoup) -> Dict[str, str]:
         return {
@@ -64,26 +74,27 @@ async def search(
     async def soupify(content: str) -> BeautifulSoup:
         return BeautifulSoup(content, features="html.parser")
 
-    def get_answers_and_questions(page):
+    def get_answers_and_questions(page: BeautifulSoup) -> Tuple[str, List[str]]:
         try:
-            stuff = page.find_all("div", attrs=json.loads(TEXT_REQUIREMENTS))
+            stuff = page("div", attrs=json.loads(TEXT_REQUIREMENTS))
         except AttributeError as exception:
             raise RuntimeError(
                 "Oh no! It appears that the StackOverflow's question text requirements "
                 "have changed. Please go to the Git repository and submit a pull request "
                 "to update the TEXT_REQUIREMENTS"
             ) from exception
-        return stuff[0].get_text(), [answer.get_text() for answer in stuff[1:]]
+        return reverse_markdown.generate_from_html(stuff[0]), [
+            reverse_markdown.generate_from_html(answer) for answer in stuff[1:]
+        ]
 
     async with aiohttp.ClientSession() as client:
         ###
         # Get site
         ###
-        if not search_on_site.endswith(".com") or not search_on_site.endswith(".org"):
-            search_on_site = search_on_site + ".com"
+        if not (search_on_site.endswith(".com") or search_on_site.endswith(".org")):
+            search_on_site += ".com"
 
-        if verbose:
-            print(f"Requesting results from {search_on_site}...")
+        logger.info(f"Requesting results from {search_on_site}...")
         async with client.get(f"https://{search_on_site}/search?q={query}") as request:
             if request.status == 429:
                 raise RuntimeError(
@@ -93,17 +104,14 @@ async def search(
             ###
             # Parse response
             ###
-            if verbose:
-                print("Parsing response HTML...")
+            logger.info("Parsing response HTML...")
             soup = await soupify(await request.text())
-            if soup.find("div", class_="fs-body2 mb24"):
+            if soup.find("div", class_="fs-body2 mb24"):  # Captcha test
                 raise RuntimeError("StackOverflow realized that we are not human")
-            if verbose:
-                print("Collecting question links...")
+            logger.info("Collecting question links...")
             question_links = await find_questions(soup)
 
-            if verbose:
-                print("Requesting questions found (This may take a while)...")
+            logger.info("Requesting questions found (This may take a while)...")
         question_html = []
         for link in map(
             lambda x: f"https://{search_on_site}{x}", iter(question_links.values())
@@ -112,10 +120,8 @@ async def search(
             async with client.get(link) as request:
                 question_html.append(await request.text())
 
-        if verbose:
-            print("Parsing questions found (This may take a while)...")
+        logger.info("Parsing questions found (This may take a while)...")
         pages = [await soupify(page) for page in question_html]
 
-        if verbose:
-            print("Returning results...")
+        logger.info("Returning results...")
         return dict(map(get_answers_and_questions, pages))
