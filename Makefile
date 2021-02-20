@@ -1,36 +1,20 @@
-PYTHON := python3
-PROJECT_NAME := stacksearch
+# Minimal makefile for Sphinx documentation
+#
 
-test:
-	@make deps > /dev/null
-	@$(PYTHON) -m ensurepip > /dev/null && $(PYTHON) -m pip install pytest-cov pytest-asyncio pytest-random > /dev/null
-	@pytest tests/ -vvv --durations=3 --cov=stacksearch
-deps:
-	@$(PYTHON) -m ensurepip
-	@echo "Installing dependencies..."
-	@$(PYTHON) -m pip install -r requirements.txt > /dev/null
+# You can set these variables from the command line, and also
+# from the environment for the first two.
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= sphinx-build
+SOURCEDIR     = docs
+BUILDDIR      = build
 
-dev-deps:
-	@$(PYTHON) -m ensurepip
-	@echo "Installing developer dependencies..."
-	@$(PYTHON) -m pip install -r dev-requirements.txt > /dev/null
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-build:
-	@$(PYTHON) setup.py sdist bdist_wheel
+.PHONY: help Makefile
 
-clean:
-	@find . -type d \( -name '__pycache__' -or -name '*.egg-info' -or -name 'dist' -or -name 'build' -or -name '.pytest_cache' \)  -exec rm -rf {} +
-	@rm ".coverage" || echo ""
-	@black . || $(PYTHON) -m ensurepip && $(PYTHON) -m pip install black > /dev/null || echo "Black failed."
-develop:
-	@$(PYTHON) -m ensurepip
-	@$(PYTHON) setup.py sdist bdist_wheel
-	@$(PYTHON) -m pip install -e .
-plush:
-	@git pull --all
-	@git push --all
-sync:  # Made by (and for) ThatXliner
-	@git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
-	@git checkout master && git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
-	@git checkout preStable && git merge --ff -m ":robot: : Auto merge \n\n (Created by: make sync) [skip ci]" Stable && make plush
-	@git checkout Stable
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

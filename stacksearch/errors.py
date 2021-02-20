@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Author: Bryan Hu .
-
-@Bryan Hu .
-
-Made with love by Bryan Hu .
+"""The errors StackSearch may raise are"""
 
 
-Version: see __init__.py
-
-Desc: The errors stacksearch may raise.
-
-"""
+class StackSearchBaseError(Exception):
+    """The base error type for StackSearch errors."""
 
 
-class UnsupportedPythonVersion(Exception):
-    """
-    This error is raised when your python version is not supported.
-    This may be thrown if your python version is below verison 3.8.
-    """
+class RecaptchaError(StackSearchBaseError):
+    """When StackExchange realizes we are a robot."""
+
+
+class RateLimitedError(StackSearchBaseError):
+    """We got rate limited."""
+
+
+class HTMLParseError(StackSearchBaseError):
+    """I couldn't parse the HTML."""

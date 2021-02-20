@@ -1,52 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # type: ignore
-"""
-Author: Bryan Hu .
-
-@Bryan Hu .
-
-Made with love by Bryan Hu .
-
-
-Version: See __init__.py
-
-Desc: The main file to use/execute when trying to search StackOverflow.
-
-"""
+"""The main CLI entry point"""
 import argparse
+import json
 import sys
-from pprint import pprint
-from typing import List
+from typing import Dict, List, NoReturn
 
-from blessings import Terminal
-from stacksearch import __version__
-from stacksearch.errors import UnsupportedPythonVersion
-from stacksearch.Search import Search, fSearch
+import rich
+import rich.console
+import rich.markdown
+import rich.markup
 
-# if not (sys.version_info.major >= 3 and sys.version_info.minor >= 8):
-#     raise UnsupportedPythonVersion("This version of python is not supported (for now).")
-
+from . import __version__, errors, sync_search
 
 parser = argparse.ArgumentParser(
     prog="StackSearch",
     formatter_class=argparse.RawDescriptionHelpFormatter,
-    description="""
-For searching StackOverflow and getting results that you can use.
-
-There are many other libraries/modules available that do the same
-thing. The reason you should use this is because this returns results
-that you can use. If ran from the command line, it'll return human readable
-results. If ran from another python script, it'll return some parsable JSON.
-Assuming you are utilizing this script's wonderful functions and objects.""",
+    description="""For searching StackExchange and getting results that you can use.""",
     epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
 
 parser.add_argument(  # Query
-    "query",
-    help="The query to search.",
-    nargs="*",
-    #     action="append",
+    "query", help="The query to search for.", nargs="?", default=None
 )
 parser.add_argument(  # JSON
     "-j",
@@ -54,184 +30,82 @@ parser.add_argument(  # JSON
     "--raw-data",
     "-r",
     "--raw",
-    help="For outputting JSON data that you can use.",
+    help="Output JSON instead?",
     action="store_true",
-    default=False,
-    dest="json",
-)
-parser.add_argument(  # Output
-    "-o",
-    "--output",
-    help="The output file.",
-    nargs="?",
-    default=sys.stdout,
-    action="store",
-    dest="OUTPUT",
+    dest="raw",
 )
 parser.add_argument(  # Silent
     "-s",
     "--silent",
     action="store_true",
-    default=False,
     help="Don't print the progress.",
-    dest="s",
 )
 
 parser.add_argument(  # Sites
     "--sites",
-    #     action="extend",
     default=["stackoverflow"],
     nargs="+",
     help="The StackExchange sites to search.",
 )
 parser.add_argument(  # Version
-    "-v",
-    "-V",
-    "--version",
+    "--version", action="version", version="%(prog)s version: " + __version__
+)
+parser.add_argument(
+    "--pager", action="store_true", help="Use a pager for output (may turn color off)"
+)
+parser.add_argument(
+    "--pager-colors",
     action="store_true",
-    default=False,
-    help="Print the version number and exit.",
-    dest="version",
+    help="Force colors when the --pager option is also specified",
 )
 
-t = Terminal()
+console = rich.console.Console()
 
 
-def _cmd_line_stuff(ANSWERS: List[str], PRINT_PROGRESS: bool, args, FILE: str) -> None:
-    if args.json:
-        pprint(ANSWERS, stream=FILE, width=79)  # You will get unprocessed, raw JSON
-    else:  # We got some parsing to do
-        if PRINT_PROGRESS:
-            print("Outputting results...")
-        question_number = 0
-        for answer in ANSWERS:
-            question_number += 10
-            # print(t.bold("Answers from {}"))  # To implement this, we'll need to make some internal changes.
-            for question, answers in answer.items():
-                print(
-                    f"{t.bold}{t.bright_green}Question #{question_number / 10}: "
-                    f"{question}{t.normal}",
-                    file=FILE,
-                )
-                print("\n")
-                try:
-                    print(
-                        f"{t.bright_yellow}{t.bold} Best Answer: {answers[0]}{t.normal}",
-                        file=FILE,
-                    )
-                    print("\n\n\n", file=FILE)
-                    try:
-                        for question_answer in answers[1:]:
-                            print(
-                                f"{t.green}Answer: {question_answer}{t.normal}",
-                                file=FILE,
-                            )
-                            print("\n\n\n", file=FILE)
-                    except IndexError:
-                        print(
-                            f"{t.red}{t.bold}This is the only answer.{t.normal}",
-                            file=FILE,
+def main() -> NoReturn:
+    """The main entry point"""
+    args = parser.parse_args()
+
+    if args.query is None or args.query == "":
+        parser.print_help()
+    else:
+        sites = set(args.sites)
+        try:
+            with console.status(f"Searching {', '.join(sites)}\n"):
+                returned_data = {
+                    site: sync_search(args.query, search_on_site=site) for site in sites
+                }
+        except errors.RecaptchaError as error:
+            raise error
+        except errors.StackSearchBaseError as error:
+            console.print(rich.markup.escape(repr(error)), style="bold red")
+            sys.exit(1)
+        if args.raw:
+            print(json.dumps(returned_data))
+            sys.exit(0)
+
+        def print_questions_and_answers(data: Dict[str, Dict[str, List[str]]]):
+            for site, questions in data.items():
+                console.rule(f"[bold]Site: [blue]{site}[/]\n\n")
+                for question, answers in questions.items():
+                    console.rule("Question")
+                    console.print(rich.markdown.Markdown(question))
+                    console.rule("Answer(s)")
+                    if len(answers) == 0:
+                        console.print(
+                            "[bold red]There were no answers for this question[/]"
                         )
-                except IndexError:
-                    print(
-                        f"{t.bright_red}There were no answers for "
-                        f"this question{t.normal}\n",
-                        file=FILE,
-                    )
-                else:
-                    print("\n\n\n", file=FILE)
-                finally:
-                    question_number += 1
+                    else:
+                        for index, answer in enumerate(answers):
+                            console.rule(f"Answer [yellow]#{index}[/]", align="left")
+                            console.print(rich.markdown.Markdown(answer))
 
-
-def custom_main(args_: list) -> None:
-    """A customizable version of the main CLI.
-
-    This is for if you want to embed stacksearch's CLI in your program
-    ("but using custom arguments").
-
-    Parameters
-    ----------
-    args_ : list
-        The list of arguments.
-
-    Returns
-    -------
-    None
-
-    """
-    args = parser.parse_args(args_)
-
-    if args.version:
-        print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
-    elif not args.query:
-        parser.print_help(file=args.OUTPUT)
-    else:
-        PRINT_PROGRESS = not args.s
-
-        SITES_TO_SEARCH = set(args.sites)
-        FILE = args.OUTPUT
-        if PRINT_PROGRESS:
-            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
-        ANSWERS = []
-
-        for site in map(str, SITES_TO_SEARCH):
-            ANSWERS.append(
-                Search(
-                    " ".join(args.query),
-                    print_prog=PRINT_PROGRESS,
-                    search_on_site=site,
-                )
-            )
-
-        _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
-
-
-async def fcustom_main(args: list) -> None:
-    """The is synchronous sister of :py:func:`stacksearch.custom_main`.
-
-    Asynchronous via :py:func:`Search.fSearch`
-
-    Parameters
-    ----------
-    args : list
-        The list of arguments.
-
-    Returns
-    -------
-    None
-
-    """
-    args = parser.parse_args(args)
-    if args.version:
-        print(f"stacksearch version: {__version__}", file=args.OUTPUT)  # noqa
-    elif not args.query:
-        parser.print_help(file=args.OUTPUT)
-    else:
-        PRINT_PROGRESS = not args.s
-
-        SITES_TO_SEARCH = set(args.sites)
-        FILE = args.OUTPUT
-        if PRINT_PROGRESS:
-            print(f"Searching {', '.join(SITES_TO_SEARCH)}...")
-        ANSWERS = []
-
-        for site in map(str, SITES_TO_SEARCH):
-            ANSWERS.append(
-                await fSearch(
-                    " ".join(args.query),
-                    print_prog=PRINT_PROGRESS,
-                    search_on_site=site,
-                )
-            )
-
-        _cmd_line_stuff(ANSWERS, PRINT_PROGRESS, args, FILE)
-
-
-def cli_main():
-    """Be the main entry point for the CLI tool."""
-    custom_main(sys.argv[1:])
+        if args.pager:
+            with console.pager(styles=args.pager_colors):
+                print_questions_and_answers(returned_data)
+        else:
+            print_questions_and_answers(returned_data)
 
 
 if __name__ == "__main__":
-    cli_main()
+    main()

@@ -1,5 +1,0 @@
-cmd: /usr/bin/make
-sh: false
-atomCommandName: build:pytest
-arguments: test
-keymap: f5
