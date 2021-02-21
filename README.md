@@ -54,7 +54,7 @@ Have fun!
 
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
 
-- A **markdown reverser engine** to return useful and beautiful answers
+- A **markdown reverser engine** via [unmarkd](https://github.com/ThatXliner/unmarkd) to return useful and beautiful answers
 - The ability to return a dictionary of _ALL_ the search results found, **not just the first result**
 - The ability to return results from all [StackExchange](https://stackexchange.com/) sites
 - A **beautiful command-line interface _for humans_** via [argparse](https://docs.python.org/3/library/argparse.html) and [**Rich**](https://github.com/willmcgugan/rich)
