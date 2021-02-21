@@ -729,6 +729,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "unmarkd"
+version = "0.1.0"
+description = "A markdown reverser."
+category = "main"
+optional = false
+python-versions = ">=3.6,<4.0"
+
+[package.dependencies]
+beautifulsoup4 = ">=4.9.3,<5.0.0"
+
+[[package]]
 name = "wrapt"
 version = "1.12.1"
 description = "Module for decorators, wrappers and monkey patching."
@@ -772,7 +783,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "deece4d043a29ed99cd0ae5589fa4fa02c775459ce38cbb338a9af81a7936425"
+content-hash = "858a03ad2ebd5eb3ec1e3cf931e1a0df358e5e5396f3c6715ff2d541906cfe2a"
 
 [metadata.files]
 aiohttp = [
@@ -1291,6 +1302,10 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
     {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
+]
+unmarkd = [
+    {file = "unmarkd-0.1.0-py3-none-any.whl", hash = "sha256:67ef69ef64206b99977e5b6e8b4bc728e5aa6926f9ecf41b194e24b6f09474a9"},
+    {file = "unmarkd-0.1.0.tar.gz", hash = "sha256:a9ae3b3e4478d4c3b0fd264afbb16d5932d48d826f4b7d04c5fc7148bcf14885"},
 ]
 wrapt = [
     {file = "wrapt-1.12.1.tar.gz", hash = "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7"},

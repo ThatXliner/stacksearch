@@ -7,9 +7,10 @@ import time
 from typing import Dict, List, Tuple
 
 import aiohttp
+import unmarkd
 from bs4 import BeautifulSoup
 
-from . import errors, reverse_markdown
+from . import errors
 
 TEXT_REQUIREMENTS: Dict[str, str] = {
     "class": "s-prose js-post-body",
@@ -25,7 +26,7 @@ def reverse_html(html: BeautifulSoup) -> str:
     if stackexchange_excuse:
         info_text = stackexchange_excuse[0]
         html.div.aside.replace_with(info_text.contents[0])
-    return reverse_markdown.generate_from_html(html).strip()
+    return unmarkd.unmarkers.StackOverflowUnmarker().unmark(html)
 
 
 def sync_search(*args, **kwargs) -> Dict[str, List[str]]:
