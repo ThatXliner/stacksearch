@@ -15,7 +15,7 @@
 
 StackSearch is a python library that provides an unofficial API to search various [StackExchange](https://stackexchange.com) sites such as [StackOverflow](https://stackoverflow.com).
 
-It does *not* implement the [stack sesrch algorithm](https://en.m.wikipedia.org/wiki/Stack_search).
+It does *not* implement the [stack search algorithm](https://en.m.wikipedia.org/wiki/Stack_search).
 
 ## Installation
 
