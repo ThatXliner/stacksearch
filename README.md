@@ -13,7 +13,9 @@
 **NOTE: STACKSEARCH IS NO LONGER ACTIVELY MAINTAINED. There will still be the occasional bug fixes and updates, but not as much.**
 
 
-StackSearch is a python module that provides a way to search [StackExchange](https://stackexchange.com) sites such as [StackOverflow](https://stackoverflow.com).
+StackSearch is a python library that provides an unofficial API to search various [StackExchange](https://stackexchange.com) sites such as [StackOverflow](https://stackoverflow.com).
+
+It does *not* implement the [stack sesrch algorithm](https://en.m.wikipedia.org/wiki/Stack_search).
 
 ## Installation
 
@@ -54,8 +56,8 @@ Have fun!
 
 The benefits of this module as opposed to the other StackOverflow-searching modules is that this module provides the following:
 
-- A **markdown reverser engine** via [unmarkd](https://github.com/ThatXliner/unmarkd) to return useful and beautiful answers
-- The ability to return a dictionary of _ALL_ the search results found, **not just the first result**
+- **Reverses HTML** via [unmarkd](https://github.com/ThatXliner/unmarkd) to return useful and beautiful answers
+- The ability to return a dictionary of _ALL_ the search results found, **not just the first result** (returning from every page found still WIP)
 - The ability to return results from all [StackExchange](https://stackexchange.com/) sites
 - A **beautiful command-line interface _for humans_** via [argparse](https://docs.python.org/3/library/argparse.html) and [**Rich**](https://github.com/willmcgugan/rich)
 - An optional **asynchronous Python API**
