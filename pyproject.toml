@@ -10,6 +10,7 @@ description = "StackSearch is a python CLI and library that provides a way to se
 authors = [ "Bryan Hu <bryan.hu.2020@gmail.com>",]
 readme = "README.md"
 documentation = "https://stacksearch.readthedocs.io/en/latest/index.html"
+repository = "https://github.com/ThatXliner/stacksearch"
 keywords = [ "stackexchange", "webscrape", "api",]
 classifiers = [ "Programming Language :: Python :: Implementation :: CPython", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Development Status :: 4 - Beta", "Intended Audience :: Developers", "Intended Audience :: End Users/Desktop", "Intended Audience :: Information Technology", "Intended Audience :: Science/Research", "Intended Audience :: System Administrators", "Environment :: Console", "Natural Language :: English", "Topic :: Utilities",]
 include = ["README.md", "LICENSE"]
