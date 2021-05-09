@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(
     prog="StackSearch",
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description="""For searching StackExchange and getting results that you can use.""",
-    epilog=' \n Judge a man by his questions rather than by his answers" - Voltaire \n ',
+    epilog=' \n "Judge a man by his questions rather than by his answers" - Voltaire \n ',
 )
 
 parser.add_argument(  # Query
