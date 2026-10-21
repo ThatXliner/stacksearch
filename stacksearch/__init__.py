@@ -9,4 +9,4 @@ Stacksearch can also search other Stack Exchange websites, not just StackOverflo
 
 from .search import search, sync_search
 
-__version__ = "2"
+__version__ = "3.0.0"

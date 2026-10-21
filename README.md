@@ -83,3 +83,7 @@ Please feel free to contribute!
 
  - [GitHub](https://github.com/ThatXliner/stacksearch/tree/Stable)
  - [PyPi](https://pypi.org/project/stacksearch/)
+
+## Python support
+
+Version 3.0.0 requires Python 3.10 or later. This release upgrades aiohttp to a patched release and updates Rich and unmarkd together for compatibility.
