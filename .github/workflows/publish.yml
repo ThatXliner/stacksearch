@@ -1,5 +1,6 @@
 name: Publish package
 on:
+  workflow_dispatch:
   release:
     types: [published]
 permissions:
@@ -24,5 +25,5 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: ${{ secrets.PYPI_USERNAME }}
+          user: __token__
           password: ${{ secrets.PYPI_PASSWORD }}
