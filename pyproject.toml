@@ -19,6 +19,7 @@ include = ["README.md", "LICENSE"]
 stacksearch = "stacksearch.__main__:main"
 
 [tool.poetry.dependencies]
+certifi = ">=2026.10.19"
 python = "^3.10"
 beautifulsoup4 = "^4.9.3"
 aiohttp = "^3.14.5"

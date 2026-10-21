@@ -6,6 +6,8 @@ import random
 import time
 from typing import Dict, List, Tuple
 
+import ssl
+import certifi
 import aiohttp
 import unmarkd
 from bs4 import BeautifulSoup
@@ -102,7 +104,11 @@ async def search(  # TODO: Use logger
             ) from exception
         return reverse_html(stuff[0]), [reverse_html(answer) for answer in stuff[1:]]
 
-    async with aiohttp.ClientSession() as client:
+    async with aiohttp.ClientSession(
+        connector=aiohttp.TCPConnector(
+            ssl=ssl.create_default_context(cafile=certifi.where())
+        )
+    ) as client:
         ###
         # Get site
         ###
